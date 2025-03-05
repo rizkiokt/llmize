@@ -1,92 +1,150 @@
 import numpy as np
 
 from ..base import Optimizer
-from ..utils.llm_init import initialize_gemini, initialize_huggingface
+from ..utils.llm_init import initialize_llm
 from ..utils.parsing import parse_pairs, parse_response
-from ..utils.llm_call import generate_content_gemini, generate_content_huggingface
-
+from ..utils.llm_call import generate_content
+from ..utils.decorators import check_init
 
 class OPRO(Optimizer):
+    """
+    OPRO optimizer for optimizing tasks using a specified LLM model.
+
+    This class inherits from the `Optimizer` class and allows configuration 
+    of various parameters related to the optimization process.
+
+    :param str llm_model: The name of the LLM model to use (default: "gemini-2.0-flash").
+    :param str api_key: The API key for accessing the model (default: None).
+    :param int num_steps: The number of optimization steps (default: 50).
+    :param int batch_size: The batch size used for optimization (default: 5).
+    """
+
     def __init__(self, llm_model="gemini-2.0-flash", api_key=None, num_steps=50, batch_size=5):
         """
         Initialize the OPRO optimizer with the provided configuration.
-        Inherits from Optimizer.
+        Inherits from `Optimizer`.
+
+        :param str llm_model: The name of the LLM model to use.
+        :param str api_key: The API key for accessing the model.
+        :param int num_steps: The number of optimization steps.
+        :param int batch_size: The batch size used for optimization.
         """
         super().__init__(llm_model=llm_model, api_key=api_key, num_steps=num_steps, batch_size=batch_size)
     
-    def meta_prompt(self, problem_text, example_pairs):
+    def meta_prompt(self, problem_text, example_pairs, optimization_type="maximize"):
+
+        example_texts = """Below are some examples of solutions and their scores:"""
+
+        if optimization_type == "maximize":
+            text1 = "higher"
+            text2 = "highest"
+        else:
+            text1 = "lower"
+            text2 = "lowest"
 
         instruction = f"""
 Generate exactly {self.batch_size} new solutions that:
 - Are distinct from all previous solutions.
-- Have a higher score than the highest provided.
+- Have {text1} scores than the {text2} provided.
 - Respect the relationships based on logical reasoning.
 
-The solutions should start with <sol> and end with <\sol> with a comma between parameters. 
+Each solution should start with <sol> and end with <\sol> with a comma between parameters. 
+Make sure the length of solutions match examples given. Don't guess for the scores as they will be calculated by an objective function.
 """
-        prompt = [problem_text, example_pairs, instruction]
+        prompt = [problem_text, example_texts, example_pairs, instruction]
 
         return prompt
+
+
     
-    def optimize(self, problem_text=None, init_samples=None, init_scores=None, obj_func=None):
+    def optimize(self, problem_text=None, init_samples=None, init_scores=None, obj_func=None, optimization_type="maximize"):
         """
-        Perform the optimization process (unique to OPRO).
-        Accepts problem-specific inputs.
-        """
-        if problem_text is None:
-            raise ValueError("problem_text must be provided.")
-        if init_samples is None or init_scores is None:
-            raise ValueError("init_samples and init_scores must be provided.")
-        if obj_func is None:
-            raise ValueError("obj_func must be provided.")
+        Perform the OPRO optimization process, either maximizing or minimizing the objective function.
         
+        :param str problem_text: The textual description of the problem to be optimized.
+        :param list init_samples: Initial solution samples provided as input (default: None).
+        :param list init_scores: Scores corresponding to the initial samples (default: None).
+        :param callable obj_func: Objective function to evaluate generated solutions (default: None).
+        :param str optimization_type: Whether to maximize or minimize the objective function ('maximize' or 'minimize').
+        
+        :return: A dictionary containing the best solution, its score, and optimization history.
+        :rtype: dict
+        """
         # Initialize the LLM model
-        if self.llm_model.startswith("gemini"):
-            client = initialize_gemini(self.api_key)
-        else:
-            client = initialize_huggingface(self.api_key)
+        client = initialize_llm(self.llm_model, self.api_key)
 
         print(f"Running OPRO optimization with {self.num_steps} steps and batch size {self.batch_size}...")
+        best_solution = None
+        if optimization_type == "maximize":
+            best_score = np.max(init_scores)
+        elif optimization_type == "minimize":
+            best_score = np.min(init_scores)
+        else:
+            raise ValueError("Invalid optimization_type. Choose 'maximize' or 'minimize'.")
         
-        for step in range(self.num_steps):
-            if step == 0: 
+        best_score_history = [best_score]
+        avg_score_per_step = [np.average(init_scores)]
+        best_score_per_step = [best_score]
+
+
+        for step in range(self.num_steps+1):
+            if step == 0:
+                print(f"Step {step} - Best Initial Score: {best_score:.2f}, Average Initial Score: {np.average(init_scores):.2f}")
                 init_pairs = parse_pairs(init_samples, init_scores)
                 example_pairs = init_pairs
-            prompt = self.meta_prompt(problem_text, example_pairs)
+                continue
 
-            if self.llm_model.startswith("gemini"):
-                response = generate_content_gemini(client, self.llm_model, prompt)
-            else:
-                response = generate_content_huggingface(client, self.llm_model, prompt)
-            
-            if response is None:
-                raise ValueError("LLM request failed. Please check your API key and try again.")
+            prompt = self.meta_prompt(problem_text, example_pairs, optimization_type)
 
+            response = generate_content(client, self.llm_model, prompt)
             solution_array = parse_response(response)
 
             while solution_array is None or len(solution_array) != self.batch_size:
                 print("Number of solutions parsed is not equal to batch size. Retrying...")
-                response = generate_content_huggingface(client, self.llm_model, prompt)
+                response = generate_content(client, self.llm_model, prompt)
                 solution_array = parse_response(response)
-            
+
             step_scores = []
+            if optimization_type == "maximize":
+                best_step_score = -float('inf')  # Start with the lowest possible value for maximization
+            elif optimization_type == "minimize":
+                best_step_score = float('inf')   # Start with the highest possible value for minimization
 
             for solution in solution_array:
-                step_scores.append(obj_func(solution))
-            
+                score = obj_func(solution)
+                step_scores.append(score)
+
+                if (optimization_type == "maximize" and score > best_step_score) or \
+                (optimization_type == "minimize" and score < best_step_score):
+                    best_step_score = score
+
+                if (optimization_type == "maximize" and score > best_score) or \
+                (optimization_type == "minimize" and score < best_score):
+                    best_score = score
+                    best_solution = solution
+
             new_pairs = parse_pairs(solution_array, step_scores)
             example_pairs = example_pairs + new_pairs
 
-            step_scores = np.array(step_scores)
-            best_index = np.argmax(step_scores)
-            best_solution = solution_array[best_index]
-            best_score = step_scores[best_index]
-            print(f"Step {step + 1}: Best solution found: {best_solution}, score: {best_score}")
+            avg_step_score = sum(step_scores) / len(solution_array)
+            best_score_per_step.append(best_step_score)
+            avg_score_per_step.append(avg_step_score)
+            best_score_history.append(best_score)
+            print(f"Step {step} - Current Best Score: {best_score:.2f}, Average Batch Score: {avg_step_score:.2f} - Best Batch Score: {best_step_score:.2f}")
 
-
-        # Example optimization logic (replace with actual logic)
         results = {
-            "best_solution": "solution_xyz",
-            "best_score": np.sum(init_scores),  # Placeholder logic
+            "best_solution": best_solution,
+            "best_score": best_score,
+            "best_score_history": best_score_history,
+            "best_score_per_step": best_score_per_step,
+            "avg_score_per_step": avg_score_per_step
         }
         return results
+
+    @check_init
+    def maximize(self, problem_text=None, init_samples=None, init_scores=None, obj_func=None):
+        return self.optimize(problem_text, init_samples, init_scores, obj_func, optimization_type="maximize")
+    
+    @check_init
+    def minimize(self, problem_text=None, init_samples=None, init_scores=None, obj_func=None):
+        return self.optimize(problem_text, init_samples, init_scores, obj_func, optimization_type="minimize")

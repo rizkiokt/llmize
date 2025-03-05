@@ -1,1 +1,2 @@
-from .api import optimize
+from .methods.opro import OPRO
+from .methods.lmea import LMEA

@@ -8,7 +8,6 @@ Extensible design—add your own optimization strategies
 Built-in utilities for logging and configuration
 🎯 Use Cases
 Mathematical Optimization (e.g., linear regression, function minimization)
-Prompt Optimization (finding the best prompt for task performance)
 Combinatorial Problems (e.g., traveling salesman, scheduling)
 🚀 Get Started
 bash
