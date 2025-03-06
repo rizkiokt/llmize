@@ -30,7 +30,18 @@ def parse_pairs(samples, scores):
 
     output = ""
     for sample, score in zip(samples, scores):
-        output += f"<sol> {','.join(map(str, sample))} <\\sol>\nscore: {score:.2f}\n\n"
+        output += "\n"
+        output += f"<sol> {','.join(map(str, sample))} <\\sol>\nscore: {score:.2f}\n"
 
-    return output.strip()
+    return output
+
+def parse_score(text):
+
+    scores = []
+    for line in text.splitlines():
+        if line.startswith("score:"):
+            scores.append(float(line.split()[1]))
+
+
+    return scores
 

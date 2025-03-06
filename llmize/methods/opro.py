@@ -5,6 +5,7 @@ from ..llm.llm_init import initialize_llm
 from ..utils.parsing import parse_pairs, parse_response
 from ..llm.llm_call import generate_content
 from ..utils.decorators import check_init
+from ..utils.truncate import truncate_pairs
 
 from ..callbacks import EarlyStopping, AdaptTempOnPlateau
 
@@ -98,6 +99,7 @@ Make sure the length of solutions match examples given. Don't guess for the scor
         best_score_per_step = [best_score]
 
         max_retries = 5
+        max_examples = 2*batch_size
 
         for step in range(num_steps+1):
             if step == 0:
@@ -107,6 +109,7 @@ Make sure the length of solutions match examples given. Don't guess for the scor
                 continue
 
             prompt = self.meta_prompt(batch_size, example_pairs, optimization_type)
+            #print(prompt)
 
             response = generate_content(client, self.llm_model, prompt, temperature)
             solution_array = parse_response(response)
@@ -143,6 +146,7 @@ Make sure the length of solutions match examples given. Don't guess for the scor
 
             new_pairs = parse_pairs(solution_array, step_scores)
             example_pairs = example_pairs + new_pairs
+            example_pairs = truncate_pairs(example_pairs, max_examples, optimization_type)
 
             avg_step_score = sum(step_scores) / len(solution_array)
             best_score_per_step.append(best_step_score)
