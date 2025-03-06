@@ -1,5 +1,5 @@
 class AdaptTempOnPlateau:
-    def __init__(self, monitor='best_score', init_temperature = 1.0, min_delta=0.0001, patience=10, factor=1.1, verbose=1):
+    def __init__(self, monitor='best_score', init_temperature = 1.0, min_delta=0.0001, patience=10, factor=1.1, verbose=0):
         """
         Adapt temperature on plateau callback to increase the temperature when the metric plateaus.
         
@@ -28,8 +28,6 @@ class AdaptTempOnPlateau:
         """
         current_score = logs.get(self.monitor)
 
-        print(current_score)
-
         # If this is the first step, initialize best_score
         if self.best_score is None:
             self.best_score = current_score
@@ -37,8 +35,8 @@ class AdaptTempOnPlateau:
         # Check if the current score has improved
         if abs(current_score - self.best_score) < self.min_delta:
             self.wait += 1
-            if self.verbose > 0:
-                print(f"Step {step}: No improvement in {self.monitor}. Patience count: {self.wait}/{self.patience}")
+            if self.verbose > 1:
+                print(f"No improvement in {self.monitor}. Patience count: {self.wait}/{self.patience}")
         else:
             self.best_score = current_score
             self.wait = 0  # Reset wait count
@@ -48,8 +46,8 @@ class AdaptTempOnPlateau:
             self.temperature *= self.factor
             self.wait = 0  # Reset the wait counter
             self.stopped_step = step
-            if self.verbose > 0:
-                print(f"Step {step}: Adapted temperature to {self.temperature:.2f}.")
+            if self.verbose == 1:
+                print(f"No improvement in {self.monitor} for {self.patience} steps. Adapted temperature to {self.temperature:.2f}.")
             return self.temperature  # Return the updated temperature
 
         return self.temperature

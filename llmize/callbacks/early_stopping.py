@@ -1,5 +1,5 @@
 class EarlyStopping:
-    def __init__(self, monitor='best_score', min_delta=0.01, patience=10, verbose=1):
+    def __init__(self, monitor='best_score', min_delta=0.01, patience=10, verbose=0):
         """
         Early stopping callback to monitor a specified metric and stop if no improvement.
         
@@ -33,7 +33,7 @@ class EarlyStopping:
         if abs(current_score - self.best_score) < self.min_delta:
             self.wait += 1
             if self.verbose > 0:
-                print(f"Step {step}: No improvement in {self.monitor}. Patience count: {self.wait}/{self.patience}")
+                print(f"No improvement in {self.monitor}. Patience count: {self.wait}/{self.patience}")
         else:
             self.best_score = current_score
             self.wait = 0  # Reset wait count
@@ -41,8 +41,7 @@ class EarlyStopping:
         # Check if early stopping should be triggered
         if self.wait >= self.patience:
             self.stopped_step = step
-            if self.verbose > 0:
-                print(f"Early stopping triggered at step {step}.")
+            print(f"Early stopping triggered at step {step}.")
             return True  # Indicate that optimization should stop
         return False
 

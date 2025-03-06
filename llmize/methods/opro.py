@@ -68,7 +68,7 @@ Make sure the length of solutions match examples given. Don't guess for the scor
         return prompt
 
     def optimize(self, init_samples=None, init_scores=None, num_steps=50, batch_size=5,
-                 temperature=1.0, optimization_type="maximize", callbacks=None):
+                 temperature=1.0, callbacks=None, optimization_type="maximize"):
         """
         Perform the OPRO optimization process, either maximizing or minimizing the objective function.
         
@@ -152,11 +152,9 @@ Make sure the length of solutions match examples given. Don't guess for the scor
 
             # Callbacks: Trigger at the end of each step
             if callbacks:
-                print(callbacks)
-                logs = {callback.monitor: best_score}  # Pass logs with the monitored metric
                 for callback in callbacks:
+                    logs = {callback.monitor: best_score}  # Pass logs with the monitored metric
                     new_temperature = callback.on_step_end(step, logs)  # Callback could adjust the temperature
-                    print(new_temperature)
                     if new_temperature is not None:
                         temperature = new_temperature  # Update temperature if needed
                     # Check if early stopping is triggered
@@ -181,16 +179,16 @@ Make sure the length of solutions match examples given. Don't guess for the scor
         return results
 
     @check_init
-    def maximize(self, init_samples=None, init_scores=None, num_steps=50, batch_size=5, temperature=1.0, callbacks=None):
+    def maximize(self, init_samples=None, init_scores=None, num_steps=50, batch_size=5,
+                 temperature=1.0, callbacks=None):
         return self.optimize(init_samples=init_samples, init_scores=init_scores,
                               num_steps=num_steps, batch_size=batch_size, temperature=temperature, 
-                              optimization_type="maximize", callbacks=callbacks)
+                              callbacks=callbacks, optimization_type="maximize")
     
     @check_init
-    def minimize(self, init_samples=None, init_scores=None, num_steps=50, batch_size=5, temperature=1.0, callbacks=[EarlyStopping, AdaptTempOnPlateau]):
-        #print(callbacks)
-        #exit()
+    def minimize(self, init_samples=None, init_scores=None, num_steps=50, batch_size=5,
+                 temperature=1.0, callbacks=None):
         return self.optimize(init_samples=init_samples, init_scores=init_scores,
                               num_steps=num_steps, batch_size=batch_size, temperature=temperature,
-                                optimization_type="minimize", callbacks=callbacks)
+                                callbacks=callbacks, optimization_type="minimize")
 
