@@ -1,5 +1,5 @@
 def check_init(func):
-    def inner(self, init_samples=None, init_scores=None, num_steps=50, batch_size=5):
+    def inner(self, init_samples=None, init_scores=None, num_steps=50, batch_size=5, callbacks=None):
 
         if init_samples is None or init_scores is None:
             raise ValueError("init_samples and init_scores must be provided.")

@@ -28,6 +28,8 @@ class AdaptTempOnPlateau:
         """
         current_score = logs.get(self.monitor)
 
+        print(current_score)
+
         # If this is the first step, initialize best_score
         if self.best_score is None:
             self.best_score = current_score

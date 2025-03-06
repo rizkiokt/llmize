@@ -97,6 +97,7 @@ Make sure the length of solutions match examples given. Don't guess for the scor
         avg_score_per_step = [np.average(init_scores)]
         best_score_per_step = [best_score]
 
+        max_retries = 5
 
         for step in range(num_steps+1):
             if step == 0:
@@ -110,10 +111,16 @@ Make sure the length of solutions match examples given. Don't guess for the scor
             response = generate_content(client, self.llm_model, prompt, temperature)
             solution_array = parse_response(response)
 
+            retry = 0
             while solution_array is None or len(solution_array) != batch_size:
                 print("Number of solutions parsed is not equal to batch size. Retrying...")
                 response = generate_content(client, self.llm_model, prompt, temperature)
                 solution_array = parse_response(response)
+
+                retry += 1
+                if retry >= max_retries:
+                    raise ValueError("Failed to generate solutions after multiple attempts.")
+
 
             step_scores = []
             if optimization_type == "maximize":
@@ -145,9 +152,11 @@ Make sure the length of solutions match examples given. Don't guess for the scor
 
             # Callbacks: Trigger at the end of each step
             if callbacks:
+                print(callbacks)
                 logs = {callback.monitor: best_score}  # Pass logs with the monitored metric
                 for callback in callbacks:
                     new_temperature = callback.on_step_end(step, logs)  # Callback could adjust the temperature
+                    print(new_temperature)
                     if new_temperature is not None:
                         temperature = new_temperature  # Update temperature if needed
                     # Check if early stopping is triggered
@@ -172,12 +181,16 @@ Make sure the length of solutions match examples given. Don't guess for the scor
         return results
 
     @check_init
-    def maximize(self, init_samples=None, init_scores=None, num_steps=50, batch_size=5):
+    def maximize(self, init_samples=None, init_scores=None, num_steps=50, batch_size=5, temperature=1.0, callbacks=None):
         return self.optimize(init_samples=init_samples, init_scores=init_scores,
-                              num_steps=num_steps, batch_size=batch_size, optimization_type="maximize")
+                              num_steps=num_steps, batch_size=batch_size, temperature=temperature, 
+                              optimization_type="maximize", callbacks=callbacks)
     
     @check_init
-    def minimize(self, init_samples=None, init_scores=None, num_steps=50, batch_size=5):
+    def minimize(self, init_samples=None, init_scores=None, num_steps=50, batch_size=5, temperature=1.0, callbacks=[EarlyStopping, AdaptTempOnPlateau]):
+        #print(callbacks)
+        #exit()
         return self.optimize(init_samples=init_samples, init_scores=init_scores,
-                              num_steps=num_steps, batch_size=batch_size, optimization_type="minimize")
+                              num_steps=num_steps, batch_size=batch_size, temperature=temperature,
+                                optimization_type="minimize", callbacks=callbacks)
 
