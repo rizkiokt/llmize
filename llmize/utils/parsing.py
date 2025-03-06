@@ -26,11 +26,11 @@ def parse_response(response_text):
         return None
 
 
-def parse_pairs(init_samples, init_scores):
+def parse_pairs(samples, scores):
 
     output = ""
-    for sample, score in zip(init_samples, init_scores):
-        output += f"<sol> {','.join(map(str, sample))} <\\sol>\nscore: {score}\n\n"
+    for sample, score in zip(samples, scores):
+        output += f"<sol> {','.join(map(str, sample))} <\\sol>\nscore: {score:.2f}\n\n"
 
     return output.strip()
 

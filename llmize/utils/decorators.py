@@ -1,10 +1,13 @@
 def check_init(func):
-    def inner(self, problem_text=None, init_samples=None, init_scores=None, obj_func=None):
-        if problem_text is None:
-            raise ValueError("problem_text must be provided.")
+    def inner(self, init_samples=None, init_scores=None, num_steps=50, batch_size=5):
+
         if init_samples is None or init_scores is None:
             raise ValueError("init_samples and init_scores must be provided.")
-        if obj_func is None:
-            raise ValueError("obj_func must be provided.")
-        return func(self, problem_text, init_samples, init_scores, obj_func)
+
+        if num_steps <= 0 or not isinstance(num_steps, int):
+            raise ValueError("num_steps must be a positive integer.")
+        if batch_size <= 0 or not isinstance(batch_size, int):
+            raise ValueError("batch_size must be a positive integer.")
+
+        return func(self, init_samples, init_scores, num_steps, batch_size)
     return inner

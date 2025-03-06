@@ -2,7 +2,9 @@ import numpy as np
 from functools import partial
 import os
 
+import llmize
 from llmize import OPRO
+import llmize.utils
 
 def initialize_tsp(num_cities, seed=42):
     """
@@ -36,9 +38,6 @@ dist_matrix = initialize_tsp(num_cities)
 routes = [np.random.permutation(num_cities) for _ in range(5)]
 total_distances = [objective_function(route, dist_matrix) for route in routes]
 
-# Initialize the OPRO optimizer
-opro = OPRO(llm_model="gemini-2.0-flash", api_key=os.getenv("GEMINI_API_KEY"))
-
 # change current working directory
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
@@ -46,9 +45,17 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 with open("tsp_problem.txt", "r") as f:
     problem_text = f.read()
 
-results = opro.minimize(problem_text=problem_text, init_samples=routes, init_scores=total_distances,
-                         obj_func=partial(objective_function, dist_matrix=dist_matrix))
+# Initialize the OPRO optimizer
+opro = OPRO(problem_text=problem_text, obj_func=partial(objective_function, dist_matrix=dist_matrix),
+            llm_model="gemini-2.0-flash", api_key=os.getenv("GEMINI_API_KEY"))
 
-print(results['best_solution'])
-print(results['best_score'])
+prompt = opro.get_sample_prompt(init_samples=routes, init_scores=total_distances, optimization_type="minimize")
+response = opro.get_sample_response(prompt)
+
+llmize.utils.pretty_print(prompt=prompt, response=response)
+
+#results = opro.minimize(init_samples=routes, init_scores=total_distances)
+
+#print(results['best_solution'])
+#print(results['best_score'])
 
