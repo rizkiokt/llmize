@@ -1,5 +1,5 @@
 class AdaptTempOnPlateau:
-    def __init__(self, monitor='best_score', init_temperature = 1.0, min_delta=0.0001, patience=10, factor=1.1, verbose=0):
+    def __init__(self, monitor='best_score', init_temperature = 1.0, min_delta=0.0001, patience=10, factor=1.1, max_temperature=2.0, verbose=0):
         """
         Adapt temperature on plateau callback to increase the temperature when the metric plateaus.
         
@@ -17,6 +17,7 @@ class AdaptTempOnPlateau:
         self.wait = 0  # Counter for patience
         self.best_score = None  # Best score encountered so far
         self.temperature = init_temperature  # Initial temperature
+        self.max_temperature = max_temperature
         self.stopped_step = 0  # Step when the temperature adaptation occurred
 
     def on_step_end(self, step, logs=None):
@@ -44,6 +45,8 @@ class AdaptTempOnPlateau:
         # Adapt temperature if patience is exceeded
         if self.wait >= self.patience:
             self.temperature *= self.factor
+            if self.temperature > self.max_temperature:
+                self.temperature = self.max_temperature
             self.wait = 0  # Reset the wait counter
             self.stopped_step = step
             if self.verbose == 1:

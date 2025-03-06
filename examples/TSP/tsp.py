@@ -54,8 +54,8 @@ response = opro.get_sample_response(prompt)
 
 llmize.utils.pretty_print(prompt=prompt, response=response)
 
-#results = opro.minimize(init_samples=routes, init_scores=total_distances)
+results = opro.minimize(init_samples=routes, init_scores=total_distances)
 
-#print(results['best_solution'])
-#print(results['best_score'])
+print(results['best_solution'])
+print(results['best_score'])
 

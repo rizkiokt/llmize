@@ -2,4 +2,16 @@ I want you to help me solve the Traveling Salesman Problem (TSP) for 10 randomly
 
 In the TSP, the goal is to minimize the total distance traveled by visiting each city only once and returning to the starting city, creating a closed loop. The cities are represented as points on a 2D grid, where each city has an x and y coordinate within the 100x100 space.
 
+Below are each city coordinate [x,y] from 0 to 9:
+ [37, 95]
+ [73, 59]
+ [15, 15]
+ [ 5, 86]
+ [60, 70]
+ [ 2, 96]
+ [83, 21]
+ [18, 18]
+ [30, 52]
+ [43, 29]
+
 For each pair of cities, the distance between them is calculated using the Euclidean distance formula. The distance between two cities is the square root of the sum of the squared differences between their x and y coordinates.

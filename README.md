@@ -1,24 +1,28 @@
-LLMize - LLM-Powered Optimization Framework 🚀
-LLMize is a Python framework that leverages Large Language Models (LLMs) as optimizers to solve various problems without traditional code generation. It integrates cutting-edge optimization techniques such as OPRO (Optimization by Prompting) and LMEA, enabling users to find optimal solutions using natural language processing.
 
-✨ Features
-Multiple LLM-based optimization methods (OPRO, LMEA, and more)
-Easy-to-use API for solving problems directly with LLMs
-Extensible design—add your own optimization strategies
-Built-in utilities for logging and configuration
-🎯 Use Cases
-Mathematical Optimization (e.g., linear regression, function minimization)
-Combinatorial Problems (e.g., traveling salesman, scheduling)
-🚀 Get Started
-bash
-Copy
-Edit
-pip install llmize
-python
-Copy
-Edit
-from llmize import optimize
-solution = optimize("opro", problem_data)
-print(solution)
-🌎 Why LLMize?
-LLMize shifts the paradigm from manually tuning optimization algorithms to leveraging LLM intelligence for discovering solutions—no gradient calculations or backpropagation required!
+# LLMize
+
+LLMize is a Python package designed to optimize tasks using a specified Large Language Model (LLM). The package includes an optimizer class that can be configured for various optimization processes, enabling seamless integration with different models for efficient problem-solving.
+
+## Installation
+
+To install LLMize, you can use pip:
+
+```bash
+pip install .
+```
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Contributing
+
+Feel free to fork the repository, submit issues, or create pull requests if you'd like to contribute to the development of LLMize. All contributions are welcome!
+
+## Acknowledgments
+
+Special thanks to the creators of the models and the underlying libraries that make this package possible.
+
+---
+
+For further details or questions, feel free to open an issue or contact me at rizki@bwailabs.com.

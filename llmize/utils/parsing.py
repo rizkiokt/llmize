@@ -11,8 +11,8 @@ def parse_response(response_text):
             values = []
             for x in sol.split(","):
                 x = x.strip()
+                x = x.split()[0]
                 if x.replace('.', '', 1).replace('-', '', 1).isdigit():  # Check if it's a number
-                    # Attempt to parse as an integer first, if that fails, try float
                     try:
                         value = int(x)
                     except ValueError:
