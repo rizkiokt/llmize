@@ -1,4 +1,5 @@
-I want you to help me solve the Traveling Salesman Problem (TSP) for 10 randomly placed cities within a 100x100 coordinate space. The objective is to find the shortest possible route that visits each city exactly once and returns to the starting point.
+I want you to help me solve the Traveling Salesman Problem (TSP) for 10 randomly placed cities within a 100x100 coordinate space. The objective is to find the shortest possible route that visits each city exactly once and returns to the starting point. Your task is to find a trace,
+with the shortest possible length, that traverses each point exactly once.
 
 In the TSP, the goal is to minimize the total distance traveled by visiting each city only once and returning to the starting city, creating a closed loop. The cities are represented as points on a 2D grid, where each city has an x and y coordinate within the 100x100 space.
 

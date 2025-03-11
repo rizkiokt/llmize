@@ -5,8 +5,7 @@ from ..llm.llm_init import initialize_llm
 from ..utils.parsing import parse_pairs
 from ..utils.truncate import truncate_pairs
 from ..utils.logger import log_info, log_warning, log_error, log_critical, log_debug
-from ..utils.decorators import time_it
-from ..callbacks import EarlyStopping, AdaptTempOnPlateau
+from ..callbacks import EarlyStopping
 
 class OPRO(Optimizer):
     """
@@ -87,7 +86,8 @@ Make sure the length of solutions match examples given. Don't guess for the scor
 
         client = initialize_llm(self.llm_model, self.api_key)
 
-        if verbose > 0: log_info(f"Running OPRO optimization with {num_steps} steps and batch size {batch_size}...")
+        if verbose > 0: 
+            log_info(f"Running OPRO optimization with {num_steps} steps and batch size {batch_size}...")
         best_solution = None
         if optimization_type == "maximize":
             best_score = np.max(init_scores)
@@ -105,7 +105,8 @@ Make sure the length of solutions match examples given. Don't guess for the scor
 
         for step in range(num_steps+1):
             if step == 0:
-                if verbose > 0: log_info(f"Step {step} - Best Initial Score: {best_score:.2f}, Average Initial Score: {np.average(init_scores):.2f}")
+                if verbose > 0: 
+                    log_info(f"Step {step} - Best Initial Score: {best_score:.2f}, Average Initial Score: {np.average(init_scores):.2f}")
                 init_pairs = parse_pairs(init_samples, init_scores)
                 example_pairs = init_pairs
                 continue
@@ -129,7 +130,8 @@ Make sure the length of solutions match examples given. Don't guess for the scor
             best_score_per_step.append(best_step_score)
             avg_score_per_step.append(avg_step_score)
             best_score_history.append(best_score)
-            if verbose > 0: log_info(f"Step {step} - Current Best Score: {best_score:.2f}, Average Batch Score: {avg_step_score:.2f} - Best Batch Score: {best_step_score:.2f}")
+            if verbose > 0: 
+                log_info(f"Step {step} - Current Best Score: {best_score:.2f}, Average Batch Score: {avg_step_score:.2f} - Best Batch Score: {best_step_score:.2f}")
 
             # Callbacks: Trigger at the end of each step
             if callbacks:

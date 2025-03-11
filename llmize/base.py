@@ -148,7 +148,7 @@ class Optimizer:
         solution_array = parse_response(response)
 
         if verbose > 2: 
-            log_debug(f"Prompt: {prompt}")
+            #log_debug(f"Prompt: {prompt}")
             log_debug(f"Response: {response}")
         if verbose > 1: log_debug(f"Generated Solutions: {solution_array}")
 
@@ -171,7 +171,7 @@ class Optimizer:
 
         return solution_array
     
-    def _evaluate_solutions(self, solution_array, optimization_type, verbose, best_score=None):
+    def _evaluate_solutions(self, solution_array, best_solution, optimization_type, verbose, best_score=None):
         """
         Evaluate a list of solutions and update the best solution based on an objective function.
         
@@ -205,8 +205,6 @@ class Optimizer:
         else:
             raise ValueError("optimization_type must be 'maximize' or 'minimize'")
         
-        best_solution = None
-
         for solution in solution_array:
             try:
                 score = self.obj_func(solution)
