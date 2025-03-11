@@ -2,12 +2,10 @@ import numpy as np
 
 from ..base import Optimizer
 from ..llm.llm_init import initialize_llm
-from ..utils.parsing import parse_pairs, parse_response
-from ..llm.llm_call import generate_content
-from ..utils.decorators import check_init
+from ..utils.parsing import parse_pairs
 from ..utils.truncate import truncate_pairs
 from ..utils.logger import log_info, log_warning, log_error, log_critical, log_debug
-
+from ..utils.decorators import time_it
 from ..callbacks import EarlyStopping, AdaptTempOnPlateau
 
 class OPRO(Optimizer):
@@ -68,9 +66,9 @@ Make sure the length of solutions match examples given. Don't guess for the scor
         prompt = "\n".join([self.problem_text, example_texts, example_pairs, instruction])
 
         return prompt
-
     def optimize(self, init_samples=None, init_scores=None, num_steps=50, batch_size=5,
                  temperature=1.0, callbacks=None, verbose=1, optimization_type="maximize"):
+        
         """
         Run the OPRO optimization algorithm.
 
@@ -111,24 +109,18 @@ Make sure the length of solutions match examples given. Don't guess for the scor
                 init_pairs = parse_pairs(init_samples, init_scores)
                 example_pairs = init_pairs
                 continue
-
-            if verbose > 1: log_debug("Example pairs:", example_pairs)
+            
+            if verbose > 1: 
+                log_debug(f"Example pairs: {example_pairs}")
 
             prompt = self.meta_prompt(batch_size, example_pairs, optimization_type)
-            response = generate_content(client, self.llm_model, prompt, temperature)
-            solution_array = parse_response(response)
 
-            if verbose > 2: 
-                log_debug("Prompt:", prompt)
-                log_debug("Response:", response)
-            if verbose > 1: log_debug("Generated Solutions:", solution_array)
 
-            solution_array = self._retry_generate_solutions(client, self.llm_model, prompt, temperature, 
+            solution_array = self._generate_solutions(client, prompt, temperature, 
                                                             batch_size, verbose)
             
-            best_score, best_solution, step_scores, best_step_score = self._evaluate_solutions(solution_array, best_score, 
-                                                                              optimization_type, verbose)
-
+            best_score, best_solution, step_scores, best_step_score = self._evaluate_solutions(solution_array, 
+                                                                              optimization_type, verbose, best_score)
             new_pairs = parse_pairs(solution_array, step_scores)
             example_pairs = example_pairs + new_pairs
             example_pairs = truncate_pairs(example_pairs, max_examples, optimization_type)
@@ -166,17 +158,4 @@ Make sure the length of solutions match examples given. Don't guess for the scor
 
         return results
 
-    @check_init
-    def maximize(self, init_samples=None, init_scores=None, num_steps=50, batch_size=5,
-                 temperature=1.0, callbacks=None, verbose=1):
-        return self.optimize(init_samples=init_samples, init_scores=init_scores,
-                              num_steps=num_steps, batch_size=batch_size, temperature=temperature, 
-                              callbacks=callbacks, verbose=verbose, optimization_type="maximize")
-    
-    @check_init
-    def minimize(self, init_samples=None, init_scores=None, num_steps=50, batch_size=5,
-                 temperature=1.0, callbacks=None, verbose=1):
-        return self.optimize(init_samples=init_samples, init_scores=init_scores,
-                              num_steps=num_steps, batch_size=batch_size, temperature=temperature,
-                                callbacks=callbacks, verbose=verbose, optimization_type="minimize")
 

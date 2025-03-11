@@ -1,4 +1,5 @@
-from llmize.utils.logger import log_critical    
+import time
+from llmize.utils.logger import log_info, log_debug, log_critical
 
 def check_init(func):
     """
@@ -40,3 +41,26 @@ def check_init(func):
 
         return func(self, init_samples, init_scores, num_steps, batch_size, temperature, callbacks, verbose)
     return inner
+
+def time_it(func):
+    """
+    A decorator that measures and logs the execution time of a function.
+
+    This decorator logs the time taken by the decorated function to execute
+    using the `log_info` method. It records the start and end time of the
+    function execution and calculates the duration in seconds.
+
+    Parameters:
+    - func (callable): The function whose execution time is to be measured.
+
+    Returns:
+    - callable: The wrapped function with time logging capability.
+    """
+
+    def wrapper(*args, **kwargs):
+        start_time = time.time()  # Record start time
+        result = func(*args, **kwargs)  # Call the original function
+        end_time = time.time()  # Record end time
+        log_info(f"Execution time of {func.__name__}: {end_time - start_time:.3f} seconds")
+        return result
+    return wrapper

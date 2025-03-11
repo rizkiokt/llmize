@@ -2,8 +2,9 @@ import time
 from google import genai
 
 from ..utils.logger import log_info, log_warning, log_error
+from ..utils.decorators import time_it
 
-
+#@time_it
 def generate_content(client, model, prompt, temperature=1.0, max_retries=10, retry_delay=5):
     """
     Generate content using the specified language model.

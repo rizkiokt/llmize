@@ -7,6 +7,7 @@ init(autoreset=True, strip=False)
 
 # Define color mapping for different log levels
 LOG_COLORS = {
+    "DEBUG": Fore.CYAN,    # Light Blue
     "WARNING": Fore.YELLOW,  # Yellow
     "ERROR": Fore.RED,     # Red
     "CRITICAL": Fore.MAGENTA + Style.BRIGHT  # Bright Magenta
@@ -22,7 +23,7 @@ class ColoredFormatter(logging.Formatter):
             t = time.strftime("%Y-%m-%d %H:%M:%S", ct)
             return f"{t}.{int(record.msecs):03d}"
 
-    def format(self, record):
+    def format_with_time(self, record):
         if record.levelname == "INFO":
             fmt = "%(asctime)s - %(message)s"
         else:
@@ -31,12 +32,22 @@ class ColoredFormatter(logging.Formatter):
         log_color = LOG_COLORS.get(record.levelname, Fore.WHITE)
         formatted_message = temp_formatter.format(record)
         return f"{log_color}{formatted_message}{Style.RESET_ALL}"
+    
+    def format(self, record):
+        if record.levelname == "INFO":
+            fmt = "%(message)s"
+        else:
+            fmt = "%(levelname)s - %(message)s"
+        temp_formatter = logging.Formatter(fmt)
+        log_color = LOG_COLORS.get(record.levelname, Fore.WHITE)
+        formatted_message = temp_formatter.format(record)
+        return f"{log_color}{formatted_message}{Style.RESET_ALL}"
 
 
 
 # Initialize the logger
 logger = logging.getLogger("Logger")
-logger.setLevel(logging.INFO)  # Default to INFO, can be changed dynamically
+logger.setLevel(logging.DEBUG)  # Default to INFO, can be changed dynamically
 
 # Remove all existing handlers (prevents duplicate logs)
 logger.handlers.clear()
