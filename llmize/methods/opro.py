@@ -103,7 +103,6 @@ Make sure the length of solutions match examples given. Don't guess for the scor
         avg_score_per_step = [np.average(init_scores)]
         best_score_per_step = [best_score]
 
-        max_retries = 5
         max_examples = 2*batch_size
 
         for step in range(num_steps+1):
@@ -124,41 +123,11 @@ Make sure the length of solutions match examples given. Don't guess for the scor
                 log_debug("Response:", response)
             if verbose > 1: log_debug("Generated Solutions:", solution_array)
 
-            retry = 0
-            while solution_array is None or len(solution_array) != batch_size:
-                log_warning("Number of solutions parsed is not equal to batch size. Retrying...")
-                response = generate_content(client, self.llm_model, prompt, temperature)
-                solution_array = parse_response(response)
-
-                if verbose > 2: 
-                    log_debug(f"Response for retry {retry+1}:", response)
-                if verbose > 1: log_debug(f"Generated Solutions for retry {retry+1}:", solution_array)
-
-                retry += 1
-                if retry >= max_retries:
-                    log_critical("Failed to generate solutions after multiple attempts.")
-                    raise ValueError("Failed to generate solutions after multiple attempts.")
-
-            step_scores = []
-            if optimization_type == "maximize":
-                best_step_score = -float('inf')  # Start with the lowest possible value for maximization
-            elif optimization_type == "minimize":
-                best_step_score = float('inf')   # Start with the highest possible value for minimization
-
-            for solution in solution_array:
-                score = self.obj_func(solution)
-                step_scores.append(score)
-
-                if verbose > 1: log_debug(f"Score for solution {solution}: {score}")
-
-                if (optimization_type == "maximize" and score > best_step_score) or \
-                (optimization_type == "minimize" and score < best_step_score):
-                    best_step_score = score
-
-                if (optimization_type == "maximize" and score > best_score) or \
-                (optimization_type == "minimize" and score < best_score):
-                    best_score = score
-                    best_solution = solution
+            solution_array = self._retry_generate_solutions(client, self.llm_model, prompt, temperature, 
+                                                            batch_size, verbose)
+            
+            best_score, best_solution, step_scores, best_step_score = self._evaluate_solutions(solution_array, best_score, 
+                                                                              optimization_type, verbose)
 
             new_pairs = parse_pairs(solution_array, step_scores)
             example_pairs = example_pairs + new_pairs
