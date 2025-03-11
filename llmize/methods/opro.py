@@ -6,6 +6,7 @@ from ..utils.parsing import parse_pairs, parse_response
 from ..llm.llm_call import generate_content
 from ..utils.decorators import check_init
 from ..utils.truncate import truncate_pairs
+from ..utils.log import log_info, log_warning, log_error, log_critical, log_debug
 
 from ..callbacks import EarlyStopping, AdaptTempOnPlateau
 
@@ -71,18 +72,21 @@ Make sure the length of solutions match examples given. Don't guess for the scor
     def optimize(self, init_samples=None, init_scores=None, num_steps=50, batch_size=5,
                  temperature=1.0, callbacks=None, optimization_type="maximize"):
         """
-        Perform the OPRO optimization process, either maximizing or minimizing the objective function.
-        
-        :param str problem_text: The textual description of the problem to be optimized.
-        :param list init_samples: Initial solution samples provided as input (default: None).
-        :param list init_scores: Scores corresponding to the initial samples (default: None).
-        :param callable obj_func: Objective function to evaluate generated solutions (default: None).
-        :param str optimization_type: Whether to maximize or minimize the objective function ('maximize' or 'minimize').
-        
-        :return: A dictionary containing the best solution, its score, and optimization history.
-        :rtype: dict
+        Run the OPRO optimization algorithm.
+
+        Parameters:
+        - init_samples (list): A list of initial solutions.
+        - init_scores (list): A list of initial scores corresponding to init_samples.
+        - num_steps (int): The number of optimization steps (default: 50).
+        - batch_size (int): The number of new solutions to generate at each step (default: 5).
+        - temperature (float): The temperature for the LLM model (default: 1.0).
+        - callbacks (list): A list of callback functions to be triggered at the end of each step.
+        - optimization_type (str): "maximize" or "minimize" (default: "maximize").
+
+        Returns:
+        - results (dict): A dictionary containing the best solution, best score, best score history, best score per step, and average score per step.
         """
-        # Initialize the LLM model
+
         client = initialize_llm(self.llm_model, self.api_key)
 
         print(f"Running OPRO optimization with {num_steps} steps and batch size {batch_size}...")
@@ -123,7 +127,6 @@ Make sure the length of solutions match examples given. Don't guess for the scor
                 retry += 1
                 if retry >= max_retries:
                     raise ValueError("Failed to generate solutions after multiple attempts.")
-
 
             step_scores = []
             if optimization_type == "maximize":

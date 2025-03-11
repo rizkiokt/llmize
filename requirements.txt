@@ -2,3 +2,4 @@ numpy
 google-genai
 huggingface_hub
 rich
+colorama

@@ -2,6 +2,23 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 def plot_scores(results, filename=None):
+    """
+    Plot optimization score progression.
+
+    Parameters
+    ----------
+    results : dict
+        Output of :func:`llmize.OPRO.minimize` or :func:`llmize.OPRO.maximize`.
+    filename : str, optional
+        If not None, save the plot to the specified filename.
+
+    Notes
+    -----
+    If `filename` is None, the plot is displayed using matplotlib's interactive
+    backend. If `filename` is not None, the plot is saved to disk and the
+    interactive backend is closed.
+
+    """
     score_history = results["best_score_history"]
     best_score_per_step = results["best_score_per_step"]
     avg_score_per_step = results["avg_score_per_step"]
