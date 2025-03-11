@@ -1,3 +1,5 @@
+from ..utils.logger import log_info, log_debug
+
 class AdaptTempOnPlateau:
     def __init__(self, monitor='best_score', init_temperature = 1.0, min_delta=0.0001, patience=10, factor=1.1, max_temperature=2.0, verbose=0):
         """
@@ -37,7 +39,7 @@ class AdaptTempOnPlateau:
         if abs(current_score - self.best_score) < self.min_delta:
             self.wait += 1
             if self.verbose > 1:
-                print(f"No improvement in {self.monitor}. Patience count: {self.wait}/{self.patience}")
+                log_debug(f"No improvement in {self.monitor}. Patience count: {self.wait}/{self.patience}")
         else:
             self.best_score = current_score
             self.wait = 0  # Reset wait count
@@ -50,7 +52,7 @@ class AdaptTempOnPlateau:
             self.wait = 0  # Reset the wait counter
             self.stopped_step = step
             if self.verbose == 1:
-                print(f"No improvement in {self.monitor} for {self.patience} steps. Adapted temperature to {self.temperature:.2f}.")
+                log_info(f"No improvement in {self.monitor} for {self.patience} steps. Adapted temperature to {self.temperature:.2f}.")
             return self.temperature  # Return the updated temperature
 
         return self.temperature

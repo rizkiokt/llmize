@@ -1,6 +1,8 @@
 import time
 from google import genai
 
+from ..utils.logger import log_info, log_warning, log_error
+
 
 def generate_content(client, model, prompt, temperature=1.0, max_retries=10, retry_delay=5):
     """
@@ -35,12 +37,12 @@ def generate_content_gemini(client, model, prompt, temperature, max_retries=10, 
             return response.text  # If the request is successful, return the response
         except Exception as e:
             if 'RESOURCE_EXHAUSTED' in str(e):  # You can check for rate-limiting specific message in the error
-                print(f"Rate limit hit, retrying in {retry_delay} seconds...")
+                log_warning(f"LLM rate limit hit, retrying in {retry_delay} seconds...")
                 time.sleep(retry_delay)  # Wait before retrying
             else:
-                print(f"An error occurred: {e}")
+                log_error(f"An error occurred: {e}")
                 break  # If it's not a rate-limiting error, stop retrying
-    print("Max retries reached. Could not complete the request.")
+    log_warning("Max retries reached. Could not complete the request.")
     return None  # Return None if the max retries are reached and the request was unsuccessful
 
 def generate_content_huggingface(client, model, prompt, temperature, max_retries=10, retry_delay=5):
@@ -57,10 +59,10 @@ def generate_content_huggingface(client, model, prompt, temperature, max_retries
             return response  # If the request is successful, return the response
         except Exception as e:
             if 'RESOURCE_EXHAUSTED' in str(e):  # You can check for rate-limiting specific message in the error
-                print(f"Rate limit hit, retrying in {retry_delay} seconds...")
+                log_warning(f"LLM rate limit hit, retrying in {retry_delay} seconds...")
                 time.sleep(retry_delay)  # Wait before retrying
             else:
-                print(f"An error occurred: {e}")
+                log_error(f"An error occurred: {e}")
                 break  # If it's not a rate-limiting error, stop retrying
-    print("Max retries reached. Could not complete the request.")
+    log_warning("Max retries reached. Could not complete the request.")
     return None  # Return None if the max retries are reached and the request was unsuccessful

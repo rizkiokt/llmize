@@ -6,7 +6,7 @@ from ..utils.parsing import parse_pairs, parse_response
 from ..llm.llm_call import generate_content
 from ..utils.decorators import check_init
 from ..utils.truncate import truncate_pairs
-from ..utils.log import log_info, log_warning, log_error, log_critical, log_debug
+from ..utils.logger import log_info, log_warning, log_error, log_critical, log_debug
 
 from ..callbacks import EarlyStopping, AdaptTempOnPlateau
 
@@ -70,7 +70,7 @@ Make sure the length of solutions match examples given. Don't guess for the scor
         return prompt
 
     def optimize(self, init_samples=None, init_scores=None, num_steps=50, batch_size=5,
-                 temperature=1.0, callbacks=None, optimization_type="maximize"):
+                 temperature=1.0, callbacks=None, verbose=1, optimization_type="maximize"):
         """
         Run the OPRO optimization algorithm.
 
@@ -89,13 +89,14 @@ Make sure the length of solutions match examples given. Don't guess for the scor
 
         client = initialize_llm(self.llm_model, self.api_key)
 
-        print(f"Running OPRO optimization with {num_steps} steps and batch size {batch_size}...")
+        if verbose > 0: log_info(f"Running OPRO optimization with {num_steps} steps and batch size {batch_size}...")
         best_solution = None
         if optimization_type == "maximize":
             best_score = np.max(init_scores)
         elif optimization_type == "minimize":
             best_score = np.min(init_scores)
         else:
+            log_critical("Invalid optimization_type. Choose 'maximize' or 'minimize'.")
             raise ValueError("Invalid optimization_type. Choose 'maximize' or 'minimize'.")
         
         best_score_history = [best_score]
@@ -107,25 +108,35 @@ Make sure the length of solutions match examples given. Don't guess for the scor
 
         for step in range(num_steps+1):
             if step == 0:
-                print(f"Step {step} - Best Initial Score: {best_score:.2f}, Average Initial Score: {np.average(init_scores):.2f}")
+                if verbose > 0: log_info(f"Step {step} - Best Initial Score: {best_score:.2f}, Average Initial Score: {np.average(init_scores):.2f}")
                 init_pairs = parse_pairs(init_samples, init_scores)
                 example_pairs = init_pairs
                 continue
 
-            prompt = self.meta_prompt(batch_size, example_pairs, optimization_type)
-            #print(prompt)
+            if verbose > 1: log_debug("Example pairs:", example_pairs)
 
+            prompt = self.meta_prompt(batch_size, example_pairs, optimization_type)
             response = generate_content(client, self.llm_model, prompt, temperature)
             solution_array = parse_response(response)
 
+            if verbose > 2: 
+                log_debug("Prompt:", prompt)
+                log_debug("Response:", response)
+            if verbose > 1: log_debug("Generated Solutions:", solution_array)
+
             retry = 0
             while solution_array is None or len(solution_array) != batch_size:
-                print("Number of solutions parsed is not equal to batch size. Retrying...")
+                log_warning("Number of solutions parsed is not equal to batch size. Retrying...")
                 response = generate_content(client, self.llm_model, prompt, temperature)
                 solution_array = parse_response(response)
 
+                if verbose > 2: 
+                    log_debug(f"Response for retry {retry+1}:", response)
+                if verbose > 1: log_debug(f"Generated Solutions for retry {retry+1}:", solution_array)
+
                 retry += 1
                 if retry >= max_retries:
+                    log_critical("Failed to generate solutions after multiple attempts.")
                     raise ValueError("Failed to generate solutions after multiple attempts.")
 
             step_scores = []
@@ -137,6 +148,8 @@ Make sure the length of solutions match examples given. Don't guess for the scor
             for solution in solution_array:
                 score = self.obj_func(solution)
                 step_scores.append(score)
+
+                if verbose > 1: log_debug(f"Score for solution {solution}: {score}")
 
                 if (optimization_type == "maximize" and score > best_step_score) or \
                 (optimization_type == "minimize" and score < best_step_score):
@@ -155,7 +168,7 @@ Make sure the length of solutions match examples given. Don't guess for the scor
             best_score_per_step.append(best_step_score)
             avg_score_per_step.append(avg_step_score)
             best_score_history.append(best_score)
-            print(f"Step {step} - Current Best Score: {best_score:.2f}, Average Batch Score: {avg_step_score:.2f} - Best Batch Score: {best_step_score:.2f}")
+            if verbose > 0: log_info(f"Step {step} - Current Best Score: {best_score:.2f}, Average Batch Score: {avg_step_score:.2f} - Best Batch Score: {best_step_score:.2f}")
 
             # Callbacks: Trigger at the end of each step
             if callbacks:
@@ -166,7 +179,6 @@ Make sure the length of solutions match examples given. Don't guess for the scor
                         temperature = new_temperature  # Update temperature if needed
                     # Check if early stopping is triggered
                     if isinstance(callback, EarlyStopping) and callback.wait >= callback.patience:
-                        print(f"Early stopping triggered at step {step}.")
                         return {
                             "best_solution": best_solution,
                             "best_score": best_score,
@@ -187,15 +199,15 @@ Make sure the length of solutions match examples given. Don't guess for the scor
 
     @check_init
     def maximize(self, init_samples=None, init_scores=None, num_steps=50, batch_size=5,
-                 temperature=1.0, callbacks=None):
+                 temperature=1.0, callbacks=None, verbose=1):
         return self.optimize(init_samples=init_samples, init_scores=init_scores,
                               num_steps=num_steps, batch_size=batch_size, temperature=temperature, 
-                              callbacks=callbacks, optimization_type="maximize")
+                              callbacks=callbacks, verbose=verbose, optimization_type="maximize")
     
     @check_init
     def minimize(self, init_samples=None, init_scores=None, num_steps=50, batch_size=5,
-                 temperature=1.0, callbacks=None):
+                 temperature=1.0, callbacks=None, verbose=1):
         return self.optimize(init_samples=init_samples, init_scores=init_scores,
                               num_steps=num_steps, batch_size=batch_size, temperature=temperature,
-                                callbacks=callbacks, optimization_type="minimize")
+                                callbacks=callbacks, verbose=verbose, optimization_type="minimize")
 

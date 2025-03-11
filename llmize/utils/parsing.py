@@ -1,3 +1,5 @@
+from llmize.utils.logger import log_info, log_error
+
 def parse_response(response_text):
     """
     Parses the generated response into a list of lists.
@@ -22,7 +24,7 @@ def parse_response(response_text):
 
         return solution_array   # Return the parsed solutions
     except Exception as e:
-        print(f"Error: Failed to parse response due to unexpected error - {e}")
+        log_error(f"Error: Failed to parse response due to unexpected error - {e}")
         return None
 
 
