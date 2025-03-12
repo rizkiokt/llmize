@@ -1,6 +1,6 @@
 from llmize.utils.logger import log_info, log_error
 
-def parse_response(response_text):
+def parse_response(response_text, hp_parse=False):
     """
     Parses the generated response into a list of lists.
     Returns None if parsing fails.
@@ -9,7 +9,7 @@ def parse_response(response_text):
         solution_array  = []
         solutions = response_text.split("<sol>")[1:]  # Split solutions correctly
         for sol in solutions:
-            sol = sol.split("</sol>")[0].strip()  # Fixed closing tag
+            sol = sol.split("<\sol>")[0].strip()  # Fixed closing tag
             values = []
             for x in sol.split(","):
                 x = x.strip()
@@ -21,6 +21,13 @@ def parse_response(response_text):
                         value = float(x)
                     values.append(value)
             solution_array.append(values)  # Store parsed values
+        
+        if hp_parse:
+            hp = response_text.split("<hp>")[1:]
+            hp = hp.split("<\hp>")[0].strip()
+            hp = hp.split(",")
+            hp = [float(x) for x in hp]
+            return solution_array, hp
 
         return solution_array   # Return the parsed solutions
     except Exception as e:

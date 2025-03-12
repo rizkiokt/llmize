@@ -124,7 +124,7 @@ class Optimizer:
 
         return generate_content(client, self.llm_model, prompt)
 
-    def _generate_solutions(self, client, prompt, temperature, batch_size, verbose, max_retries=5):
+    def _generate_solutions(self, client, prompt, temperature, batch_size, verbose, max_retries=5, hp_parse=False):
         """
         Generate solutions by retrying content generation until the solution array has the expected batch size.
         
@@ -145,7 +145,7 @@ class Optimizer:
         """
 
         response = generate_content(client, self.llm_model, prompt, temperature)
-        solution_array = parse_response(response)
+        solution_array = parse_response(response, hp_parse)
 
         if verbose > 2: 
             #log_debug(f"Prompt: {prompt}")
@@ -157,7 +157,7 @@ class Optimizer:
         while solution_array is None or len(solution_array) != batch_size:
             log_warning("Number of solutions parsed is not equal to batch size. Retrying...")
             response = generate_content(client, self.llm_model, prompt, temperature)
-            solution_array = parse_response(response)
+            solution_array = parse_response(response, hp_parse)
 
             if verbose > 2: 
                 log_debug(f"Response for retry {retry+1}: {response}")

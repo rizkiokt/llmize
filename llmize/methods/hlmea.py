@@ -34,7 +34,8 @@ class HLMEA(Optimizer):
         super().__init__(problem_text=problem_text, obj_func=obj_func, llm_model=llm_model, api_key=api_key)
     
 
-    def meta_prompt(self, batch_size, example_pairs, optimization_type="maximize"):
+    def meta_prompt(self, batch_size, example_pairs, optimization_type="maximize", 
+                    hp_text="The solutions below are generated randomly."):
         """
         Generate a prompt for the LLM model to generate new solutions.
         Parameters:
@@ -77,12 +78,14 @@ Generate exactly {batch_size} solutions for the next population by following the
 7. Keep the solutions generated in step 2 and 6 and repeat step 3-6 until you generate {batch_size} solutions.
 
 Directly give me the solutions in the format: <sol> param1, param2, ..., paramn <\sol> with a comma between parameters.
+Also, give me your decision on the hyperparameters in the format: <hp> elitism_rate, mutation_rate, crossover_rate <\hp>.
 Don't give me any explanation, just the solutions and your decision on hyperparameters.
 Make sure the length of solutions match examples given. Don't guess for the scores as they will be calculated by an objective function.
 """
-        prompt = "\n".join([backstory, self.problem_text, example_texts, example_pairs, instruction])
+        prompt = "\n".join([backstory, self.problem_text, example_texts, hp_text, example_pairs, instruction])
 
         return prompt
+    
     def optimize(self, init_samples=None, init_scores=None, num_steps=50, batch_size=5,
                  temperature=1.0, callbacks=None, verbose=1, optimization_type="maximize"):
         
@@ -128,18 +131,19 @@ Make sure the length of solutions match examples given. Don't guess for the scor
                 continue
             
             if verbose > 1: 
-                log_debug(f"Example pairs: {example_pairs}")
+                log_debug(f"Example pairs: {example_pairs}")    
 
             prompt = self.meta_prompt(batch_size, example_pairs, optimization_type)
 
 
-            solution_array = self._generate_solutions(client, prompt, temperature, 
-                                                            batch_size, verbose)
+            solution_array, hp = self._generate_solutions(client, prompt, temperature, 
+                                                            batch_size, verbose, hp_parse=True)
             
             best_score, best_solution, step_scores, best_step_score = self._evaluate_solutions(solution_array, best_solution,
                                                                               optimization_type, verbose, best_score)
             new_pairs = parse_pairs(solution_array, step_scores)
             example_pairs = new_pairs
+            hp_text = f"""The hyperparameters (elitism_rate, mutation_rate, crossover_rate) used in previous step are: <hp> {hp[0]}, {hp[1]}, {hp[2]} <\hp>"""
 
             avg_step_score = sum(step_scores) / len(solution_array)
             best_score_per_step.append(best_step_score)
