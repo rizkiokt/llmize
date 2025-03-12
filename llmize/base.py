@@ -136,7 +136,7 @@ class Optimizer:
             batch_size: Expected number of solutions.
             verbose: Verbosity level for debug logging.
             max_retries: Maximum number of retry attempts.
-        
+            hp_parse: Whether to parse the hyperparameters from the response.
         Returns:
             A list of solutions that matches the expected batch_size.
         
@@ -145,7 +145,10 @@ class Optimizer:
         """
 
         response = generate_content(client, self.llm_model, prompt, temperature)
-        solution_array = parse_response(response, hp_parse)
+        if hp_parse:
+            solution_array, hp = parse_response(response, hp_parse)
+        else:
+            solution_array = parse_response(response, hp_parse)
 
         if verbose > 2: 
             #log_debug(f"Prompt: {prompt}")
@@ -157,7 +160,10 @@ class Optimizer:
         while solution_array is None or len(solution_array) != batch_size:
             log_warning("Number of solutions parsed is not equal to batch size. Retrying...")
             response = generate_content(client, self.llm_model, prompt, temperature)
-            solution_array = parse_response(response, hp_parse)
+            if hp_parse:
+                solution_array, hp = parse_response(response, hp_parse)
+            else:
+                solution_array = parse_response(response, hp_parse)
 
             if verbose > 2: 
                 log_debug(f"Response for retry {retry+1}: {response}")
@@ -169,7 +175,10 @@ class Optimizer:
                 log_critical("Failed to generate solutions after multiple attempts.")
                 raise ValueError("Failed to generate solutions after multiple attempts.")
 
-        return solution_array
+        if hp_parse:
+            return solution_array, hp
+        else:
+            return solution_array
     
     def _evaluate_solutions(self, solution_array, best_solution, optimization_type, verbose, best_score=None):
         """

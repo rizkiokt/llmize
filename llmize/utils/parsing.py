@@ -9,7 +9,7 @@ def parse_response(response_text, hp_parse=False):
         solution_array  = []
         solutions = response_text.split("<sol>")[1:]  # Split solutions correctly
         for sol in solutions:
-            sol = sol.split("<\sol>")[0].strip()  # Fixed closing tag
+            sol = sol.split("</sol>")[0].split("<\sol>")[0].strip()  # Handle both / and \ in closing tag
             values = []
             for x in sol.split(","):
                 x = x.strip()
@@ -23,10 +23,14 @@ def parse_response(response_text, hp_parse=False):
             solution_array.append(values)  # Store parsed values
         
         if hp_parse:
-            hp = response_text.split("<hp>")[1:]
-            hp = hp.split("<\hp>")[0].strip()
-            hp = hp.split(",")
-            hp = [float(x) for x in hp]
+            # find line starts with <hp> and ends with <\hp>
+            hp_text = ""        
+            for line in response_text.splitlines():
+                if line.startswith("<hp>"):
+                    hp_text = line
+                    break
+            hp_text = hp_text.replace("<hp>", "").replace("<\hp>", "").replace("</hp>", "").strip()
+            hp = [float(x.strip()) for x in hp_text.split(",")]
             return solution_array, hp
 
         return solution_array   # Return the parsed solutions
@@ -54,3 +58,26 @@ def parse_score(text):
 
     return scores
 
+if __name__ == "__main__":
+    text = """
+<hp> 0.1, 0.8, 0.9 <\hp>
+<sol> 5,2,7,3,0,8,9,6,1,4 <\sol>
+<sol> 4,2,7,0,6,3,5,8,9,1 <\sol>
+<sol> 4,8,1,3,0,5,2,9,7,6 <\sol>
+<sol> 5,2,4,3,0,8,9,6,1,7 <\sol>
+<sol> 5,2,7,3,1,8,9,6,0,4 <\sol>
+<sol> 4,2,7,0,5,3,6,8,9,1 <\sol>
+<sol> 5,2,7,0,6,3,8,9,1,4 <\sol>
+<sol> 4,2,8,0,6,3,5,7,9,1 <\sol>
+<sol> 5,2,7,3,0,8,1,6,9,4 <\sol>
+<sol> 4,2,7,0,1,3,5,8,9,6 <\sol>
+<sol> 5,2,7,3,0,6,9,8,1,4 <\sol>
+<sol> 4,2,7,1,6,3,5,8,9,0 <\sol>
+<sol> 5,2,6,3,0,8,9,7,1,4 <\sol>
+<sol> 4,7,2,0,6,3,5,8,9,1 <\sol>
+<sol> 5,7,2,3,0,8,9,6,1,4 <\sol>
+<sol> 4,2,7,0,6,3,1,8,9,5 <\sol>
+    """
+    sol, hp = parse_response(text, hp_parse=True)
+    print(sol)
+    print(hp)

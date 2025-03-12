@@ -128,13 +128,15 @@ Make sure the length of solutions match examples given. Don't guess for the scor
                     log_info(f"Step {step} - Best Initial Score: {best_score:.2f}, Average Initial Score: {np.average(init_scores):.2f}")
                 init_pairs = parse_pairs(init_samples, init_scores)
                 example_pairs = init_pairs
+                hp_text = "The solutions below are generated randomly."
                 continue
             
             if verbose > 1: 
                 log_debug(f"Example pairs: {example_pairs}")    
 
-            prompt = self.meta_prompt(batch_size, example_pairs, optimization_type)
-
+            prompt = self.meta_prompt(batch_size, example_pairs, optimization_type, hp_text)
+            if verbose > 3:
+                log_debug(f"Prompt: {prompt}")
 
             solution_array, hp = self._generate_solutions(client, prompt, temperature, 
                                                             batch_size, verbose, hp_parse=True)
@@ -151,6 +153,8 @@ Make sure the length of solutions match examples given. Don't guess for the scor
             best_score_history.append(best_score)
             if verbose > 0: 
                 log_info(f"Step {step} - Current Best Score: {best_score:.2f}, Average Batch Score: {avg_step_score:.2f} - Best Batch Score: {best_step_score:.2f}")
+            if verbose > 1:
+                log_info(f"Best solution: {best_solution}")
 
             # Callbacks: Trigger at the end of each step
             if callbacks:
