@@ -157,8 +157,8 @@ class Optimizer:
 
         retry = 0
         
-        while solution_array is None or len(solution_array) != batch_size:
-            log_warning("Number of solutions parsed is not equal to batch size. Retrying...")
+        while solution_array is None or len(solution_array) < batch_size:
+            log_warning("Number of solutions parsed is less than batch size. Retrying...")
             response = generate_content(client, self.llm_model, prompt, temperature)
             if hp_parse:
                 solution_array, hp = parse_response(response, hp_parse)
@@ -174,6 +174,11 @@ class Optimizer:
             if retry >= max_retries:
                 log_critical("Failed to generate solutions after multiple attempts.")
                 raise ValueError("Failed to generate solutions after multiple attempts.")
+        
+        if len(solution_array) > batch_size:
+            log_warning(f"Number of solutions parsed is greater than batch size. Removing extra solutions.")
+            # Remove first extra solutions
+            solution_array = solution_array[:batch_size]
 
         if hp_parse:
             return solution_array, hp

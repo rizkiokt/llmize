@@ -5,7 +5,7 @@ from ..llm.llm_init import initialize_llm
 from ..utils.parsing import parse_pairs
 from ..utils.truncate import truncate_pairs
 from ..utils.logger import log_info, log_warning, log_error, log_critical, log_debug
-from ..callbacks import EarlyStopping
+from ..callbacks import EarlyStopping, OptimalScoreStopping
 
 class HLMEA(Optimizer):
     """
@@ -79,8 +79,32 @@ Generate exactly {batch_size} solutions for the next population by following the
 
 Directly give me the solutions in the format: <sol> param1, param2, ..., paramn <\sol> with a comma between parameters.
 Also, give me your decision on the hyperparameters in the format: <hp> elitism_rate, mutation_rate, crossover_rate <\hp>.
-Don't give me any explanation, just the solutions and your decision on hyperparameters.
+Just give me the solutions and hyperparameters, *don't include any other text in your response*.
+Don't guess for the scores as they will be calculated by an objective function.
+
+"""
+        
+        instruction_full = f"""
+The best solution has the {text2} score from the provided population.
+
+Generate exactly {batch_size} solutions for the next population by following the step-by-step instuctions below.
+1. Set the elitism rate, mutation rate, and crossover rate based on your knowledge. 
+   Prioritize the hyperparameters that introduce diversity in the search space (high mutation rate and high crossover rate).
+2. Select the best solutions to keep based on the elitism rate you decided.
+3. Implement natural selection using strategies like Roulette Wheel Selection, Tournament Selection, or Rank-Based Selection for the selected mechanism.
+4. Crossover the selected solutions and generate a new solution based on the crossover rate you decided. 
+   There are 2 different crossover operators you can use: PMX (Partially Mapped Crossover), OX (Ordered Crossover).
+5. Mutate the solution generated and generate a new solution based on the mutation rate you decided.
+   There are 3 different mutation operators you can use: Swap Mutation, Insert Mutation, Inversion Mutation
+6. If the solution generated is identical with one of the previous or current solutions, repeat the step 3-5.
+7. Keep the solutions generated in step 2 and 6 and repeat step 3-6 until you generate {batch_size} solutions.
+8. Think step by step to follow the instructions above. The format <sol> and <hp> are only used for your final output, don't include them in your process.
+
+
+Give me the solutions in the format: <sol> param1, param2, ..., paramn <\sol> with a comma between parameters.
+Also, give me your decision on the hyperparameters in the format: <hp> elitism_rate, mutation_rate, crossover_rate <\hp>.
 Make sure the length of solutions match examples given. Don't guess for the scores as they will be calculated by an objective function.
+
 """
         prompt = "\n".join([backstory, self.problem_text, example_texts, hp_text, example_pairs, instruction])
 
@@ -164,7 +188,9 @@ Make sure the length of solutions match examples given. Don't guess for the scor
                     if new_temperature is not None:
                         temperature = new_temperature  # Update temperature if needed
                     # Check if early stopping is triggered
-                    if isinstance(callback, EarlyStopping) and callback.wait >= callback.patience:
+                    early_stop = isinstance(callback, EarlyStopping) and callback.wait >= callback.patience
+                    optimal_stop = isinstance(callback, OptimalScoreStopping) and callback.on_step_end(step, logs)
+                    if early_stop or optimal_stop:
                         return {
                             "best_solution": best_solution,
                             "best_score": best_score,

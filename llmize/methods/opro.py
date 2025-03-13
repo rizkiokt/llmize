@@ -5,7 +5,7 @@ from ..llm.llm_init import initialize_llm
 from ..utils.parsing import parse_pairs
 from ..utils.truncate import truncate_pairs
 from ..utils.logger import log_info, log_warning, log_error, log_critical, log_debug
-from ..callbacks import EarlyStopping
+from ..callbacks import EarlyStopping, OptimalScoreStopping
 
 class OPRO(Optimizer):
     """
@@ -141,8 +141,9 @@ Make sure the length of solutions match examples given. Don't guess for the scor
                     if new_temperature is not None:
                         temperature = new_temperature  # Update temperature if needed
                     # Check if early stopping is triggered
-                    if isinstance(callback, EarlyStopping) and callback.wait >= callback.patience:
-                        return {
+                    early_stop = isinstance(callback, EarlyStopping) and callback.wait >= callback.patience
+                    optimal_stop = isinstance(callback, OptimalScoreStopping) and callback.on_step_end(step, logs)
+                    if early_stop or optimal_stop:                        return {
                             "best_solution": best_solution,
                             "best_score": best_score,
                             "best_score_history": best_score_history,
