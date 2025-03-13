@@ -8,6 +8,11 @@ def parse_response(response_text, hp_parse=False):
     try:
         solution_array  = []
         solutions = response_text.split("<sol>")[1:]  # Split solutions correctly
+
+        # If no solutions found, return None (or (None, None) if hp_parse=True)
+        if not solutions:
+            return None if not hp_parse else (None, None)
+        
         for sol in solutions:
             sol = sol.split("</sol>")[0].split("<\sol>")[0].strip()  # Handle both / and \ in closing tag
             values = []
@@ -23,24 +28,29 @@ def parse_response(response_text, hp_parse=False):
             solution_array.append(values)  # Store parsed values
         
         if hp_parse:
-            # find line starts with <hp> and ends with <\hp>
-            hp_text = ""        
-            for line in response_text.splitlines():
-                if line.startswith("<hp>"):
-                    hp_text = line
-                    break
-            hp_text = hp_text.replace("<hp>", "").replace("<\hp>", "").replace("</hp>", "").strip()
+            # Find hyperparameters between <hp> and either </hp> or <\hp>
             hp = []
-            for x in hp_text.split(","):
-                try:
-                    hp.append(float(x.strip()))
-                except ValueError:
-                    try:
-                        hp.append(float(x.split()[1]))  # Try splitting with space and taking the second number
-                    except ValueError as e:
-                        log_error(f"Error parsing hyperparameter value '{x}': {e}")
-                        return solution_array, None
-            return solution_array, hp
+            for line in response_text.splitlines():
+                line = line.strip()
+                if line.startswith("<hp>"):
+                    # Extract content between <hp> and closing tag
+                    hp_text = line.split("<hp>")[1]
+                    hp_text = hp_text.split("</hp>")[0].split("<\hp>")[0].strip()
+                    
+                    # Parse each hyperparameter value
+                    for x in hp_text.split(","):
+                        try:
+                            hp.append(float(x.strip()))
+                        except ValueError:
+                            try:
+                                # Try splitting with space and taking the second number
+                                hp.append(float(x.split()[1]))
+                            except (ValueError, IndexError) as e:
+                                log_error(f"Error parsing hyperparameter value '{x}': {e}")
+                                return solution_array, None
+                    break  # Stop after finding first hyperparameter set
+            
+            return solution_array, hp if hp else None
 
         return solution_array   # Return the parsed solutions
     except Exception as e:
@@ -61,6 +71,7 @@ def parse_score(text):
 
     scores = []
     for line in text.splitlines():
+        line = line.strip()
         if line.startswith("score:"):
             scores.append(float(line.split()[1]))
 

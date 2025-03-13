@@ -1,19 +1,19 @@
 import pytest
 import numpy as np
-from llmize import OPRO
+from llmize import HLMSA
 from llmize.callbacks import OptimalScoreStopping
 import os
 
-def test_opro_initialization():
-    """Test OPRO optimizer initialization"""
+def test_hlmsa_initialization():
+    """Test HLMSA optimizer initialization"""
     problem_text = "Maximize x^2 where x is integer between -10 and 10"
     obj_func = lambda x: float(x)**2
     
-    opro = OPRO(problem_text=problem_text, obj_func=obj_func, api_key=os.getenv("GEMINI_API_KEY"))
+    hlmsa = HLMSA(problem_text=problem_text, obj_func=obj_func, api_key=os.getenv("GEMINI_API_KEY"))
     
-    assert opro.problem_text == problem_text
-    assert opro.obj_func == obj_func
-    assert opro.llm_model == "gemini-2.0-flash"  # default model
+    assert hlmsa.problem_text == problem_text
+    assert hlmsa.obj_func == obj_func
+    assert hlmsa.llm_model == "gemini-2.0-flash"  # default model
 
 def test_optimal_score_stopping():
     """Test OptimalScoreStopping callback functionality"""
@@ -24,8 +24,8 @@ def test_optimal_score_stopping():
         else:
             return float(x)**2  # Simple quadratic function
     
-    opro = OPRO(
-        problem_text="Maximize x^2 where x is integer between -10 and 10 (not including 10 and -10)",
+    hlmsa = HLMSA(
+        problem_text="Maximize x^2 where x is integer between -10 and 10",
         obj_func=obj_func, api_key=os.getenv("GEMINI_API_KEY")
     )
     
@@ -36,7 +36,7 @@ def test_optimal_score_stopping():
     init_samples = ["5", "-4", "3"]  # String inputs as that's what LLM would generate
     init_scores = [25, 16, 9]  # Corresponding scores: 5^2, (-4)^2, 3^2
     
-    result = opro.maximize(
+    result = hlmsa.maximize(
         init_samples=init_samples,
         init_scores=init_scores,
         num_steps=50,
@@ -51,16 +51,15 @@ def test_optimal_score_stopping():
     assert isinstance(result["best_score_history"], list)
 
 
-
-def test_opro_minimize():
-    """Test OPRO's minimize functionality"""
+def test_hlmsa_minimize():
+    """Test HLMSA's minimize functionality"""
     def obj_func(x):
         if isinstance(x, list):
             return (float(x[0]) + 2)**2  # Minimum at x=-2
         else:
             return (float(x) + 2)**2  # Minimum at x=-2
     
-    opro = OPRO(
+    hlmsa = HLMSA(
         problem_text="Minimize (x+2)^2",
         obj_func=obj_func, api_key=os.getenv("GEMINI_API_KEY")
     )
@@ -68,7 +67,7 @@ def test_opro_minimize():
     init_samples = ["0", "1", "-1"]
     init_scores = [4, 9, 1]  # (0+2)^2, (1+2)^2, (-1+2)^2
     
-    result = opro.minimize(
+    result = hlmsa.minimize(
         init_samples=init_samples,
         init_scores=init_scores,
         num_steps=2,
@@ -77,15 +76,15 @@ def test_opro_minimize():
     
     assert result["best_score"] <= 4  # Should be better than initial best score
 
-def test_opro_with_invalid_optimization_type():
-    """Test OPRO with invalid optimization type"""
-    opro = OPRO(
+def test_hlmsa_with_invalid_optimization_type():
+    """Test HLMSA with invalid optimization type"""
+    hlmsa = HLMSA(
         problem_text="Test problem",
         obj_func=lambda x: float(x), api_key=os.getenv("GEMINI_API_KEY")
     )
     
     with pytest.raises(ValueError, match="Invalid optimization_type"):
-        opro.optimize(
+        hlmsa.optimize(
             init_samples=["1"],
             init_scores=[1],
             optimization_type="invalid"

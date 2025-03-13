@@ -1,0 +1,298 @@
+[37m
+Running experiments for OPRO with gemini-2.0-flash[0m
+[0m[37m
+Trial 1/5[0m
+[0m[37mRunning OPRO optimization with 250 steps and batch size 16...[0m
+[0m[37mStep 0 - Best Initial Score: 419.41, Average Initial Score: 556.15[0m
+[0m[37mStep 1 - Current Best Score: 419.41, Average Batch Score: 475.83 - Best Batch Score: 419.47[0m
+[0m[37mStep 2 - Current Best Score: 419.41, Average Batch Score: 487.92 - Best Batch Score: 450.75[0m
+[0m[37mStep 3 - Current Best Score: 419.41, Average Batch Score: 470.80 - Best Batch Score: 419.41[0m
+[0m[37mStep 4 - Current Best Score: 419.41, Average Batch Score: 479.81 - Best Batch Score: 457.53[0m
+[0m[37mStep 5 - Current Best Score: 419.41, Average Batch Score: 480.21 - Best Batch Score: 444.72[0m
+[0m[37mStep 6 - Current Best Score: 419.41, Average Batch Score: 497.75 - Best Batch Score: 469.84[0m
+[0m[37mStep 7 - Current Best Score: 419.41, Average Batch Score: 479.18 - Best Batch Score: 462.73[0m
+[0m[37mStep 8 - Current Best Score: 419.41, Average Batch Score: 471.22 - Best Batch Score: 444.72[0m
+[0m[37mStep 9 - Current Best Score: 419.41, Average Batch Score: 475.47 - Best Batch Score: 442.97[0m
+[0m[37mStep 10 - Current Best Score: 419.41, Average Batch Score: 479.96 - Best Batch Score: 457.53[0m
+[0m[37mStep 11 - Current Best Score: 419.41, Average Batch Score: 482.20 - Best Batch Score: 458.15[0m
+[0m[37mStep 12 - Current Best Score: 419.41, Average Batch Score: 488.87 - Best Batch Score: 466.38[0m
+[0m[37mStep 13 - Current Best Score: 398.41, Average Batch Score: 472.82 - Best Batch Score: 398.41[0m
+[0m[37mStep 14 - Current Best Score: 398.41, Average Batch Score: 470.78 - Best Batch Score: 430.25[0m
+[0m[37mStep 15 - Current Best Score: 398.41, Average Batch Score: 449.77 - Best Batch Score: 398.41[0m
+[0m[37mStep 16 - Current Best Score: 398.41, Average Batch Score: 464.00 - Best Batch Score: 430.19[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[37mStep 17 - Current Best Score: 398.41, Average Batch Score: 463.65 - Best Batch Score: 437.15[0m
+[0m[37mStep 18 - Current Best Score: 398.41, Average Batch Score: 467.82 - Best Batch Score: 437.15[0m
+[0m[37mStep 19 - Current Best Score: 398.41, Average Batch Score: 456.65 - Best Batch Score: 436.52[0m
+[0m[37mStep 20 - Current Best Score: 398.41, Average Batch Score: 466.16 - Best Batch Score: 444.72[0m
+[0m[37mStep 21 - Current Best Score: 398.41, Average Batch Score: 454.66 - Best Batch Score: 430.19[0m
+[0m[37mStep 22 - Current Best Score: 398.41, Average Batch Score: 460.07 - Best Batch Score: 430.19[0m
+[0m[37mStep 23 - Current Best Score: 398.41, Average Batch Score: 480.82 - Best Batch Score: 439.28[0m
+[0m[37mStep 24 - Current Best Score: 398.41, Average Batch Score: 468.18 - Best Batch Score: 430.19[0m
+[0m[37mStep 25 - Current Best Score: 398.41, Average Batch Score: 457.15 - Best Batch Score: 398.47[0m
+[0m[37mStep 26 - Current Best Score: 398.41, Average Batch Score: 462.25 - Best Batch Score: 430.19[0m
+[0m[37mStep 27 - Current Best Score: 398.41, Average Batch Score: 457.38 - Best Batch Score: 430.19[0m
+[0m[37mStep 28 - Current Best Score: 398.41, Average Batch Score: 472.43 - Best Batch Score: 430.19[0m
+[0m[37mStep 29 - Current Best Score: 398.41, Average Batch Score: 473.93 - Best Batch Score: 436.52[0m
+[0m[37mStep 30 - Current Best Score: 398.41, Average Batch Score: 467.82 - Best Batch Score: 437.15[0m
+[0m[37mStep 31 - Current Best Score: 398.41, Average Batch Score: 467.53 - Best Batch Score: 430.19[0m
+[0m[37mStep 32 - Current Best Score: 398.41, Average Batch Score: 485.07 - Best Batch Score: 439.28[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[37mStep 33 - Current Best Score: 398.41, Average Batch Score: 452.00 - Best Batch Score: 407.41[0m
+[0m[37mNo improvement in best_score for 20 steps. Adapted temperature to 1.10.[0m
+[0m[37mStep 34 - Current Best Score: 398.41, Average Batch Score: 451.12 - Best Batch Score: 430.19[0m
+[0m[37mStep 35 - Current Best Score: 398.41, Average Batch Score: 483.57 - Best Batch Score: 437.15[0m
+[0m[37mStep 36 - Current Best Score: 398.41, Average Batch Score: 478.04 - Best Batch Score: 430.19[0m
+[0m[37mStep 37 - Current Best Score: 398.41, Average Batch Score: 467.32 - Best Batch Score: 436.52[0m
+[0m[37mStep 38 - Current Best Score: 398.41, Average Batch Score: 465.04 - Best Batch Score: 430.19[0m
+[0m[37mStep 39 - Current Best Score: 398.41, Average Batch Score: 461.64 - Best Batch Score: 430.19[0m
+[0m[37mStep 40 - Current Best Score: 398.41, Average Batch Score: 472.84 - Best Batch Score: 437.15[0m
+[0m[37mStep 41 - Current Best Score: 398.41, Average Batch Score: 470.32 - Best Batch Score: 430.19[0m
+[0m[37mStep 42 - Current Best Score: 398.41, Average Batch Score: 474.87 - Best Batch Score: 442.97[0m
+[0m[37mStep 43 - Current Best Score: 398.41, Average Batch Score: 476.94 - Best Batch Score: 430.19[0m
+[0m[37mStep 44 - Current Best Score: 398.41, Average Batch Score: 463.98 - Best Batch Score: 398.47[0m
+[0m[37mStep 45 - Current Best Score: 398.41, Average Batch Score: 471.01 - Best Batch Score: 437.15[0m
+[0m[37mStep 46 - Current Best Score: 398.41, Average Batch Score: 466.18 - Best Batch Score: 430.19[0m
+[0m[37mStep 47 - Current Best Score: 398.41, Average Batch Score: 460.77 - Best Batch Score: 436.52[0m
+[0m[37mStep 48 - Current Best Score: 398.41, Average Batch Score: 499.93 - Best Batch Score: 445.42[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[37mStep 49 - Current Best Score: 398.41, Average Batch Score: 446.90 - Best Batch Score: 398.41[0m
+[0m[37mStep 50 - Current Best Score: 398.41, Average Batch Score: 483.67 - Best Batch Score: 436.52[0m
+[0m[37mStep 51 - Current Best Score: 398.41, Average Batch Score: 459.15 - Best Batch Score: 408.87[0m
+[0m[37mStep 52 - Current Best Score: 398.41, Average Batch Score: 476.01 - Best Batch Score: 407.41[0m
+[0m[37mStep 53 - Current Best Score: 398.41, Average Batch Score: 480.47 - Best Batch Score: 436.52[0m
+[0m[37mNo improvement in best_score for 20 steps. Adapted temperature to 1.21.[0m
+[0m[37mStep 54 - Current Best Score: 398.41, Average Batch Score: 466.71 - Best Batch Score: 430.19[0m
+[0m[37mStep 55 - Current Best Score: 398.41, Average Batch Score: 466.41 - Best Batch Score: 430.19[0m
+[0m[37mStep 56 - Current Best Score: 398.41, Average Batch Score: 475.30 - Best Batch Score: 436.52[0m
+[0m[37mStep 57 - Current Best Score: 398.41, Average Batch Score: 461.90 - Best Batch Score: 437.15[0m
+[0m[37mStep 58 - Current Best Score: 398.41, Average Batch Score: 489.34 - Best Batch Score: 436.52[0m
+[0m[37mStep 59 - Current Best Score: 398.41, Average Batch Score: 460.31 - Best Batch Score: 407.41[0m
+[0m[37mStep 60 - Current Best Score: 398.41, Average Batch Score: 465.33 - Best Batch Score: 430.19[0m
+[0m[37mStep 61 - Current Best Score: 398.41, Average Batch Score: 460.43 - Best Batch Score: 408.87[0m
+[0m[37mStep 62 - Current Best Score: 398.41, Average Batch Score: 471.87 - Best Batch Score: 436.72[0m
+[0m[37mStep 63 - Current Best Score: 398.41, Average Batch Score: 455.29 - Best Batch Score: 398.47[0m
+[0m[33mWARNING - Early stopping triggered at step 63.[0m
+[0m[37mExecution time of minimize: 217.805 seconds[0m
+[0m[37mTrial 1 best score: 398.41[0m
+[0m[37mTrial 1 best solution: [5, 2, 7, 3, 0, 4, 1, 6, 9, 8][0m
+[0m[37m
+Trial 2/5[0m
+[0m[37mRunning OPRO optimization with 250 steps and batch size 16...[0m
+[0m[37mStep 0 - Best Initial Score: 419.41, Average Initial Score: 556.15[0m
+[0m[37mStep 1 - Current Best Score: 401.20, Average Batch Score: 545.70 - Best Batch Score: 401.20[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[37mStep 2 - Current Best Score: 375.67, Average Batch Score: 439.65 - Best Batch Score: 375.67[0m
+[0m[37mStep 3 - Current Best Score: 375.67, Average Batch Score: 424.39 - Best Batch Score: 376.85[0m
+[0m[33mWARNING - Number of solutions parsed is greater than batch size. Removing extra solutions.[0m
+[0m[37mStep 4 - Current Best Score: 375.67, Average Batch Score: 439.88 - Best Batch Score: 375.67[0m
+[0m[37mStep 5 - Current Best Score: 375.67, Average Batch Score: 448.98 - Best Batch Score: 376.02[0m
+[0m[33mWARNING - Number of solutions parsed is greater than batch size. Removing extra solutions.[0m
+[0m[37mStep 6 - Current Best Score: 371.16, Average Batch Score: 433.24 - Best Batch Score: 371.16[0m
+[0m[37mStep 7 - Current Best Score: 371.16, Average Batch Score: 415.51 - Best Batch Score: 372.34[0m
+[0m[37mStep 8 - Current Best Score: 371.16, Average Batch Score: 450.56 - Best Batch Score: 396.83[0m
+[0m[37mStep 9 - Current Best Score: 371.16, Average Batch Score: 427.70 - Best Batch Score: 383.15[0m
+[0m[37mStep 10 - Current Best Score: 371.16, Average Batch Score: 416.97 - Best Batch Score: 372.34[0m
+[0m[37mStep 11 - Current Best Score: 371.16, Average Batch Score: 432.14 - Best Batch Score: 383.15[0m
+[0m[37mStep 12 - Current Best Score: 371.16, Average Batch Score: 453.39 - Best Batch Score: 401.80[0m
+[0m[37mStep 13 - Current Best Score: 371.16, Average Batch Score: 421.05 - Best Batch Score: 383.15[0m
+[0m[37mStep 14 - Current Best Score: 371.16, Average Batch Score: 435.36 - Best Batch Score: 383.15[0m
+[0m[37mStep 15 - Current Best Score: 371.16, Average Batch Score: 427.33 - Best Batch Score: 383.15[0m
+[0m[37mStep 16 - Current Best Score: 371.16, Average Batch Score: 441.52 - Best Batch Score: 403.67[0m
+[0m[37mStep 17 - Current Best Score: 371.16, Average Batch Score: 440.54 - Best Batch Score: 391.81[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[37mStep 18 - Current Best Score: 371.16, Average Batch Score: 431.47 - Best Batch Score: 391.81[0m
+[0m[37mStep 19 - Current Best Score: 371.16, Average Batch Score: 429.44 - Best Batch Score: 383.15[0m
+[0m[37mStep 20 - Current Best Score: 371.16, Average Batch Score: 442.83 - Best Batch Score: 391.81[0m
+[0m[37mStep 21 - Current Best Score: 371.16, Average Batch Score: 445.12 - Best Batch Score: 391.81[0m
+[0m[37mStep 22 - Current Best Score: 371.16, Average Batch Score: 458.87 - Best Batch Score: 383.15[0m
+[0m[37mStep 23 - Current Best Score: 371.16, Average Batch Score: 446.36 - Best Batch Score: 391.81[0m
+[0m[37mStep 24 - Current Best Score: 371.16, Average Batch Score: 451.92 - Best Batch Score: 403.67[0m
+[0m[37mStep 25 - Current Best Score: 371.16, Average Batch Score: 452.85 - Best Batch Score: 403.77[0m
+[0m[37mStep 26 - Current Best Score: 371.16, Average Batch Score: 435.77 - Best Batch Score: 383.15[0m
+[0m[37mNo improvement in best_score for 20 steps. Adapted temperature to 1.33.[0m
+[0m[37mStep 27 - Current Best Score: 371.16, Average Batch Score: 423.87 - Best Batch Score: 375.67[0m
+[0m[37mStep 28 - Current Best Score: 370.11, Average Batch Score: 415.44 - Best Batch Score: 370.11[0m
+[0m[37mStep 29 - Current Best Score: 347.67, Average Batch Score: 405.04 - Best Batch Score: 347.67[0m
+[0m[37mStep 30 - Current Best Score: 347.67, Average Batch Score: 420.56 - Best Batch Score: 369.12[0m
+[0m[37mStep 31 - Current Best Score: 347.67, Average Batch Score: 452.91 - Best Batch Score: 392.63[0m
+[0m[37mStep 32 - Current Best Score: 347.67, Average Batch Score: 410.49 - Best Batch Score: 382.09[0m
+[0m[37mStep 33 - Current Best Score: 347.67, Average Batch Score: 431.68 - Best Batch Score: 387.76[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[37mStep 34 - Current Best Score: 347.67, Average Batch Score: 428.03 - Best Batch Score: 375.32[0m
+[0m[37mStep 35 - Current Best Score: 347.67, Average Batch Score: 428.88 - Best Batch Score: 387.76[0m
+[0m[37mStep 36 - Current Best Score: 347.67, Average Batch Score: 426.54 - Best Batch Score: 387.76[0m
+[0m[37mStep 37 - Current Best Score: 347.67, Average Batch Score: 444.53 - Best Batch Score: 387.76[0m
+[0m[37mStep 38 - Current Best Score: 347.67, Average Batch Score: 407.83 - Best Batch Score: 375.32[0m
+[0m[37mStep 39 - Current Best Score: 347.67, Average Batch Score: 474.02 - Best Batch Score: 408.60[0m
+[0m[37mStep 40 - Current Best Score: 347.67, Average Batch Score: 435.97 - Best Batch Score: 375.32[0m
+[0m[37mStep 41 - Current Best Score: 347.67, Average Batch Score: 430.06 - Best Batch Score: 398.21[0m
+[0m[37mStep 42 - Current Best Score: 347.67, Average Batch Score: 427.33 - Best Batch Score: 375.32[0m
+[0m[37mStep 43 - Current Best Score: 347.67, Average Batch Score: 427.58 - Best Batch Score: 387.22[0m
+[0m[37mStep 44 - Current Best Score: 347.67, Average Batch Score: 417.08 - Best Batch Score: 375.32[0m
+[0m[37mStep 45 - Current Best Score: 347.67, Average Batch Score: 448.48 - Best Batch Score: 395.77[0m
+[0m[37mStep 46 - Current Best Score: 347.67, Average Batch Score: 422.77 - Best Batch Score: 387.22[0m
+[0m[37mStep 47 - Current Best Score: 347.67, Average Batch Score: 430.27 - Best Batch Score: 400.74[0m
+[0m[37mStep 48 - Current Best Score: 347.67, Average Batch Score: 410.62 - Best Batch Score: 375.23[0m
+[0m[37mStep 49 - Current Best Score: 347.67, Average Batch Score: 430.62 - Best Batch Score: 387.76[0m
+[0m[37mNo improvement in best_score for 20 steps. Adapted temperature to 1.46.[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[37mStep 50 - Current Best Score: 347.67, Average Batch Score: 447.27 - Best Batch Score: 405.69[0m
+[0m[37mStep 51 - Current Best Score: 347.67, Average Batch Score: 430.48 - Best Batch Score: 382.09[0m
+[0m[37mStep 52 - Current Best Score: 347.67, Average Batch Score: 408.71 - Best Batch Score: 375.32[0m
+[0m[37mStep 53 - Current Best Score: 347.67, Average Batch Score: 409.93 - Best Batch Score: 375.23[0m
+[0m[37mStep 54 - Current Best Score: 347.67, Average Batch Score: 432.52 - Best Batch Score: 380.20[0m
+[0m[37mStep 55 - Current Best Score: 347.67, Average Batch Score: 428.93 - Best Batch Score: 387.22[0m
+[0m[37mStep 56 - Current Best Score: 347.67, Average Batch Score: 427.61 - Best Batch Score: 380.20[0m
+[0m[37mStep 57 - Current Best Score: 347.67, Average Batch Score: 406.39 - Best Batch Score: 355.85[0m
+[0m[37mStep 58 - Current Best Score: 347.67, Average Batch Score: 433.00 - Best Batch Score: 375.23[0m
+[0m[37mStep 59 - Current Best Score: 347.67, Average Batch Score: 430.15 - Best Batch Score: 375.23[0m
+[0m[37mStep 60 - Current Best Score: 347.67, Average Batch Score: 426.92 - Best Batch Score: 377.30[0m
+[0m[37mStep 61 - Current Best Score: 347.67, Average Batch Score: 418.60 - Best Batch Score: 355.85[0m
+[0m[37mStep 62 - Current Best Score: 347.67, Average Batch Score: 467.61 - Best Batch Score: 400.74[0m
+[0m[37mStep 63 - Current Best Score: 347.67, Average Batch Score: 418.48 - Best Batch Score: 372.02[0m
+[0m[37mStep 64 - Current Best Score: 347.67, Average Batch Score: 443.97 - Best Batch Score: 420.65[0m
+[0m[37mStep 65 - Current Best Score: 347.67, Average Batch Score: 406.52 - Best Batch Score: 372.02[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[37mStep 66 - Current Best Score: 347.67, Average Batch Score: 420.11 - Best Batch Score: 372.02[0m
+[0m[37mStep 67 - Current Best Score: 347.67, Average Batch Score: 473.67 - Best Batch Score: 392.63[0m
+[0m[37mStep 68 - Current Best Score: 347.67, Average Batch Score: 426.49 - Best Batch Score: 372.02[0m
+[0m[37mStep 69 - Current Best Score: 347.67, Average Batch Score: 435.31 - Best Batch Score: 392.72[0m
+[0m[37mNo improvement in best_score for 20 steps. Adapted temperature to 1.61.[0m
+[0m[37mStep 70 - Current Best Score: 347.67, Average Batch Score: 446.49 - Best Batch Score: 405.69[0m
+[0m[37mStep 71 - Current Best Score: 347.67, Average Batch Score: 434.15 - Best Batch Score: 372.02[0m
+[0m[37mStep 72 - Current Best Score: 347.67, Average Batch Score: 435.49 - Best Batch Score: 372.02[0m
+[0m[37mStep 73 - Current Best Score: 347.67, Average Batch Score: 418.53 - Best Batch Score: 387.76[0m
+[0m[37mStep 74 - Current Best Score: 347.67, Average Batch Score: 409.14 - Best Batch Score: 372.02[0m
+[0m[37mStep 75 - Current Best Score: 347.67, Average Batch Score: 440.37 - Best Batch Score: 396.56[0m
+[0m[37mStep 76 - Current Best Score: 347.67, Average Batch Score: 422.11 - Best Batch Score: 372.02[0m
+[0m[37mStep 77 - Current Best Score: 347.67, Average Batch Score: 413.03 - Best Batch Score: 372.02[0m
+[0m[37mStep 78 - Current Best Score: 347.67, Average Batch Score: 401.60 - Best Batch Score: 370.11[0m
+[0m[37mStep 79 - Current Best Score: 347.67, Average Batch Score: 423.55 - Best Batch Score: 375.32[0m
+[0m[33mWARNING - Early stopping triggered at step 79.[0m
+[0m[37mExecution time of minimize: 300.135 seconds[0m
+[0m[37mTrial 2 best score: 347.67[0m
+[0m[37mTrial 2 best solution: [7, 4, 0, 5, 3, 8, 1, 6, 9, 2][0m
+[0m[37m
+Trial 3/5[0m
+[0m[37mRunning OPRO optimization with 250 steps and batch size 16...[0m
+[0m[37mStep 0 - Best Initial Score: 419.41, Average Initial Score: 556.15[0m
+[0m[37mStep 1 - Current Best Score: 419.41, Average Batch Score: 573.52 - Best Batch Score: 511.30[0m
+[0m[37mStep 2 - Current Best Score: 419.41, Average Batch Score: 485.74 - Best Batch Score: 450.75[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[37mStep 3 - Current Best Score: 419.41, Average Batch Score: 487.95 - Best Batch Score: 419.41[0m
+[0m[37mStep 4 - Current Best Score: 419.41, Average Batch Score: 468.46 - Best Batch Score: 419.41[0m
+[0m[37mStep 5 - Current Best Score: 419.41, Average Batch Score: 475.40 - Best Batch Score: 419.41[0m
+[0m[37mStep 6 - Current Best Score: 419.41, Average Batch Score: 490.64 - Best Batch Score: 456.05[0m
+[0m[37mStep 7 - Current Best Score: 419.41, Average Batch Score: 469.46 - Best Batch Score: 439.28[0m
+[0m[37mStep 8 - Current Best Score: 398.41, Average Batch Score: 478.61 - Best Batch Score: 398.41[0m
+[0m[37mStep 9 - Current Best Score: 398.41, Average Batch Score: 478.60 - Best Batch Score: 430.19[0m
+[0m[37mStep 10 - Current Best Score: 398.41, Average Batch Score: 471.30 - Best Batch Score: 436.52[0m
+[0m[37mStep 11 - Current Best Score: 398.41, Average Batch Score: 472.61 - Best Batch Score: 437.15[0m
+[0m[37mStep 12 - Current Best Score: 398.41, Average Batch Score: 490.20 - Best Batch Score: 436.52[0m
+[0m[37mStep 13 - Current Best Score: 398.41, Average Batch Score: 494.62 - Best Batch Score: 445.42[0m
+[0m[37mStep 14 - Current Best Score: 398.41, Average Batch Score: 466.60 - Best Batch Score: 437.15[0m
+[0m[37mStep 15 - Current Best Score: 398.41, Average Batch Score: 475.93 - Best Batch Score: 436.52[0m
+[0m[37mStep 16 - Current Best Score: 398.41, Average Batch Score: 458.51 - Best Batch Score: 398.41[0m
+[0m[37mStep 17 - Current Best Score: 398.41, Average Batch Score: 463.35 - Best Batch Score: 430.19[0m
+[0m[37mStep 18 - Current Best Score: 398.41, Average Batch Score: 472.64 - Best Batch Score: 436.52[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[37mStep 19 - Current Best Score: 398.41, Average Batch Score: 469.63 - Best Batch Score: 430.19[0m
+[0m[37mStep 20 - Current Best Score: 398.41, Average Batch Score: 467.13 - Best Batch Score: 437.15[0m
+[0m[37mStep 21 - Current Best Score: 398.41, Average Batch Score: 479.24 - Best Batch Score: 436.52[0m
+[0m[37mStep 22 - Current Best Score: 398.41, Average Batch Score: 473.49 - Best Batch Score: 437.15[0m
+[0m[37mStep 23 - Current Best Score: 398.41, Average Batch Score: 470.87 - Best Batch Score: 430.19[0m
+[0m[37mStep 24 - Current Best Score: 398.41, Average Batch Score: 490.03 - Best Batch Score: 442.97[0m
+[0m[37mStep 25 - Current Best Score: 398.41, Average Batch Score: 486.64 - Best Batch Score: 437.15[0m
+[0m[37mStep 26 - Current Best Score: 398.41, Average Batch Score: 472.92 - Best Batch Score: 439.28[0m
+[0m[37mStep 27 - Current Best Score: 398.41, Average Batch Score: 479.68 - Best Batch Score: 430.19[0m
+[0m[37mStep 28 - Current Best Score: 398.41, Average Batch Score: 485.02 - Best Batch Score: 445.42[0m
+[0m[37mNo improvement in best_score for 20 steps. Adapted temperature to 1.77.[0m
+[0m[37mStep 29 - Current Best Score: 398.41, Average Batch Score: 489.94 - Best Batch Score: 442.91[0m
+[0m[37mStep 30 - Current Best Score: 398.41, Average Batch Score: 467.99 - Best Batch Score: 430.19[0m
+[0m[37mStep 31 - Current Best Score: 398.41, Average Batch Score: 466.25 - Best Batch Score: 430.19[0m
+[0m[37mStep 32 - Current Best Score: 398.41, Average Batch Score: 473.96 - Best Batch Score: 430.19[0m
+[0m[37mStep 33 - Current Best Score: 398.41, Average Batch Score: 475.70 - Best Batch Score: 430.19[0m
+[0m[37mStep 34 - Current Best Score: 398.41, Average Batch Score: 475.00 - Best Batch Score: 430.19[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[37mStep 35 - Current Best Score: 398.41, Average Batch Score: 483.73 - Best Batch Score: 444.28[0m
+[0m[37mStep 36 - Current Best Score: 398.41, Average Batch Score: 468.34 - Best Batch Score: 430.19[0m
+[0m[37mStep 37 - Current Best Score: 398.41, Average Batch Score: 475.16 - Best Batch Score: 430.19[0m
+[0m[37mStep 38 - Current Best Score: 398.41, Average Batch Score: 481.20 - Best Batch Score: 444.28[0m
+[0m[37mStep 39 - Current Best Score: 398.41, Average Batch Score: 458.18 - Best Batch Score: 398.47[0m
+[0m[37mStep 40 - Current Best Score: 398.41, Average Batch Score: 467.82 - Best Batch Score: 437.15[0m
+[0m[37mStep 41 - Current Best Score: 398.41, Average Batch Score: 458.06 - Best Batch Score: 398.47[0m
+[0m[37mStep 42 - Current Best Score: 398.41, Average Batch Score: 468.66 - Best Batch Score: 455.17[0m
+[0m[37mStep 43 - Current Best Score: 398.41, Average Batch Score: 466.52 - Best Batch Score: 437.15[0m
+[0m[37mStep 44 - Current Best Score: 398.41, Average Batch Score: 471.43 - Best Batch Score: 430.19[0m
+[0m[37mStep 45 - Current Best Score: 398.41, Average Batch Score: 458.01 - Best Batch Score: 430.19[0m
+[0m[37mStep 46 - Current Best Score: 398.41, Average Batch Score: 474.82 - Best Batch Score: 436.52[0m
+[0m[37mStep 47 - Current Best Score: 398.41, Average Batch Score: 479.46 - Best Batch Score: 436.52[0m
+[0m[37mStep 48 - Current Best Score: 398.41, Average Batch Score: 465.80 - Best Batch Score: 430.19[0m
+[0m[37mNo improvement in best_score for 20 steps. Adapted temperature to 1.90.[0m
+[0m[37mStep 49 - Current Best Score: 398.41, Average Batch Score: 474.21 - Best Batch Score: 437.15[0m
+[0m[37mStep 50 - Current Best Score: 398.41, Average Batch Score: 462.07 - Best Batch Score: 430.19[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[33mWARNING - LLM rate limit hit, retrying in 5 seconds...[0m
+[0m[37mStep 51 - Current Best Score: 398.41, Average Batch Score: 463.70 - Best Batch Score: 430.19[0m
+[0m[37mStep 52 - Current Best Score: 398.41, Average Batch Score: 467.47 - Best Batch Score: 437.15[0m
+[0m[37mStep 53 - Current Best Score: 398.41, Average Batch Score: 466.87 - Best Batch Score: 407.41[0m
+[0m[37mStep 54 - Current Best Score: 398.41, Average Batch Score: 463.44 - Best Batch Score: 430.19[0m
+[0m[37mStep 55 - Current Best Score: 398.41, Average Batch Score: 457.51 - Best Batch Score: 407.41[0m
+[0m[37mStep 56 - Current Best Score: 398.41, Average Batch Score: 459.35 - Best Batch Score: 430.19[0m
+[0m[37mStep 57 - Current Best Score: 398.41, Average Batch Score: 455.12 - Best Batch Score: 398.47[0m
+[0m[37mStep 58 - Current Best Score: 398.41, Average Batch Score: 481.79 - Best Batch Score: 437.15[0m
+[0m[33mWARNING - Early stopping triggered at step 58.[0m
+[0m[37mExecution time of minimize: 223.555 seconds[0m
+[0m[37mTrial 3 best score: 398.41[0m
+[0m[37mTrial 3 best solution: [5, 2, 7, 3, 0, 4, 1, 6, 9, 8][0m
+[0m[37m
+Trial 4/5[0m
+[0m[37mRunning OPRO optimization with 250 steps and batch size 16...[0m
+[0m[37mStep 0 - Best Initial Score: 419.41, Average Initial Score: 556.15[0m
+[0m[37mStep 1 - Current Best Score: 397.55, Average Batch Score: 468.60 - Best Batch Score: 397.55[0m
+[0m[33mWARNING - Early stopping triggered at step 1.[0m
+[0m[37mExecution time of minimize: 2.442 seconds[0m
+[0m[37mTrial 4 best score: 397.55[0m
+[0m[37mTrial 4 best solution: [5, 3, 7, 2, 0, 8, 9, 6, 1, 4][0m
+[0m[37m
+Trial 5/5[0m
+[0m[37mRunning OPRO optimization with 250 steps and batch size 16...[0m
+[0m[37mStep 0 - Best Initial Score: 419.41, Average Initial Score: 556.15[0m
+[0m[37mStep 1 - Current Best Score: 419.41, Average Batch Score: 600.33 - Best Batch Score: 555.24[0m
+[0m[37mStep 2 - Current Best Score: 419.41, Average Batch Score: 483.66 - Best Batch Score: 444.72[0m
+[0m[37mStep 3 - Current Best Score: 398.41, Average Batch Score: 474.74 - Best Batch Score: 398.41[0m
+[0m[37mStep 4 - Current Best Score: 398.41, Average Batch Score: 465.55 - Best Batch Score: 430.19[0m
+[0m

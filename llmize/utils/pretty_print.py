@@ -1,15 +1,19 @@
-from rich import print
-from rich.console import Console
-import os
+import textwrap
 
-def pretty_print(prompt=None, response=None):
-
-    sol_color_start = "[bold cyan]"
-    sol_color_end =   "[ /bold cyan]"
+def pretty_print(prompt=None, response=None, width=150):
+    print("=" * width)
+    
+    def wrap_text(text):
+        """Wrap text while preserving explicit newlines."""
+        return "\n".join(textwrap.fill(line, width) if line.strip() else "" for line in text.splitlines())
 
     if prompt:
-        formatted_prompt = prompt.replace('<sol>', f'{sol_color_start}<sol>').replace('</sol>', f'</sol>{sol_color_end}')
-        print(f"[bold yellow]Prompt:[/bold yellow] {formatted_prompt}")
+        print("Prompt:")
+        print(wrap_text(prompt))
+        print()
+    
     if response:
-        formatted_response = response.replace('<sol>', f'{sol_color_start}<sol>').replace('</sol>', f'</sol>{sol_color_end}')
-        print(f"[bold green]Response:[/bold green] {formatted_response}")
+        print("Response:")
+        print(wrap_text(response))
+    
+    print("=" * width)

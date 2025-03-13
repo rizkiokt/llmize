@@ -102,7 +102,7 @@ Make sure the length of solutions match examples given. Don't guess for the scor
         avg_score_per_step = [np.average(init_scores)]
         best_score_per_step = [best_score]
 
-        max_examples = 2*batch_size
+        max_examples = batch_size
 
         for step in range(num_steps+1):
             if step == 0:
