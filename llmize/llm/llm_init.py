@@ -1,6 +1,6 @@
 from google import genai
 from huggingface_hub import InferenceClient
-
+from openai import OpenAI
 
 
 def initialize_llm(llm_model, api_key):
@@ -18,5 +18,10 @@ def initialize_gemini(api_key):
 
 def initialize_huggingface(api_key):
     client = InferenceClient(api_key=api_key)
+
+    return client
+
+def initialize_openai(api_key):
+    client = OpenAI(api_key=api_key)
 
     return client

@@ -65,6 +65,7 @@ Make sure the length of solutions match examples given. Don't guess for the scor
         prompt = "\n".join([self.problem_text, example_texts, example_pairs, instruction])
 
         return prompt
+    
     def optimize(self, init_samples=None, init_scores=None, num_steps=50, batch_size=5,
                  temperature=1.0, callbacks=None, verbose=1, optimization_type="maximize"):
         
@@ -120,7 +121,7 @@ Make sure the length of solutions match examples given. Don't guess for the scor
             solution_array = self._generate_solutions(client, prompt, temperature, 
                                                             batch_size, verbose)
             
-            best_score, best_solution, step_scores, best_step_score = self._evaluate_solutions(solution_array, 
+            best_score, best_solution, step_scores, best_step_score = self._evaluate_solutions(solution_array, best_solution,
                                                                               optimization_type, verbose, best_score)
             new_pairs = parse_pairs(solution_array, step_scores)
             example_pairs = example_pairs + new_pairs

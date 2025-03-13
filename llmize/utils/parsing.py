@@ -30,7 +30,16 @@ def parse_response(response_text, hp_parse=False):
                     hp_text = line
                     break
             hp_text = hp_text.replace("<hp>", "").replace("<\hp>", "").replace("</hp>", "").strip()
-            hp = [float(x.strip()) for x in hp_text.split(",")]
+            hp = []
+            for x in hp_text.split(","):
+                try:
+                    hp.append(float(x.strip()))
+                except ValueError:
+                    try:
+                        hp.append(float(x.split()[1]))  # Try splitting with space and taking the second number
+                    except ValueError as e:
+                        log_error(f"Error parsing hyperparameter value '{x}': {e}")
+                        return solution_array, None
             return solution_array, hp
 
         return solution_array   # Return the parsed solutions
