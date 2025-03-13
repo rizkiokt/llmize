@@ -48,9 +48,11 @@ class HLMEA(Optimizer):
         """
 
         backstory = """
-You are a hyper-heuristic LLM-driven evolutionary algorithm that generates new solutions for a given problem.
-You are capable of selecting the most optimal hyperparameters of evolutionary algorithms based on your knowledge and the problem at hand.
-The problem is described as follows:
+You are a hyper-heuristic LLM-driven evolutionary algorithm that generates diverse and optimized solutions for a given problem.  
+You can adaptively set hyperparameters to enhance solution quality and exploration.  
+
+## Problem Description  
+You need to optimize a given problem by evolving a set of candidate solutions. The objective is to iteratively improve solutions using evolutionary strategies, ensuring diversity and avoiding premature convergence.  
 """
 
         example_texts = """Below are some examples of solutions and their scores from the previous population:"""
@@ -65,22 +67,48 @@ The problem is described as follows:
         instruction = f"""
 The best solution has the {text2} score from the provided population.
 
-Generate exactly {batch_size} solutions for the next population by following the step-by-step instuctions below.
-1. Set the elitism rate, mutation rate, and crossover rate based on your knowledge. 
-   Prioritize the hyperparameters that introduce diversity in the search space (high mutation rate and high crossover rate).
-2. Select the best solutions to keep based on the elitism rate you decided.
-3. Implement natural selection using strategies like Roulette Wheel Selection, Tournament Selection, or Rank-Based Selection for the selected mechanism.
-4. Crossover the selected solutions and generate a new solution based on the crossover rate you decided. 
-   There are 2 different crossover operators you can use: PMX (Partially Mapped Crossover), OX (Ordered Crossover).
-5. Mutate the solution generated and generate a new solution based on the mutation rate you decided.
-   There are 3 different mutation operators you can use: Swap Mutation, Insert Mutation, Inversion Mutation
-6. If the solution generated is identical with one of the previous or current solutions, repeat the step 3-5.
-7. Keep the solutions generated in step 2 and 6 and repeat step 3-6 until you generate {batch_size} solutions.
+## Your Task  
 
-Directly give me the solutions in the format: <sol> param1, param2, ..., paramn <\sol> with a comma between parameters.
-Also, give me your decision on the hyperparameters in the format: <hp> elitism_rate, mutation_rate, crossover_rate <\hp>.
-Just give me the solutions and hyperparameters, *don't include any other text in your response*.
-Don't guess for the scores as they will be calculated by an objective function.
+Generate **exactly {batch_size} diverse solutions** for the next generation using an evolutionary algorithm.  
+
+### **Step 1: Adaptive Hyperparameter Selection**  
+- Determine the **elitism rate, mutation rate, and crossover rate**.  
+- Prioritize **high mutation rate and high crossover rate** to enhance diversity and avoid premature convergence.  
+
+### **Step 2: Selection (Parent Selection)**  
+- Select the best solutions from the previous population using **Roulette Wheel Selection, Tournament Selection, or Rank-Based Selection**.  
+- Ensure that diverse parents are chosen to prevent premature convergence.  
+
+### **Step 3: Crossover (Recombination of Parents)**  
+- Generate new solutions using appropriate crossover techniques such as **Ordered Crossover (OX), Partially Mapped Crossover (PMX), or problem-specific recombination operators**.  
+- Apply crossover **only if it introduces diversity**.  
+
+### **Step 4: Mutation (Introducing Variations)**  
+- Apply mutation based on the mutation rate. Mutation operators may include:  
+  - **Swap Mutation**: Swap two random elements.  
+  - **Insert Mutation**: Insert an element at a different position.  
+  - **Inversion Mutation**: Reverse a segment of the solution.  
+  - **Problem-Specific Mutations**: Apply domain-relevant perturbations.  
+- Ensure each generated solution is **unique** compared to existing ones.  
+
+### **Step 5: Uniqueness Enforcement**  
+- **Check if a newly generated solution is identical to any previous or current solutions**.  
+- If duplication occurs, **repeat Steps 3-5 until a new unique solution is found**.  
+
+
+## **Output Format**  
+
+Return exactly **{batch_size} unique solutions** and the chosen hyperparameters in the following format:  
+
+### **Hyperparameters Output**  
+
+<hp> elitism_rate, mutation_rate, crossover_rate <\hp>
+
+### **Solutions Output**  
+
+<sol> param1, param2, ..., paramn <\sol>
+
+**Only provide the solutions and hyperparameters—do not include any extra text. Do not include any code.**  
 
 """
         
@@ -169,7 +197,13 @@ Make sure the length of solutions match examples given. Don't guess for the scor
                                                                               optimization_type, verbose, best_score)
             new_pairs = parse_pairs(solution_array, step_scores)
             example_pairs = new_pairs
-            hp_text = f"""The hyperparameters (elitism_rate, mutation_rate, crossover_rate) used in previous step are: <hp> {hp[0]}, {hp[1]}, {hp[2]} <\hp>"""
+
+            # Check if hp is not None and has the correct format (3 values between 0 and 1)
+            if hp is None or len(hp) != 3 or not all(0 <= x <= 1 for x in hp):
+                log_warning("Invalid or missing hyperparameters format.")
+                hp_text = "The hyperparameters used in previous step are unknown."
+            else:
+                hp_text = f"""The hyperparameters (elitism_rate, mutation_rate, crossover_rate) used in previous step are: <hp> {hp[0]}, {hp[1]}, {hp[2]} <\hp>"""
 
             avg_step_score = sum(step_scores) / len(solution_array)
             best_score_per_step.append(best_step_score)

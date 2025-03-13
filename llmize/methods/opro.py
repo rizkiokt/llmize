@@ -143,7 +143,8 @@ Make sure the length of solutions match examples given. Don't guess for the scor
                     # Check if early stopping is triggered
                     early_stop = isinstance(callback, EarlyStopping) and callback.wait >= callback.patience
                     optimal_stop = isinstance(callback, OptimalScoreStopping) and callback.on_step_end(step, logs)
-                    if early_stop or optimal_stop:                        return {
+                    if early_stop or optimal_stop:                        
+                        return {
                             "best_solution": best_solution,
                             "best_score": best_score,
                             "best_score_history": best_score_history,

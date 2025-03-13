@@ -147,23 +147,28 @@ class Optimizer:
         response = generate_content(client, self.llm_model, prompt, temperature)
         if hp_parse:
             solution_array, hp = parse_response(response, hp_parse)
+            hp_none = hp is None
         else:
             solution_array = parse_response(response, hp_parse)
+            hp_none = False
 
         if verbose > 2: 
             #log_debug(f"Prompt: {prompt}")
             log_debug(f"Response: {response}")
         if verbose > 1: log_debug(f"Generated Solutions: {solution_array}")
+        
 
         retry = 0
         
-        while solution_array is None or len(solution_array) < batch_size:
+        while solution_array is None or len(solution_array) < batch_size or hp_none:
             log_warning("Number of solutions parsed is less than batch size. Retrying...")
             response = generate_content(client, self.llm_model, prompt, temperature)
             if hp_parse:
                 solution_array, hp = parse_response(response, hp_parse)
+                hp_none = hp is None
             else:
                 solution_array = parse_response(response, hp_parse)
+                hp_none = False
 
             if verbose > 2: 
                 log_debug(f"Response for retry {retry+1}: {response}")
