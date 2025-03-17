@@ -1,0 +1,88 @@
+TTL * Hatch Unit 1 .. GNF2/GE-14 ORNL Optimized Dominant DOM 5% max fuel
+*
+TMO=555  * Use Tmod at core midplane approx Tsat
+TFU=945  * Use Tfue average from S5 work in H1 C1-3 for Rev 1
+VOI=40   * Nominal void
+*
+* Spacer grids modified for Zirc grids in GE-14 fuel
+* Rev 1 includes both smeared and explicit grids to invoke explicit grid in SIM-5
+*
+SPA  5.0           * Zirc Smeared Spacer mass/assy length assumed
+SPA 60.0 / / 'ZR1' * Zirc Explicit spacer assumed for GE-14
+*
+* Control blades on CRD card inserted by case maxtrix given 'ROD' identifier
+* Rev 1 This fixes a dimensional errors in the original work
+CRD 0.396 0.0  1.985 10.255 0.175 0.488 / / / 'CRD' 'ROD'
+*
+* power range monitor = LPRM
+*
+* Non Fuel materials for the PRM
+*
+MAT 'AL2O3' 4.0 8.1E-06 / 13016=100 
+MAT 'TITAN' 4.5 8.6E-06 / 22000=100
+*
+PRM .241 .251 .317 .477 .635 .813 .889 /'TITAN' 'AL2O3' 'TITAN' 'MOD' 'CRS' 'MOD' 'CRS' // 2 2 92235 'SE' 'PRM' 'ROD'
+*
+* Geometry for GE-14 10x10 fuel
+*
+BWR 10 1.295 13.406 0.203 0.953 0.475 1.168 * 10x10 BWR dimensions in 1/2 symmetry = 15.24 cm assy pitch = 6"
+*
+PIN 1 0.438 0.447 0.513              * Fuel Pin for 10x10
+PIN 2 0.513 / 'COO'                  * Empty rod position for Vanished pin
+PIN 3 1.200 1.280 / 'MOD' 'BOX' // 4 * 2x2 water rod
+*
+* Begin GE14 Lattice specific data
+*
+* Fuel for ORNL Optimized Dominant DOM 5% max fuel
+*
+FUE  1 10.64   / 1.6
+FUE  2 10.64   / 2.4
+FUE  3 10.64   / 2.8
+FUE  4 10.64   / 4.0
+FUE  5 10.64   / 5.0
+FUE  6 10.64   / 4.8
+FUE  7 10.64   / 3.6
+FUE  8 10.4462 / 4.0 64016=6.0
+FUE  9 10.4462 / 4.8 64016=6.0
+FUE 10 10.4462 / 5.0 64016=6.0
+FUE 11 10.3816 / 5.0 64016=8.0
+*
+* Configuration of pins and fuel types
+*
+LPI
+1
+1 1
+1 1 1 
+1 1 1 1
+1 1 1 1 1
+1 1 1 3 3 1
+1 1 1 3 3 1 1
+1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1
+*
+LFU
+1
+2  7
+3  8  5 
+7  4  9  6
+4 10  5 11  5 
+4  5 11  0  0  5
+7  5  6  0  0  5 10
+7  5  5  5  5  5  5  5
+3  6 10  5  5  5  5  5 10
+2  7  6  6  6  6  6  6  4  7
+*
+* End Lattice specific data
+*
+PDE 23.450  * Average Power density watts/gmU; effects Eq Xe in base cases
+*
+GAM         * Activate Gamma Calculation
+*
+* Adding additional control rod depletion calculations for four dimensional
+* control rod history, HCRD(EXP, HVOI=VOI,CRD) and perform bypass void branches
+*
+STA
+*
+END
+

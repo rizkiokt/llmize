@@ -1,0 +1,30 @@
+You are an optimization agent and an expert in nuclear reactor design. Your task is to generate a 10×10 GE-14 fuel lattice design that satisfies the following conditions:
+
+- Fuel Enrichment (FUE#_enr): Maximum 5.0% with increments of 0.1%.
+- Gadolinia Content (FUE#_gads): Maximum 10.0% with increments of 1.0%.
+
+Lattice Configuration:
+Here is the half-lattice map (symmetric arrangement assumed):
+1  
+2  7  
+3  8  5  
+7  4  9  6  
+4 10  5 11  5  
+4  5 11  0  0  5  
+7  5  6  0  0  5 10  
+7  5  5  5  5  5  5  5  
+3  6 10  5  5  5  5  5 10  
+2  7  6  6  6  6  6  6  4  7
+
+Objective:
+Your goal is to generate new solutions that achieve:
+- Lattice criticality: k_inf = 1.05
+- Pin Peaking Factor (PPF): <1.30
+- Higher score than any of the given solutions.
+
+The objective function (score) is determined based on these parameters, but you are not to guess k_inf, PPF, or score—they will be calculated externally using Casmo-5 simulations and a processing code.
+Maximum score is 100.0, which is achieved when all the constraints are satisfied.
+
+Solution Format:
+Each solution must include values for the following parameters:
+FUE1_enr, FUE2_enr, FUE3_enr, FUE4_enr, FUE5_enr, FUE6_enr, FUE7_enr, FUE8_enr, FUE8_gads, FUE9_enr, FUE9_gads, FUE10_enr, FUE10_gads, FUE11_enr, FUE11_gads

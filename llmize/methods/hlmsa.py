@@ -170,7 +170,7 @@ Return exactly **{batch_size} unique solutions** and the chosen hyperparameters 
             if step == 0:
                 sa_temperature = init_sa_temperature
                 if verbose > 0: 
-                    log_info(f"Step {step} - SA Temperature: {sa_temperature:.2f} - Best Initial Score: {best_score:.2f}, Average Initial Score: {np.average(init_scores):.2f}")
+                    log_info(f"Step {step} - SA Temperature: {sa_temperature:.2f} - Best Initial Score: {best_score:.3f}, Average Initial Score: {np.average(init_scores):.3f}")
                 init_pairs = parse_pairs(init_samples, init_scores)
                 example_pairs = init_pairs
                 hp_text = "The solutions below are generated randomly."
@@ -211,7 +211,7 @@ Return exactly **{batch_size} unique solutions** and the chosen hyperparameters 
             avg_score_per_step.append(avg_step_score)
             best_score_history.append(best_score)
             if verbose > 0: 
-                log_info(f"Step {step} - SA Temperature: {sa_temperature:.2f} - Current Best Score: {best_score:.2f}, Average Batch Score: {avg_step_score:.2f} - Best Batch Score: {best_step_score:.2f}")
+                log_info(f"Step {step} - SA Temperature: {sa_temperature:.2f} - Current Best Score: {best_score:.3f}, Average Batch Score: {avg_step_score:.3f} - Best Batch Score: {best_step_score:.3f}")
             if verbose > 1:
                 log_info(f"Best solution: {best_solution}")
 

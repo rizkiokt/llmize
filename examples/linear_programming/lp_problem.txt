@@ -1,0 +1,10 @@
+Problem: Linear Programming Optimization  
+-----------------------------------------------------  
+Objective: Maximize the function  
+    Z = 3x1 + 4x2 + 6x3  
+
+Subject to constraints:  
+    2x1 + 3x2 + x3 ≤ 15  
+    x1 + 2x2 + 3x3 ≤ 20  
+    4x1 + x2 + 2x3 ≤ 16  
+    x1, x2, x3 ≥ 0  

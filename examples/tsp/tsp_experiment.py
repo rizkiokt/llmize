@@ -6,6 +6,8 @@ from llmize.utils.logger import log_info, log_error
 import matplotlib.pyplot as plt
 import json
 import time
+
+
 def initialize_tsp(num_cities, seed=42):
     """
     Initializes the TSP with random city coordinates.
@@ -33,9 +35,10 @@ def objective_function(route, dist_matrix):
 
 
 # Experiment parameters
-models = ["gemini-2.0-flash", "gemini-2.0-flash-thinking-exp"]
-#models = ["gemini-2.0-flash-lite"]
-methods = [OPRO, HLMEA, HLMSA]
+#models = ["gemini-2.0-flash", "gemini-2.0-flash-thinking-exp"]
+models = ["gemini-2.0-flash"]
+#methods = [OPRO, HLMEA, HLMSA]
+methods = [HLMEA, HLMSA]
 num_trials = 5
 batch_size = 16
 num_steps = 250
