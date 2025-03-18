@@ -1,5 +1,5 @@
 1___________________________________________________________________________________________________________________________________
- * C A S M O 5    3.06.00 Rev:00 Created:2022/08/15 **Studsvik** Executed:2025/03/17  16:18:27   State Point =      0 Page =       1
+ * C A S M O 5    3.06.00 Rev:00 Created:2022/08/15 **Studsvik** Executed:2025/03/17  16:29:54   State Point =      0 Page =       1
 
  This source code includes the following optional modules or capabilities:
       1 - 64-bit executable.
@@ -12,7 +12,7 @@
  Executable compiled with      Intel(R) Fortran Version 19.1 Update  3 Build Date 20200925
  Executable compiled on        Sep  8 2022 14:26:48
  Neutron Data Library File     /home/rizki/CMSCODES/CasLib/library/e7r1.202.586.bin (Size:504827886) (Checksum:3010113215)
- Input File                    GE14.BOC.inp (Size:2250) (Checksum:1713407765)
+ Input File                    GE14.BOC.inp (Size:2250) (Checksum:3165073375)
  Output List File              GE14.BOC.out
  Card Image File               GE14.BOC.cax
  Working Directory             /home/rizki/llmize/examples/nuclear_fuel_optimization/cas5_runs
@@ -63,23 +63,23 @@
        *
                                              (to be continued)
 1___________________________________________________________________________________________________________________________________
- * C A S M O 5    3.06.00 Rev:00 Created:2022/08/15 **Studsvik** Executed:2025/03/17  16:18:27   State Point =      0 Page =       2
+ * C A S M O 5    3.06.00 Rev:00 Created:2022/08/15 **Studsvik** Executed:2025/03/17  16:29:54   State Point =      0 Page =       2
 
        List of CASMO5 Input Cards               (Continued)
        --------------------------
                 1         2         3         4         5         6         7         8         9         0         1         2
        123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
-       FUE 1 10.64 / 1.8
-       FUE 2 10.64 / 2.5
-       FUE 3 10.64 / 2.5
-       FUE 4 10.64 / 5.0
+       FUE 1 10.64 / 1.9
+       FUE 2 10.64 / 2.6
+       FUE 3 10.64 / 2.7
+       FUE 4 10.64 / 3.8
        FUE 5 10.64 / 5.0
-       FUE 6 10.64 / 5.0
+       FUE 6 10.64 / 4.3
        FUE 7 10.64 / 3.6
        FUE 8 10.4462 / 3.9 64016=5.0
-       FUE 9 10.4462 / 5.0 64016=4.0
+       FUE 9 10.4462 / 4.8 64016=3.0
        FUE 10 10.4462 / 3.8 64016=5.0
-       FUE 11 10.3816 / 5.0 64016=5.0
+       FUE 11 10.3816 / 4.9 64016=4.0
        *
        * Configuration of pins and fuel types
        *
@@ -124,7 +124,7 @@
 
  [Warning] in CHKDUP              Duplicated input: ---Check input card:SPA
 1___________________________________________________________________________________________________________________________________
- * C A S M O 5    3.06.00 Rev:00 Created:2022/08/15 **Studsvik** Executed:2025/03/17  16:18:27   State Point =      1 Page =       3
+ * C A S M O 5    3.06.00 Rev:00 Created:2022/08/15 **Studsvik** Executed:2025/03/17  16:29:54   State Point =      1 Page =       3
  * 
  * Burnup =     0.000 
  SPA  5.0           * Zirc Smeared Spacer mass/assy length assumed                                                             Input
@@ -155,17 +155,17 @@
  *                                                                                                                             Input
  * Fuel for ORNL Optimized Dominant DOM 5% max fuel                                                                            Input
  *                                                                                                                             Input
- FUE 1 10.64 / 1.8                                                                                                             Input
- FUE 2 10.64 / 2.5                                                                                                             Input
- FUE 3 10.64 / 2.5                                                                                                             Input
- FUE 4 10.64 / 5.0                                                                                                             Input
+ FUE 1 10.64 / 1.9                                                                                                             Input
+ FUE 2 10.64 / 2.6                                                                                                             Input
+ FUE 3 10.64 / 2.7                                                                                                             Input
+ FUE 4 10.64 / 3.8                                                                                                             Input
  FUE 5 10.64 / 5.0                                                                                                             Input
- FUE 6 10.64 / 5.0                                                                                                             Input
+ FUE 6 10.64 / 4.3                                                                                                             Input
  FUE 7 10.64 / 3.6                                                                                                             Input
  FUE 8 10.4462 / 3.9 64016=5.0                                                                                                 Input
- FUE 9 10.4462 / 5.0 64016=4.0                                                                                                 Input
+ FUE 9 10.4462 / 4.8 64016=3.0                                                                                                 Input
  FUE 10 10.4462 / 3.8 64016=5.0                                                                                                Input
- FUE 11 10.3816 / 5.0 64016=5.0                                                                                                Input
+ FUE 11 10.3816 / 4.9 64016=4.0                                                                                                Input
  *                                                                                                                             Input
  * Configuration of pins and fuel types                                                                                        Input
  *                                                                                                                             Input
@@ -208,13 +208,13 @@
 
  Execution Continued.
 1___________________________________________________________________________________________________________________________________
- * C A S M O 5    3.06.00 Rev:00 Created:2022/08/15 **Studsvik** Executed:2025/03/17  16:18:27   State Point =      1 Page =       4
+ * C A S M O 5    3.06.00 Rev:00 Created:2022/08/15 **Studsvik** Executed:2025/03/17  16:29:54   State Point =      1 Page =       4
  * Hatch Unit 1 .. GNF2/GE-14 ORNL Optimized Dominant DOM 5% max fuel
  * Burnup =     0.000 V=40.0  TF= 945.0  TM= 555.0  BOR=   0.0
 
  File Trail Data For Incoming Data Libraries
  -------------------------------------------
- Execution     CASMO5    3.06.00  2022/08/15  2025/03/17  16:18:27    SSP       P        
+ Execution     CASMO5    3.06.00  2022/08/15  2025/03/17  16:29:54    SSP       P        
  Neutron Data  5004     130121 586
             E7R1LIB UPDATE G,VERSION=E7R1.202-130121                                        
                CASLIB       4.06  13/10/07    13/10/28    08:20:29    Linux     
@@ -230,7 +230,7 @@
  Gamma Data       8 080606      18
  GAMLIB, UPDATE B VERSION=E7.1.00-080606  18 GAM GRP, 70 NEU GRP (EMBEDDED)
 1___________________________________________________________________________________________________________________________________
- * C A S M O 5    3.06.00 Rev:00 Created:2022/08/15 **Studsvik** Executed:2025/03/17  16:18:27   State Point =      1 Page =       5
+ * C A S M O 5    3.06.00 Rev:00 Created:2022/08/15 **Studsvik** Executed:2025/03/17  16:29:54   State Point =      1 Page =       5
  * Hatch Unit 1 .. GNF2/GE-14 ORNL Optimized Dominant DOM 5% max fuel
  * Burnup =     0.000 V=40.0  TF= 945.0  TM= 555.0  BOR=   0.0
 
@@ -368,18 +368,18 @@
                                                       O-18   = 1.08553E-01
  TITA     4.4697  8.600E-06  555.0    0.000  100.000  Ti-46  = 7.92010E+00  Ti-47  = 7.29777E+00  Ti-48  = 7.38451E+01
                                                       Ti-49  = 5.53219E+00  Ti-50  = 5.40486E+00
- FUE   1 10.4143  1.100E-05  945.0    6.367  100.000  U-235  = 1.58667E+00  U-234  = 1.39644E-02  U-238  = 8.65477E+01
-                                                      O-16   = 1.18195E+01  O-17   = 4.78452E-03  O-18   = 2.73323E-02
- FUE   2 10.4143  1.100E-05  945.0   25.468  100.000  U-235  = 2.20368E+00  U-234  = 2.00365E-02  U-238  = 8.59237E+01
-                                                      O-16   = 1.18205E+01  O-17   = 4.78490E-03  O-18   = 2.73345E-02
- FUE   3 10.4143  1.100E-05  945.0   25.468  100.000  U-235  = 2.20368E+00  U-234  = 2.00365E-02  U-238  = 8.59237E+01
-                                                      O-16   = 1.18205E+01  O-17   = 4.78490E-03  O-18   = 2.73345E-02
- FUE   4 10.4143  1.100E-05  945.0   50.936  100.000  U-235  = 4.40720E+00  U-234  = 4.19558E-02  U-238  = 8.36948E+01
-                                                      O-16   = 1.18239E+01  O-17   = 4.78627E-03  O-18   = 2.73423E-02
+ FUE   1 10.4143  1.100E-05  945.0    6.367  100.000  U-235  = 1.67482E+00  U-234  = 1.48280E-02  U-238  = 8.64586E+01
+                                                      O-16   = 1.18197E+01  O-17   = 4.78457E-03  O-18   = 2.73326E-02
+ FUE   2 10.4143  1.100E-05  945.0   25.468  100.000  U-235  = 2.29183E+00  U-234  = 2.09080E-02  U-238  = 8.58345E+01
+                                                      O-16   = 1.18206E+01  O-17   = 4.78495E-03  O-18   = 2.73348E-02
+ FUE   3 10.4143  1.100E-05  945.0   25.468  100.000  U-235  = 2.37997E+00  U-234  = 2.17802E-02  U-238  = 8.57454E+01
+                                                      O-16   = 1.18208E+01  O-17   = 4.78501E-03  O-18   = 2.73351E-02
+ FUE   4 10.4143  1.100E-05  945.0   50.936  100.000  U-235  = 3.34953E+00  U-234  = 3.14090E-02  U-238  = 8.47647E+01
+                                                      O-16   = 1.18222E+01  O-17   = 4.78561E-03  O-18   = 2.73386E-02
  FUE   5 10.4143  1.100E-05  945.0  216.479  100.000  U-235  = 4.40720E+00  U-234  = 4.19558E-02  U-238  = 8.36948E+01
                                                       O-16   = 1.18239E+01  O-17   = 4.78627E-03  O-18   = 2.73423E-02
- FUE   6 10.4143  1.100E-05  945.0  108.239  100.000  U-235  = 4.40720E+00  U-234  = 4.19558E-02  U-238  = 8.36948E+01
-                                                      O-16   = 1.18239E+01  O-17   = 4.78627E-03  O-18   = 2.73423E-02
+ FUE   6 10.4143  1.100E-05  945.0  108.239  100.000  U-235  = 3.79023E+00  U-234  = 3.57998E-02  U-238  = 8.43189E+01
+                                                      O-16   = 1.18229E+01  O-17   = 4.78588E-03  O-18   = 2.73401E-02
  FUE   7 10.4143  1.100E-05  945.0   63.670  100.000  U-235  = 3.17325E+00  U-234  = 2.96547E-02  U-238  = 8.49430E+01
                                                       O-16   = 1.18220E+01  O-17   = 4.78550E-03  O-18   = 2.73379E-02
  FUE   8 10.2246  1.100E-05  945.0   12.502  100.000  U-235  = 3.26579E+00  Gd-152 = 8.38182E-03  Gd-154 = 9.25653E-02
@@ -387,21 +387,21 @@
                                                       Gd-158 = 1.08216E+00  Gd-160 = 9.64417E-01  U-234  = 3.06723E-02
                                                       U-238  = 8.04418E+01  O-16   = 1.18915E+01  O-17   = 4.81363E-03
                                                       O-18   = 2.74986E-02
- FUE   9 10.2246  1.100E-05  945.0   12.502  100.000  U-235  = 4.23091E+00  Gd-152 = 6.70546E-03  Gd-154 = 7.40522E-02
-                                                      Gd-155 = 5.06012E-01  Gd-156 = 7.04384E-01  Gd-157 = 5.41985E-01
-                                                      Gd-158 = 8.65729E-01  Gd-160 = 7.71533E-01  U-234  = 4.02775E-02
-                                                      U-238  = 8.03471E+01  O-16   = 1.18791E+01  O-17   = 4.80861E-03
-                                                      O-18   = 2.74700E-02
+ FUE   9 10.2246  1.100E-05  945.0   12.502  100.000  U-235  = 4.10400E+00  Gd-152 = 5.02909E-03  Gd-154 = 5.55392E-02
+                                                      Gd-155 = 3.79509E-01  Gd-156 = 5.28288E-01  Gd-157 = 4.06488E-01
+                                                      Gd-158 = 6.49297E-01  Gd-160 = 5.78650E-01  U-234  = 3.89902E-02
+                                                      U-238  = 8.13570E+01  O-16   = 1.18650E+01  O-17   = 4.80292E-03
+                                                      O-18   = 2.74374E-02
  FUE  10 10.2246  1.100E-05  945.0   37.506  100.000  U-235  = 3.18206E+00  Gd-152 = 8.38182E-03  Gd-154 = 9.25653E-02
                                                       Gd-155 = 6.32515E-01  Gd-156 = 8.80480E-01  Gd-157 = 6.77481E-01
                                                       Gd-158 = 1.08216E+00  Gd-160 = 9.64417E-01  U-234  = 2.98386E-02
                                                       U-238  = 8.05264E+01  O-16   = 1.18913E+01  O-17   = 4.81358E-03
                                                       O-18   = 2.74983E-02
- FUE  11 10.1614  1.100E-05  945.0   24.850  100.000  U-235  = 4.18684E+00  Gd-152 = 8.38182E-03  Gd-154 = 9.25653E-02
-                                                      Gd-155 = 6.32515E-01  Gd-156 = 8.80480E-01  Gd-157 = 6.77481E-01
-                                                      Gd-158 = 1.08216E+00  Gd-160 = 9.64417E-01  U-234  = 3.98580E-02
-                                                      U-238  = 7.95101E+01  O-16   = 1.18929E+01  O-17   = 4.81420E-03
-                                                      O-18   = 2.75019E-02
+ FUE  11 10.1614  1.100E-05  945.0   24.850  100.000  U-235  = 4.14630E+00  Gd-152 = 6.70546E-03  Gd-154 = 7.40522E-02
+                                                      Gd-155 = 5.06012E-01  Gd-156 = 7.04384E-01  Gd-157 = 5.41985E-01
+                                                      Gd-158 = 8.65729E-01  Gd-160 = 7.71533E-01  U-234  = 3.94328E-02
+                                                      U-238  = 8.04326E+01  O-16   = 1.18789E+01  O-17   = 4.80856E-03
+                                                      O-18   = 2.74697E-02
 
  Total # compositions defined:  35
 
@@ -414,7 +414,7 @@
  Nuclides treated as resonance absorbers in fuel regions: 442
  Nuclides treated as resonance absorbers in CRD and structural regions: 357
 1___________________________________________________________________________________________________________________________________
- * C A S M O 5    3.06.00 Rev:00 Created:2022/08/15 **Studsvik** Executed:2025/03/17  16:18:27   State Point =      1 Page =       6
+ * C A S M O 5    3.06.00 Rev:00 Created:2022/08/15 **Studsvik** Executed:2025/03/17  16:29:54   State Point =      1 Page =       6
  * Hatch Unit 1 .. GNF2/GE-14 ORNL Optimized Dominant DOM 5% max fuel
  * Burnup =     0.000 V=40.0  TF= 945.0  TM= 555.0  BOR=   0.0
 
@@ -481,7 +481,7 @@
 
        Total                                     :  100
 1___________________________________________________________________________________________________________________________________
- * C A S M O 5    3.06.00 Rev:00 Created:2022/08/15 **Studsvik** Executed:2025/03/17  16:18:27   State Point =      1 Page =       7
+ * C A S M O 5    3.06.00 Rev:00 Created:2022/08/15 **Studsvik** Executed:2025/03/17  16:29:54   State Point =      1 Page =       7
  * Hatch Unit 1 .. GNF2/GE-14 ORNL Optimized Dominant DOM 5% max fuel
  * Burnup =     0.000 V=40.0  TF= 945.0  TM= 555.0  BOR=   0.0
 
@@ -525,7 +525,7 @@
        12  FUE  HEL  CAN      10.414   0.001   6.513  6.1137E-01  1.8753E-02  1.9981E-01     1.0        1.6825E+00    Round 
            COO                 0.462                  8.5254E-01
 1___________________________________________________________________________________________________________________________________
- * C A S M O 5    3.06.00 Rev:00 Created:2022/08/15 **Studsvik** Executed:2025/03/17  16:18:27   State Point =      1 Page =       8
+ * C A S M O 5    3.06.00 Rev:00 Created:2022/08/15 **Studsvik** Executed:2025/03/17  16:29:54   State Point =      1 Page =       8
  * Hatch Unit 1 .. GNF2/GE-14 ORNL Optimized Dominant DOM 5% max fuel
  * Burnup =     0.000 V=40.0  TF= 945.0  TM= 555.0  BOR=   0.0
 
@@ -538,7 +538,7 @@
   313  MOD          0.747    2.9595E+01     314  MOD          0.747    0.0000E+00
   315  MOD          0.747    1.4642E+01     316  MOD          0.747    0.0000E+00
 1___________________________________________________________________________________________________________________________________
- * C A S M O 5    3.06.00 Rev:00 Created:2022/08/15 **Studsvik** Executed:2025/03/17  16:18:27   State Point =      1 Page =       9
+ * C A S M O 5    3.06.00 Rev:00 Created:2022/08/15 **Studsvik** Executed:2025/03/17  16:29:54   State Point =      1 Page =       9
  * Hatch Unit 1 .. GNF2/GE-14 ORNL Optimized Dominant DOM 5% max fuel
  * Burnup =     0.000 V=40.0  TF= 945.0  TM= 555.0  BOR=   0.0
 
@@ -575,7 +575,7 @@
    060   313  The vertical   outer water gap. If a cruciform CR is present, the water below the rod                         [MOD ]
    062   315  The horizontal outer water gap. If a cruciform CR is present, the water to the left of the rod                [MOD ]
 1___________________________________________________________________________________________________________________________________
- * C A S M O 5    3.06.00 Rev:00 Created:2022/08/15 **Studsvik** Executed:2025/03/17  16:18:27   State Point =      1 Page =      10
+ * C A S M O 5    3.06.00 Rev:00 Created:2022/08/15 **Studsvik** Executed:2025/03/17  16:29:54   State Point =      1 Page =      10
  * Hatch Unit 1 .. GNF2/GE-14 ORNL Optimized Dominant DOM 5% max fuel
  * Burnup =     0.000 V=40.0  TF= 945.0  TM= 555.0  BOR=   0.0
 
@@ -583,15 +583,15 @@
  Fuel Loading                      (adjusted for thermal expansion)     (not adjusted for thermal expansion)
  ------------                                  (g/cm)     (lb/cm)               (g/cm)     (lb/cm)
  Fuel    mass              :                 5.8399E+02  1.2875E+00            5.8818E+02  1.2967E+00
- Metal   mass              :                 5.1101E+02  1.1266E+00            5.1468E+02  1.1347E+00
- Fissile mass              :                 2.2971E+01  5.0642E-02            2.3136E+01  5.1005E-02
+ Metal   mass              :                 5.1134E+02  1.1273E+00            5.1501E+02  1.1354E+00
+ Fissile mass              :                 2.1811E+01  4.8085E-02            2.1968E+01  4.8430E-02
 
 
  Hydraulic and other segment data (adjusted for thermal expansion)  
 
     Densities                                  (g/cm3)    (lb/ft3)  
     ---------
- Average fissile density   :                 4.0840E-01  2.5496E+01
+ Average fissile density   :                 3.8778E-01  2.4209E+01
  Base water density ( 6.60 MP  555.0 K):     7.4697E-01  4.6633E+01
  Channel rel. water density:                 6.1831E-01
  Bypass  rel. water density:                 1.0000E+00
@@ -637,7 +637,7 @@
  Water to fuel ratio       :                 2.5981E+00
  Fuel to segment ratio     :                 2.3990E-01
 1___________________________________________________________________________________________________________________________________
- * C A S M O 5    3.06.00 Rev:00 Created:2022/08/15 **Studsvik** Executed:2025/03/17  16:18:27   State Point =      1 Page =      11
+ * C A S M O 5    3.06.00 Rev:00 Created:2022/08/15 **Studsvik** Executed:2025/03/17  16:29:54   State Point =      1 Page =      11
  * Hatch Unit 1 .. GNF2/GE-14 ORNL Optimized Dominant DOM 5% max fuel
  * Burnup =     0.000 V=40.0  TF= 945.0  TM= 555.0  BOR=   0.0
 
@@ -662,7 +662,7 @@
  Spatial adjoint calculation will not be performed (default).
  Pn scattering order:  0
  Power density  in W/gU      . . . . . . =   2.3450E+01
-      -"-       in kW/litre    . . . . . =   5.1965E+01
+      -"-       in kW/litre    . . . . . =   5.1998E+01
  Thermal expansion is performed.
  Gamma smearing factor on pin powers:   0.095
  Constant Energy Release per Fission (ERF) model (Persic-Trkov values).
@@ -672,7 +672,7 @@
  Nuclide-dependent inhour equation (NUIH): ON.
  Limited depletion chains (201-library equivalent) will be used. (non-EXT).
 1___________________________________________________________________________________________________________________________________
- * C A S M O 5    3.06.00 Rev:00 Created:2022/08/15 **Studsvik** Executed:2025/03/17  16:18:27   State Point =      1 Page =      12
+ * C A S M O 5    3.06.00 Rev:00 Created:2022/08/15 **Studsvik** Executed:2025/03/17  16:29:54   State Point =      1 Page =      12
  * Hatch Unit 1 .. GNF2/GE-14 ORNL Optimized Dominant DOM 5% max fuel
  * Burnup =     0.000 V=40.0  TF= 945.0  TM= 555.0  BOR=   0.0
 
@@ -710,8 +710,8 @@
 
  Parameters for SIMULATE on SIM card:
     Segment type name  . . . . =                         
-    Weight percent U-235 . . . =     4.495 (initial heavy metal)     4.495 (initial total uranium)
-    Weight percent of BA . . . =     4.857 Gd
+    Weight percent U-235 . . . =     4.265 (initial heavy metal)     4.265 (initial total uranium)
+    Weight percent of BA . . . =     4.429 Gd
     Present  number of BA rods =    14 (Total)
     Original number of BA rods =    14 (Total)
     Weight percent of Pu . . . =     0.000 (initial heavy metal)
@@ -725,7 +725,7 @@
  Highest energy micro-group number in fluence edit (FLU)=   1  20000000.000 eV (upper boundary)
  Lowest  energy micro-group number in fluence edit (FLU)=  62   1000000.000 eV (lower boundary)
 1___________________________________________________________________________________________________________________________________
- * C A S M O 5    3.06.00 Rev:00 Created:2022/08/15 **Studsvik** Executed:2025/03/17  16:18:27   State Point =      1 Page =      13
+ * C A S M O 5    3.06.00 Rev:00 Created:2022/08/15 **Studsvik** Executed:2025/03/17  16:29:54   State Point =      1 Page =      13
  * Hatch Unit 1 .. GNF2/GE-14 ORNL Optimized Dominant DOM 5% max fuel
  * Burnup =     0.000 V=40.0  TF= 945.0  TM= 555.0  BOR=   0.0
 
@@ -760,7 +760,7 @@
  --------------------
  Micro-group calculation =  1.00000E-04   500
 1___________________________________________________________________________________________________________________________________
- * C A S M O 5    3.06.00 Rev:00 Created:2022/08/15 **Studsvik** Executed:2025/03/17  16:18:27   State Point =      1 Page =      14
+ * C A S M O 5    3.06.00 Rev:00 Created:2022/08/15 **Studsvik** Executed:2025/03/17  16:29:54   State Point =      1 Page =      14
  * Hatch Unit 1 .. GNF2/GE-14 ORNL Optimized Dominant DOM 5% max fuel
  * Burnup =     0.000 V=40.0  TF= 945.0  TM= 555.0  BOR=   0.0
 
@@ -778,12 +778,18 @@
 
  Nuclide number densities (Identical compositions are not repeated)
    (Composition name, Material number, and Macro-region number)
- FUE    1  55  U-235 = 4.23369E+20  U-234 = 3.74206E+18  U-238 = 2.28017E+22  O-16  = 4.63448E+22
-               O-17  = 1.76520E+19  O-18  = 9.52368E+19
- FUE    2   1  U-235 = 5.88007E+20  U-234 = 5.36923E+18  U-238 = 2.26373E+22  O-16  = 4.63485E+22
-               O-17  = 1.76534E+19  O-18  = 9.52444E+19
- FUE    6   9  U-235 = 1.17597E+21  U-234 = 1.12430E+19  U-238 = 2.20501E+22  O-16  = 4.63617E+22
+ FUE    1  55  U-235 = 4.46889E+20  U-234 = 3.97349E+18  U-238 = 2.27782E+22  O-16  = 4.63453E+22
+               O-17  = 1.76522E+19  O-18  = 9.52379E+19
+ FUE    2   1  U-235 = 6.11526E+20  U-234 = 5.60276E+18  U-238 = 2.26138E+22  O-16  = 4.63490E+22
+               O-17  = 1.76536E+19  O-18  = 9.52455E+19
+ FUE    4  11  U-235 = 6.35045E+20  U-234 = 5.83648E+18  U-238 = 2.25903E+22  O-16  = 4.63496E+22
+               O-17  = 1.76538E+19  O-18  = 9.52466E+19
+ FUE    6   9  U-235 = 8.93752E+20  U-234 = 8.41675E+18  U-238 = 2.23320E+22  O-16  = 4.63554E+22
+               O-17  = 1.76560E+19  O-18  = 9.52586E+19
+ FUE   10  14  U-235 = 1.17597E+21  U-234 = 1.12430E+19  U-238 = 2.20501E+22  O-16  = 4.63617E+22
                O-17  = 1.76584E+19  O-18  = 9.52716E+19
+ FUE   29   3  U-235 = 1.01134E+21  U-234 = 9.59335E+18  U-238 = 2.22145E+22  O-16  = 4.63580E+22
+               O-17  = 1.76570E+19  O-18  = 9.52640E+19
  FUE   38   2  U-235 = 8.46715E+20  U-234 = 7.94664E+18  U-238 = 2.23789E+22  O-16  = 4.63543E+22
                O-17  = 1.76556E+19  O-18  = 9.52564E+19
  FUE   44  51  U-235 = 8.55535E+20  Gd-152= 3.39720E+18  Gd-154= 3.70295E+19  Gd-155= 2.51393E+20
@@ -803,8 +809,8 @@
                Dy-167= 0.00000E+00  Dy-168= 0.00000E+00  Ho-166= 0.00000E+00  Ho166m= 0.00000E+00
                U-234 = 8.06963E+18  U-238 = 2.08070E+22  O-16  = 4.57775E+22  O-17  = 1.74359E+19
                O-18  = 9.40711E+19
- FUE   54  48  U-235 = 1.10837E+21  Gd-152= 2.71776E+18  Gd-154= 2.96236E+19  Gd-155= 2.01114E+20
-               Gd-156= 2.78163E+20  Gd-157= 2.12665E+20  Gd-158= 3.37546E+20  Gd-160= 2.97051E+20
+ FUE   54  48  U-235 = 1.07512E+21  Gd-152= 2.03832E+18  Gd-154= 2.22177E+19  Gd-155= 1.50836E+20
+               Gd-156= 2.08622E+20  Gd-157= 1.59499E+20  Gd-158= 2.53160E+20  Gd-160= 2.22789E+20
                Gd-153= 0.00000E+00  Gd-159= 0.00000E+00  Gd-161= 0.00000E+00  Tb-159= 0.00000E+00
                Tb-160= 0.00000E+00  Tb-161= 0.00000E+00  Dy-160= 0.00000E+00  Dy-161= 0.00000E+00
                Dy-162= 0.00000E+00  Dy-163= 0.00000E+00  Dy-164= 0.00000E+00  Dy-165= 0.00000E+00
@@ -818,8 +824,8 @@
                Tb-163= 0.00000E+00  Tb-164= 0.00000E+00  Tb-165= 0.00000E+00  Dy-156= 0.00000E+00
                Dy-157= 0.00000E+00  Dy-158= 0.00000E+00  Dy-159= 0.00000E+00  Dy-166= 0.00000E+00
                Dy-167= 0.00000E+00  Dy-168= 0.00000E+00  Ho-166= 0.00000E+00  Ho166m= 0.00000E+00
-               U-234 = 1.05967E+19  U-238 = 2.07825E+22  O-16  = 4.57298E+22  O-17  = 1.74178E+19
-               O-18  = 9.39731E+19
+               U-234 = 1.02580E+19  U-238 = 2.10438E+22  O-16  = 4.56757E+22  O-17  = 1.73971E+19
+               O-18  = 9.38618E+19
  FUE   64  13  U-235 = 8.33599E+20  Gd-152= 3.39720E+18  Gd-154= 3.70295E+19  Gd-155= 2.51393E+20
                Gd-156= 3.47704E+20  Gd-157= 2.65831E+20  Gd-158= 4.21933E+20  Gd-160= 3.71314E+20
                Gd-153= 0.00000E+00  Gd-159= 0.00000E+00  Gd-161= 0.00000E+00  Tb-159= 0.00000E+00
@@ -837,8 +843,8 @@
                Dy-167= 0.00000E+00  Dy-168= 0.00000E+00  Ho-166= 0.00000E+00  Ho166m= 0.00000E+00
                U-234 = 7.85028E+18  U-238 = 2.08289E+22  O-16  = 4.57770E+22  O-17  = 1.74357E+19
                O-18  = 9.40701E+19
- FUE  104  37  U-235 = 1.09004E+21  Gd-152= 3.37620E+18  Gd-154= 3.68005E+19  Gd-155= 2.49838E+20
-               Gd-156= 3.45554E+20  Gd-157= 2.64187E+20  Gd-158= 4.19323E+20  Gd-160= 3.69018E+20
+ FUE  104  37  U-235 = 1.07948E+21  Gd-152= 2.70096E+18  Gd-154= 2.94404E+19  Gd-155= 1.99871E+20
+               Gd-156= 2.76443E+20  Gd-157= 2.11350E+20  Gd-158= 3.35459E+20  Gd-160= 2.95215E+20
                Gd-153= 0.00000E+00  Gd-159= 0.00000E+00  Gd-161= 0.00000E+00  Tb-159= 0.00000E+00
                Tb-160= 0.00000E+00  Tb-161= 0.00000E+00  Dy-160= 0.00000E+00  Dy-161= 0.00000E+00
                Dy-162= 0.00000E+00  Dy-163= 0.00000E+00  Dy-164= 0.00000E+00  Dy-165= 0.00000E+00
@@ -852,8 +858,8 @@
                Tb-163= 0.00000E+00  Tb-164= 0.00000E+00  Tb-165= 0.00000E+00  Dy-156= 0.00000E+00
                Dy-157= 0.00000E+00  Dy-158= 0.00000E+00  Dy-159= 0.00000E+00  Dy-166= 0.00000E+00
                Dy-167= 0.00000E+00  Dy-168= 0.00000E+00  Ho-166= 0.00000E+00  Ho166m= 0.00000E+00
-               U-234 = 1.04214E+19  U-238 = 2.04389E+22  O-16  = 4.54998E+22  O-17  = 1.73302E+19
-               O-18  = 9.35004E+19
+               U-234 = 1.03103E+19  U-238 = 2.06760E+22  O-16  = 4.54465E+22  O-17  = 1.73099E+19
+               O-18  = 9.33909E+19
  COO  124   1  H     = 2.78203E+22  O-16  = 1.39045E+22  O-17  = 5.29602E+18  O-18  = 2.85733E+19
                B     = 0.00000E+00  Sn112C= 4.61220E+17  Sn114C= 3.13820E+17  Sn115C= 1.61665E+17
                Sn116C= 6.91354E+18  Sn117C= 3.65172E+18  Sn118C= 1.15162E+19  Sn119C= 4.08441E+18
@@ -895,9 +901,9 @@
   0.658 0.478 0.478 0.478 0.478 0.478 0.478 0.478 0.478 0.647
   0.776 0.647 0.647 0.647 0.647 0.647 0.647 0.647 0.647 0.765
 
- K-inf from the micro group calculations = 1.39906 (Average pin cell)   
-   (Spectra calculation number 1-12)     = 1.26430 1.35152 1.41400 1.41417 1.26848 0.97055 1.42094 1.36783 0.97541 0.98868
-                                         = 0.97108 1.17035
+ K-inf from the micro group calculations = 1.38857 (Average pin cell)   
+   (Spectra calculation number 1-12)     = 1.27399 1.35152 1.38813 1.36516 1.28735 0.95473 1.42094 1.35835 0.97132 0.98682
+                                         = 0.95528 1.18604
 
  Mesh for 2D transport calc
  --------------------------
@@ -913,7 +919,7 @@
  EPS flux:                     1.00000E-04
  MoC source option:                 Linear
 1___________________________________________________________________________________________________________________________________
- * C A S M O 5    3.06.00 Rev:00 Created:2022/08/15 **Studsvik** Executed:2025/03/17  16:18:27   State Point =      1 Page =      15
+ * C A S M O 5    3.06.00 Rev:00 Created:2022/08/15 **Studsvik** Executed:2025/03/17  16:29:54   State Point =      1 Page =      15
  * Hatch Unit 1 .. GNF2/GE-14 ORNL Optimized Dominant DOM 5% max fuel
  * Burnup =     0.000 V=40.0  TF= 945.0  TM= 555.0  BOR=   0.0
 
@@ -933,10 +939,197 @@
 
    Iter   Eigen  Del PCM      CPU      EPS-2D    EPS-Source    EPS-Flux    CMCO-Dev    Thermals
    ----   -----  -------      ---    --------    ----------    --------    --------    --------
-     1  1.20787              0.00    1.000000      1.000000    1.000000    1.000000        0
-     2  1.03455 -17332.4     0.37   21.328708      0.057042    0.000926    9.000000        2
-     3  1.05875   2420.6     0.33    0.042437      0.005071    0.000097    0.204391        2
-     4  1.06214    339.2     0.62    0.010987      0.002797    0.000063    0.036333        5
-     5  1.06331    116.4     0.44    0.004256      0.001281    0.000029    0.029068        3
-     6  1.06349     18.5     0.61    0.001801      0.000530    0.000012    0.008756        5
-     7  1.06357      7.6     0.54    0.000659      0.000137    0.000003    0.002576        4
+     1  1.19569              0.00    1.000000      1.000000    1.000000    1.000000        0
+     2  1.02080 -17488.6     0.59   20.495215      0.057854    0.000904    9.000000        2
+     3  1.04521   2440.8     0.52    0.042052      0.004992    0.000092    0.199851        2
+     4  1.04852    331.1     0.59    0.010643      0.002736    0.000061    0.035007        5
+     5  1.04964    112.4     0.47    0.004211      0.001271    0.000029    0.029164        3
+     6  1.04982     17.6     0.93    0.001793      0.000525    0.000012    0.008381        5
+     7  1.04989      6.9     0.49    0.000654      0.000111    0.000002    0.002574        4
+     8  1.04991      2.3     0.25    0.000172      0.000061    0.000001    0.000778        1
+     9  1.04992      0.4     0.24    0.000094      0.000036    0.000001    0.000760        1
+    10  1.04991     -0.1     0.23    0.000061      0.000017    0.000000    0.000146        1
+ Total CPU (Sec)             4.31
+ Wall Time (Sec)             4.31
+ 2D k-infinity:  1.049914
+
+ ********************
+ * K-inf = 1.04991  *   (Fundamental mode calc. skipped)
+ ********************
+
+ Segment reaction-rate balance ( 586 groups ):
+ Segment nu-bar       :      2.46247 neutrons/fission
+ E-ave. chi           :      2.02047 MeV
+ Total Nu*fis (prod)  :      1.000000
+ Total Abs.   (dest)  :      0.952466
+ Total Capture        :      0.547777
+ Total Fission        :      0.406096
+ Capture/Fission      :      1.348886
+ k-infinity           :      1.049906  Delta pcm to 2D k-inf:         -0.78 
+
+ Energy Release per Fission Data:
+ Ave. Q/Fission (E0)  :      193.699 MeV/fission
+ Ave. Qc-Bar          :        5.991 MeV/capture        8.081 MeV/fission
+ Q-Total RR based     :      201.780 MeV/fission
+
+ Polar Angle Integration: TY Optimum 2 Polar Angle
+ 2D gamma transport calculation symmetry: 1/2 assembly                                           
+ Boundary Conditions: West: Mirror,  South: Mirror,  East: Mirror,  North: Mirror                         Source regions:       1642
+ 2D Groups: 18   EDIT-B Groups:  8   Azimuthal Angles:  32   Polar Angles:  2   Ray-Spacing:  0.1000 cm           Tracks:     118036
+ 1642 out of: 1642 source regions treated with MOC linear source. Threads: 1
+
+ Gamma calculation converged in 14 iterations
+1___________________________________________________________________________________________________________________________________
+ * C A S M O 5    3.06.00 Rev:00 Created:2022/08/15 **Studsvik** Executed:2025/03/17  16:29:54   State Point =      1 Page =      16
+ * Hatch Unit 1 .. GNF2/GE-14 ORNL Optimized Dominant DOM 5% max fuel
+ * Burnup=   0.000  V=40.0  TF= 945.0  TM= 555.0  BOR=   0.0  EFPH=     0  ECH=   0.000                                       
+
+          --------------------  C A S M O 5      S U M M A R Y    ----------------------  
+                          Burnup =    0.000 MWd/kg   K-inf =   1.04991
+          ------------------------------------------------------------------------------  
+
+  * Power Distribution    Peak: LL = 1.334  ( 173.9 W/cm),  HSF =  1.334  (   53.8 W/cm2) (including   9.5% gamma smearing)
+  1.151 
+  1.199  1.116 
+  1.044  0.402  0.765 
+  1.184  0.795  0.445  0.609 
+  1.185  0.386  0.753  0.455  1.040 
+  1.223  1.039  0.472  0.000  0.000  1.158 
+  1.242  1.184  0.973  0.000  0.000  1.040  0.390 
+  1.334* 1.266  1.059  1.092  1.091  0.987  0.904  0.917 
+  1.183  1.248  0.414  1.050  1.068  1.042  1.021  1.000  0.416 
+  1.321  1.333  1.263  1.170  1.140  1.125  1.127  1.155  1.141  1.323 
+
+  * Two Group Data                                    K-inf Xe, No Xe  1.04991     1.04991
+    Diff1   , Diff2         1.5999E+00   4.1507E-01   M2     ",  "     7.9995E+01  7.9995E+01
+    Abs1    , Abs2          8.2561E-03   7.4949E-02   Xe2  Mic, Mac    9.2144E+05  2.2106E-19 [Xe-135]
+    Nufiss1 , Nufiss2       6.3652E-03   9.1734E-02   Sm2    ",  "     2.8103E+04  6.7420E-21
+    Remov1  , Nu            1.3232E-02   2.4625E+00   Bor1   ",  "     9.4838E+00  5.9113E-24
+    Kappa   , Xe-Yield      3.2546E-11   6.5667E-02   Bor2   ",  "     4.8415E+02  3.0177E-22
+                                                      Xe2  Mic, Mac    0.5946E+03  0.1427E-21 [Xe135m]
+
+  * Neutron Balance            Group 1      Group 2        Total
+    Flux  . . . . . . .     1.8906E-01   3.3377E-02   2.2244E-01
+    Absorption  . . . .     3.6596E-01   5.8651E-01   9.5247E-01
+    Fission . . . . . .     1.1149E-01   2.9460E-01   4.0610E-01
+    Nufission . . . . .     2.8214E-01   7.1786E-01   1.0000E+00
+    Leakage . . . . . .     0.0000E+00   0.0000E+00   0.0000E+00
+    Outscatter  . . . .     5.9701E-01   1.0505E-02   6.0752E-01
+    K-inf  (2-Group). .     2.9622E-01   7.5368E-01   1.0499E+00
+    ETA*F, P  . . . . .     7.7096E-01   1.2240E+00   6.1578E-01
+    Inv Velocity  . . .     5.5271E-08   2.4827E-06
+
+  * Neutron Detector        1.5751E+12   Gamma Det    3.6988E+10   Pr. Neut. Gen.  2.5392E-05
+    Integrated Abs  . .     0.0000E+00   Int Nufiss   0.0000E+00   Int Leakage     0.0000E+00
+    Fast Fluence    . .     0.0000E+00   Power (w/g)  2.3450E+01   Norm Factor     9.0726E+14
+    Conv Ratio      . .     4.5465E-01   Fiss/Tot U%  4.2655E+00   Fiss/Tot Pu%    0.0000E+00
+    Neut Det (Abs)  . .     1.8887E+16   GTIP(Abs)    4.4354E+14
+
+  * Nuclide  Wt(%) HM       Capture      Fission      Int Capt      Int Fiss           MWd/kg
+    U-233     0.0000        0.0000E+00   0.0000E+00   0.0000E+00   0.0000E+00           0.000 Fis
+    U-234     0.0403        2.0428E-03   5.7221E-05   0.0000E+00   0.0000E+00           0.000 Fer
+    U-235     4.2655        9.1121E-02   3.7926E-01   0.0000E+00   0.0000E+00           0.000 Fis
+    U-236     0.0000        0.0000E+00   0.0000E+00   0.0000E+00   0.0000E+00           0.000
+    U-237     0.0000        0.0000E+00   0.0000E+00   0.0000E+00   0.0000E+00           0.000
+    U-238    95.6942        2.1182E-01   2.6775E-02   0.0000E+00   0.0000E+00           0.000 Fer
+    Np-237    0.0000        0.0000E+00   0.0000E+00   0.0000E+00   0.0000E+00           0.000
+    Np-238    0.0000        0.0000E+00   0.0000E+00   0.0000E+00   0.0000E+00           0.000
+    Np-239    0.0000        0.0000E+00   0.0000E+00   0.0000E+00   0.0000E+00           0.000
+    Pu-238    0.0000        0.0000E+00   0.0000E+00   0.0000E+00   0.0000E+00           0.000 Fer
+    Pu-239    0.0000        0.0000E+00   0.0000E+00   0.0000E+00   0.0000E+00           0.000 Fis
+    Pu-240    0.0000        0.0000E+00   0.0000E+00   0.0000E+00   0.0000E+00           0.000 Fer
+    Pu-241    0.0000        0.0000E+00   0.0000E+00   0.0000E+00   0.0000E+00           0.000 Fis
+    Pu-242    0.0000        0.0000E+00   0.0000E+00   0.0000E+00   0.0000E+00           0.000
+    Pu-243    0.0000        0.0000E+00   0.0000E+00   0.0000E+00   0.0000E+00           0.000
+    Am-241    0.0000        0.0000E+00   0.0000E+00   0.0000E+00   0.0000E+00           0.000
+    Am-242    0.0000        0.0000E+00   0.0000E+00   0.0000E+00   0.0000E+00           0.000
+    Am-243    0.0000        0.0000E+00   0.0000E+00   0.0000E+00   0.0000E+00           0.000
+    Am242m    0.0000        0.0000E+00   0.0000E+00   0.0000E+00   0.0000E+00           0.000 Fis
+    Cm-242    0.0000        0.0000E+00   0.0000E+00   0.0000E+00   0.0000E+00           0.000 Fis
+    Cm-243    0.0000        0.0000E+00   0.0000E+00   0.0000E+00   0.0000E+00           0.000 Fis
+    Cm-244    0.0000        0.0000E+00   0.0000E+00   0.0000E+00   0.0000E+00           0.000 Fer
+    Cm-245    0.0000        0.0000E+00   0.0000E+00   0.0000E+00   0.0000E+00           0.000
+    Cm-246    0.0000        0.0000E+00   0.0000E+00   0.0000E+00   0.0000E+00           0.000
+    Tot  U   100.000        3.0498E-01   4.0610E-01   0.0000E+00   0.0000E+00           0.000
+    Tot Pu     0.000        0.0000E+00   0.0000E+00   0.0000E+00   0.0000E+00           0.000
+    Sum      100.000
+
+  * Nuclide  Wt(%) HM       Capture      Fission      Int Capt      Int Fiss           MWd/kg
+    Fissile    4.265        9.1121E-02   3.7926E-01   0.0000E+00   0.0000E+00           0.000
+    Fertile   95.735        2.1386E-01   2.6832E-02   0.0000E+00   0.0000E+00           0.000
+    Sum      100.000
+
+  * Nuclide  Wt(%) FUE      Capture                   Int Capt
+    Tot Gd    3.8429        1.7597E-01                0.0000E+00
+    Gd-155    0.5603        3.9387E-02                0.0000E+00
+    Gd-157    0.6002        1.3375E-01                0.0000E+00
+
+  * Delayed Neutron Data (Tuttle) (Weight:0-D Adjoint)
+                          Grp 1   Grp 2   Grp 3   Grp 4   Grp 5   Grp 6              Total
+       Decay Constants:  0.0128  0.0318  0.1196  0.3193  1.4027  3.9317
+              Yield*E3:  0.2489  1.4705  1.3463  2.9583  1.0514  0.2480             7.3235 (Beta Phy.)
+    Effective Yield*E3:  0.2379  1.4068  1.2853  2.8405  1.0083  0.2381             7.0169 (Beta Eff.)   I-bar= 0.9581
+
+
+ Mean Neutron Generation Time (sec) :  2.5392E-05
+ Period to Reactivity Conversion (In-Hour):
+ Period        (sec)   10.00   20.00   30.00   40.00   50.00   75.00  100.00  125.00  150.00  175.00  225.00  300.00
+ Doubling Time (sec)    6.93   13.86   20.80   27.73   34.66   51.99   69.32   86.65  103.98  121.30  155.96  207.95
+ Reactivity    (pcm)  262.10  185.54  146.98  122.74  105.80   79.21   63.58   53.19   45.77   40.18   32.32   25.01
+1___________________________________________________________________________________________________________________________________
+ * C A S M O 5    3.06.00 Rev:00 Created:2022/08/15 **Studsvik** Executed:2025/03/17  16:29:54   State Point =      2 Page =      17
+ * Hatch Unit 1 .. GNF2/GE-14 ORNL Optimized Dominant DOM 5% max fuel
+ * Burnup =     0.000 V=40.0  TF= 945.0  TM= 555.0  BOR=   0.0
+
+ List of Errors/Warnings/Cautions/Notes Encountered
+ Severity: (E):Error, (W):Warning, (C):Caution, (N):Note
+ -------------------------------------------------------
+ Routine       S  Text
+ -------       -  ----
+ CHKDUP        W  Duplicated input: ---Check input card:SPA
+ INP_PDE       N  Units not specified on PDE card --defaulting to 'WGU' (not 'KWL').
+
+   ** C A S M O 5  Summary **
+
+   Hatch Unit 1 .. GNF2/GE-14 ORNL Optimized Dominant DOM 5% max fuel
+   HVOI= 40.0 HTFU=  945.0 HTMO=  555.0 HTCO=  555.0 HBOR=    0.0
+   No Void    TFU    TMO    TCO    BOR   PRE  Rod   Burnup   K-inf   K-inf     M2     Pin   U-235 Fiss Pu  Tot Pu
+                                                    MWd/kg            Two-Group      Peak    Wt %    Wt %    Wt %
+    1 40.0  945.0  555.0  555.0    0.0  66.0  ZR1    0.000 1.04991 1.04991  79.99   1.334   4.265   0.000   0.000  
+
+
+ Run Terminated.    2  Messages Encountered
+     0  Fatal error(s),       1  Warning(s)
+     1  Usage note(s),        0  Caution(s)
+
+ Run Started     (Date,Time):  2025/03/17   16:29:54  
+ Run Completed   (Date,Time):  2025/03/17   16:30:03  
+ Total Wall Time Used       :               00:00:09
+ Total CPU  Time Used       :               00:00:07  CPU Util:  77%
+
+ #S.P.                      :           1
+ Sec./S.P.                  :        9.00
+ S.P./Min.                  :        6.67
+ # of gamma calcs.          :           1
+
+ Maximum dynamic memory used (bytes):      251525100
+
+ Files:
+ Input                      :  GE14.BOC.inp
+ Output                     :  GE14.BOC.out
+ Screen                     :  GE14.BOC.log
+ Card Image                 :  GE14.BOC.cax
+
+ Scanning C.I. file:
+ Card Image File contains no non-ASCII characters.
+ Card image file contains:      4604 lines
+ Scan Complete
+
+ *********************************
+ *        CASMO5 v3.06.00        *
+ *       Normal Termination      *
+ *     -Warnings Encountered-    *
+ *********************************
+Mon 17 Mar 2025 04:30:03 PM EDT
+Using executable --> /home/rizki/CMSCODES/C5/v3.06.00L/Linux_64/c5.exe
+-rwxr-xr-x 1 rizki rizki 64473144 Sep  8  2022 /home/rizki/CMSCODES/C5/v3.06.00L/Linux_64/c5.exe

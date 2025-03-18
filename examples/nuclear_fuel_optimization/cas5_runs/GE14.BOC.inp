@@ -35,17 +35,17 @@ PIN 3 1.200 1.280 / 'MOD' 'BOX' // 4 * 2x2 water rod
 *
 * Fuel for ORNL Optimized Dominant DOM 5% max fuel
 *
-FUE 1 10.64 / 1.8
-FUE 2 10.64 / 2.5
-FUE 3 10.64 / 2.5
-FUE 4 10.64 / 5.0
+FUE 1 10.64 / 1.9
+FUE 2 10.64 / 2.6
+FUE 3 10.64 / 2.7
+FUE 4 10.64 / 3.8
 FUE 5 10.64 / 5.0
-FUE 6 10.64 / 5.0
+FUE 6 10.64 / 4.3
 FUE 7 10.64 / 3.6
 FUE 8 10.4462 / 3.9 64016=5.0
-FUE 9 10.4462 / 5.0 64016=4.0
+FUE 9 10.4462 / 4.8 64016=3.0
 FUE 10 10.4462 / 3.8 64016=5.0
-FUE 11 10.3816 / 5.0 64016=5.0
+FUE 11 10.3816 / 4.9 64016=4.0
 *
 * Configuration of pins and fuel types
 *

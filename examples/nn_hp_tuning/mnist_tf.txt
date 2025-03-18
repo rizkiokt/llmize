@@ -6,11 +6,13 @@ Input Layer: 28x28 pixel images (flattened to 784 inputs)
 Hidden Layer: A single dense layer with configurable number of units, activated by ReLU
 Dropout Layer: Added for regularization to prevent overfitting
 Output Layer: Dense layer with 10 units (representing digits 0-9), softmax activation for multi-class classification
+
 Hyperparameters to Optimize:
 
 units: The number of neurons in the hidden layer
 dropout: The dropout rate (probability of randomly deactivating neurons during training)
 learning_rate: The learning rate for the Adam optimizer
+
 Training Setup:
 
 Optimizer: Adam
@@ -18,6 +20,7 @@ Loss Function: Sparse categorical cross-entropy (ideal for multi-class classific
 Metrics: Accuracy
 Epochs: 5 epochs
 Validation data used during training
+
 Data Processing:
 
 Dataset: MNIST

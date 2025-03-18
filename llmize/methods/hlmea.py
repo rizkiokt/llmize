@@ -177,7 +177,7 @@ Make sure the length of solutions match examples given. Don't guess for the scor
         for step in range(num_steps+1):
             if step == 0:
                 if verbose > 0: 
-                    log_info(f"Step {step} - Best Initial Score: {best_score:.2f}, Average Initial Score: {np.average(init_scores):.2f}")
+                    log_info(f"Step {step} - Best Initial Score: {best_score:.3f}, Average Initial Score: {np.average(init_scores):.3f}")
                 init_pairs = parse_pairs(init_samples, init_scores)
                 example_pairs = init_pairs
                 hp_text = "The solutions below are generated randomly."
@@ -210,7 +210,7 @@ Make sure the length of solutions match examples given. Don't guess for the scor
             avg_score_per_step.append(avg_step_score)
             best_score_history.append(best_score)
             if verbose > 0: 
-                log_info(f"Step {step} - Current Best Score: {best_score:.2f}, Average Batch Score: {avg_step_score:.2f} - Best Batch Score: {best_step_score:.2f}")
+                log_info(f"Step {step} - Current Best Score: {best_score:.3f}, Average Batch Score: {avg_step_score:.3f} - Best Batch Score: {best_step_score:.3f}")
             if verbose > 1:
                 log_info(f"Best solution: {best_solution}")
 
