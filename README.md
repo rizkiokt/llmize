@@ -1,16 +1,15 @@
 # LLMize
 
-LLMize is a powerful Python package that leverages Large Language Models (LLMs) for optimization tasks. It provides a flexible and efficient framework for solving various optimization problems using LLM-based approaches, with support for both maximization and minimization objectives.
+LLMize is a Python package that uses Large Language Models (LLMs) for multipurpose, numerical optimization tasks. It provides a flexible and efficient framework for solving various optimization problems using LLM-based approaches, with support for both maximization and minimization objectives.
 
 ## Features
 
-- **LLM-Based Optimization**: Utilizes state-of-the-art language models (default: Gemini 2.0 Flash) for generating and optimizing solutions
+- **LLM-Based Optimization**: Utilizes LLM for iteratively generating and optimizing solutions, inspired by OPRO methods [paper here](https://arxiv.org/abs/2309.03409)
 - **Flexible Problem Definition**: Supports both text-based problem descriptions and objective functions
 - **Parallel Processing**: Built-in support for parallel evaluation of solutions
 - **Callback System**: Extensible callback mechanism for monitoring and controlling the optimization process
-- **Temperature Control**: Adjustable temperature parameter for controlling solution diversity
 - **Early Stopping**: Built-in early stopping mechanism to prevent overfitting
-- **Adaptive Temperature**: Dynamic temperature adjustment based on optimization progress
+- **Adaptive Temperature**: Dynamic LLM temperature adjustment based on optimization progress
 
 ## Installation
 
@@ -22,25 +21,25 @@ pip install .
 
 ## Quick Start
 
-Here's a simple example of how to use LLMize:
+Here's a simple example of how to use LLMize with OPRO approach:
 
 ```python
-from llmize import Optimizer
+from llmize import OPRO
 
 # Define your problem
 problem_text = "Find the optimal values of x and y that maximize the function f(x,y) = x^2 + y^2"
 objective_function = lambda x, y: x**2 + y**2
 
 # Initialize the optimizer
-optimizer = Optimizer(
+opro = OPRO(
     problem_text=problem_text,
     obj_func=objective_function,
-    llm_model="gemini-2.0-flash",  # or your preferred model
+    llm_model="gemini-2.0-flash",  # or any preferred model
     api_key="your-api-key"
 )
 
 # Run optimization
-results = optimizer.maximize(
+results = opro.maximize(
     num_steps=50,
     batch_size=5,
     temperature=1.0,
