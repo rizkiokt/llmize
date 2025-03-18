@@ -18,7 +18,7 @@ def check_init(func):
     """
 
     def inner(self, init_samples=None, init_scores=None, num_steps=50, batch_size=5,
-                 temperature=1.0, callbacks=None, verbose=1):
+                 temperature=1.0, callbacks=None, verbose=1, parallel_n_jobs=1):
 
         if init_samples is None or init_scores is None:
             log_critical("init_samples and init_scores must be provided.")
@@ -39,7 +39,7 @@ def check_init(func):
             log_critical("verbose must be an integer.")
             raise ValueError("verbose must be an integer.")
 
-        return func(self, init_samples, init_scores, num_steps, batch_size, temperature, callbacks, verbose)
+        return func(self, init_samples, init_scores, num_steps, batch_size, temperature, callbacks, verbose, parallel_n_jobs)
     return inner
 
 def time_it(func):

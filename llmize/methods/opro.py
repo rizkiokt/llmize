@@ -5,7 +5,7 @@ from ..llm.llm_init import initialize_llm
 from ..utils.parsing import parse_pairs
 from ..utils.truncate import truncate_pairs
 from ..utils.logger import log_info, log_warning, log_error, log_critical, log_debug
-from ..callbacks import EarlyStopping, OptimalScoreStopping
+from ..callbacks import EarlyStopping, OptimalScoreStopping, AdaptTempOnPlateau
 
 class OPRO(Optimizer):
     """
@@ -67,7 +67,7 @@ Make sure the length of solutions match examples given. Don't guess for the scor
         return prompt
     
     def optimize(self, init_samples=None, init_scores=None, num_steps=50, batch_size=5,
-                 temperature=1.0, callbacks=None, verbose=1, optimization_type="maximize"):
+                 temperature=1.0, callbacks=None, verbose=1, optimization_type="maximize", parallel_n_jobs=1):
         
         """
         Run the OPRO optimization algorithm.
@@ -104,6 +104,9 @@ Make sure the length of solutions match examples given. Don't guess for the scor
 
         max_examples = batch_size
 
+        # Call the helper function to initialize callbacks
+        self._initialize_callbacks(callbacks, temperature)
+
         for step in range(num_steps+1):
             if step == 0:
                 if verbose > 0: 
@@ -122,7 +125,7 @@ Make sure the length of solutions match examples given. Don't guess for the scor
                                                             batch_size, verbose)
             
             best_score, best_solution, step_scores, best_step_score = self._evaluate_solutions(solution_array, best_solution,
-                                                                              optimization_type, verbose, best_score)
+                                                                              optimization_type, verbose, best_score, parallel_n_jobs)
             new_pairs = parse_pairs(solution_array, step_scores)
             example_pairs = example_pairs + new_pairs
             example_pairs = truncate_pairs(example_pairs, max_examples, optimization_type)

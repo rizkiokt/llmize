@@ -127,7 +127,7 @@ Return exactly **{batch_size} unique solutions** and the chosen hyperparameters 
         return current_solutions, current_scores    
     
     def optimize(self, init_samples=None, init_scores=None, num_steps=50, batch_size=5,
-                 temperature=1.0, callbacks=None, verbose=1, optimization_type="maximize"):
+                 temperature=1.0, callbacks=None, verbose=1, optimization_type="maximize", parallel_n_jobs=1):
         
         """
         Run the HLMSA optimization algorithm.
@@ -166,6 +166,9 @@ Return exactly **{batch_size} unique solutions** and the chosen hyperparameters 
         final_sa_temperature = 1.0 #final temperature
         cooling_rate = 0.95 #initial cooling rate
 
+        # Call the helper function to initialize callbacks
+        self._initialize_callbacks(callbacks, temperature)
+
         for step in range(num_steps+1):
             if step == 0:
                 sa_temperature = init_sa_temperature
@@ -197,7 +200,7 @@ Return exactly **{batch_size} unique solutions** and the chosen hyperparameters 
                 cooling_rate = hp[0]
 
             best_score, best_solution, step_scores, best_step_score = self._evaluate_solutions(solution_array, best_solution,
-                                                                              optimization_type, verbose, best_score)
+                                                                              optimization_type, verbose, best_score, parallel_n_jobs)
             
             current_solutions, current_scores = self._accept_solutions(prev_solutions, prev_scores, 
                                                                        solution_array, step_scores, sa_temperature, optimization_type)

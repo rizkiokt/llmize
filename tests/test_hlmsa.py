@@ -25,7 +25,7 @@ def test_optimal_score_stopping():
             return float(x)**2  # Simple quadratic function
     
     hlmsa = HLMSA(
-        problem_text="Maximize x^2 where x is integer between -10 and 10",
+        problem_text="Maximize x^2 where x is integer between -10 and 10 (not including 10 and -10)",
         obj_func=obj_func, api_key=os.getenv("GEMINI_API_KEY")
     )
     

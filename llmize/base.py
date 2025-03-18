@@ -1,15 +1,16 @@
 import functools
+import multiprocessing as mp
 from .utils.parsing import parse_pairs
 from .llm.llm_call import generate_content
 from .llm.llm_init import initialize_llm
 from .utils.logger import log_info, log_critical, log_debug, log_warning, log_error
 from .utils.parsing import parse_response
 from .utils.decorators import check_init, time_it
-
+from .callbacks import EarlyStopping, AdaptTempOnPlateau
 class Optimizer:
     def __init__(self, problem_text=None, obj_func=None, llm_model="gemini-2.0-flash", api_key=None):
         """
-        Initialize the Optimizer with the general configuration.
+        Initialize the Optimizer with the general configuration.    
         """
         self.problem_text = problem_text
         self.obj_func = obj_func
@@ -19,7 +20,7 @@ class Optimizer:
     @check_init
     @time_it
     def maximize(self, init_samples=None, init_scores=None, num_steps=50, batch_size=5,
-                 temperature=1.0, callbacks=None, verbose=1):
+                 temperature=1.0, callbacks=None, verbose=1, parallel_n_jobs=1):
         """
         Run the optimization algorithm to maximize the objective function.
 
@@ -37,12 +38,12 @@ class Optimizer:
         """
         return self.optimize(init_samples=init_samples, init_scores=init_scores,
                               num_steps=num_steps, batch_size=batch_size, temperature=temperature, 
-                              callbacks=callbacks, verbose=verbose, optimization_type="maximize")
+                              callbacks=callbacks, verbose=verbose, optimization_type="maximize", parallel_n_jobs=parallel_n_jobs)
     
     @check_init
     @time_it
     def minimize(self, init_samples=None, init_scores=None, num_steps=50, batch_size=5,
-                 temperature=1.0, callbacks=None, verbose=1):
+                 temperature=1.0, callbacks=None, verbose=1, parallel_n_jobs=1):
         """
         Run the optimization algorithm to minimize the objective function.
 
@@ -60,7 +61,7 @@ class Optimizer:
         """
         return self.optimize(init_samples=init_samples, init_scores=init_scores,
                               num_steps=num_steps, batch_size=batch_size, temperature=temperature,
-                                callbacks=callbacks, verbose=verbose, optimization_type="minimize")
+                              callbacks=callbacks, verbose=verbose, optimization_type="minimize", parallel_n_jobs=parallel_n_jobs)
     
     def get_configuration(self):
         """
@@ -190,7 +191,7 @@ class Optimizer:
         else:
             return solution_array
     
-    def _evaluate_solutions(self, solution_array, best_solution, optimization_type, verbose, best_score=None):
+    def _evaluate_solutions(self, solution_array, best_solution, optimization_type, verbose, best_score=None, parallel_n_jobs=1):
         """
         Evaluate a list of solutions and update the best solution based on an objective function.
         
@@ -201,17 +202,22 @@ class Optimizer:
             obj_func (callable): A function that takes a solution and returns its score.
             best_score (float, optional): The current best score. If not provided, it will be
                 initialized based on the optimization_type.
+            parallel_n_jobs (int): Number of CPU cores to use for parallel evaluation.
+                If 1 (default), uses sequential processing.
+                If >1, uses parallel processing with specified number of cores.
+                If -1, uses all available cores.
                 
         Returns:
-            tuple: (best_score, best_solution, step_scores)
+            tuple: (best_score, best_solution, step_scores, best_step_score)
                 best_score (float): The updated best score after evaluating solutions.
                 best_solution (any): The solution corresponding to the best score.
                 step_scores (list): A list of scores for each solution in solution_array.
+                best_step_score (float): The best score in the current batch.
         
         Raises:
             ValueError: If optimization_type is not "maximize" or "minimize".
         """
-        step_scores = []
+        self.optimization_type = optimization_type  # Store for _evaluate_single_solution
         
         if optimization_type == "maximize":
             best_step_score = -float('inf')  # Start with the lowest possible value for maximization
@@ -224,16 +230,30 @@ class Optimizer:
         else:
             raise ValueError("optimization_type must be 'maximize' or 'minimize'")
         
-        for solution in solution_array:
+        # Evaluate solutions either in parallel or sequentially
+        if parallel_n_jobs != 1:
             try:
-                score = self.obj_func(solution)
+                # If parallel_n_jobs is -1, use all available cores
+                if parallel_n_jobs == -1:
+                    parallel_n_jobs = mp.cpu_count()
+                # Ensure parallel_n_jobs is at least 1
+                parallel_n_jobs = max(1, min(parallel_n_jobs, mp.cpu_count()))
+                
+                if verbose > 1:
+                    log_debug(f"Using {parallel_n_jobs} CPU cores for parallel evaluation")
+                    
+                with mp.Pool(processes=parallel_n_jobs) as pool:
+                    step_scores = pool.map(self._evaluate_single_solution, solution_array)
             except Exception as e:
-                log_error(f"Error occurred while evaluating solution {solution}: {e}")
-                continue
-            step_scores.append(score)
+                log_error(f"Parallel evaluation failed, falling back to sequential: {e}")
+                step_scores = [self._evaluate_single_solution(solution) for solution in solution_array]
+        else:
+            step_scores = [self._evaluate_single_solution(solution) for solution in solution_array]
 
+        # Process results
+        for i, score in enumerate(step_scores):
             if verbose > 1:
-                log_debug(f"Score for solution {solution}: {score}")
+                log_debug(f"Score for solution {solution_array[i]}: {score}")
 
             # Update best step score for the current batch
             if (optimization_type == "maximize" and score > best_step_score) or \
@@ -244,8 +264,38 @@ class Optimizer:
             if (optimization_type == "maximize" and score > best_score) or \
             (optimization_type == "minimize" and score < best_score):
                 best_score = score
-                best_solution = solution
+                best_solution = solution_array[i]
 
         return best_score, best_solution, step_scores, best_step_score
     
+    def _evaluate_single_solution(self, solution):
+        """
+        Evaluate a single solution using the objective function.
+        
+        Parameters:
+            solution: The solution to evaluate
+            
+        Returns:
+            float: The score of the solution
+        """
+        try:
+            return self.obj_func(solution)
+        except Exception as e:
+            log_error(f"Error occurred while evaluating solution {solution}: {e}")
+            return float('inf') if self.optimization_type == "minimize" else float('-inf')
 
+    def _initialize_callbacks(self,callbacks, temperature):
+        """
+        Initialize wait counter and temperature for callbacks if early stopping or adaptive temperature is used.
+        
+        Parameters:
+        - callbacks (list): A list of callback functions.
+        - temperature (float): The initial temperature for the LLM model.
+        """
+        if callbacks:
+            for callback in callbacks:
+                if isinstance(callback, EarlyStopping):
+                    callback.wait = 0
+                if isinstance(callback, AdaptTempOnPlateau):
+                    callback.temperature = temperature
+                    callback.wait = 0
