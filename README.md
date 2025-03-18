@@ -25,25 +25,26 @@ Here's a simple example of how to use LLMize with OPRO approach:
 
 ```python
 from llmize import OPRO
+import os
+def obj_func(x):
+    if isinstance(x, list):
+        return (float(x[0]) + 2)**2  # Minimum at x=-2
+    else:
+        return (float(x) + 2)**2  # Minimum at x=-2
 
-# Define your problem
-problem_text = "Find the optimal values of x and y that maximize the function f(x,y) = x^2 + y^2"
-objective_function = lambda x, y: x**2 + y**2
-
-# Initialize the optimizer
 opro = OPRO(
-    problem_text=problem_text,
-    obj_func=objective_function,
-    llm_model="gemini-2.0-flash",  # or any preferred model
-    api_key="your-api-key"
+    problem_text="Minimize (x+2)^2",
+    obj_func=obj_func, api_key=os.getenv("GEMINI_API_KEY")
 )
 
-# Run optimization
-results = opro.maximize(
-    num_steps=50,
-    batch_size=5,
-    temperature=1.0,
-    verbose=1
+init_samples = ["0", "1", "-1"]
+init_scores = [4, 9, 1]  # (0+2)^2, (1+2)^2, (-1+2)^2
+
+result = opro.minimize(
+    init_samples=init_samples,
+    init_scores=init_scores,
+    num_steps=2,
+    batch_size=2
 )
 
 # Access results
