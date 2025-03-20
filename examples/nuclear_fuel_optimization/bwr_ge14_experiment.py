@@ -13,10 +13,10 @@ from llmize.utils.logger import log_info, log_error
 
 
 # Experiment parameters
-models = ["gemini-2.0-flash", "gemini-2.0-flash-thinking-exp"]
-#models = ["gemini-2.0-flash"]
-methods = [OPRO, HLMEA, HLMSA]
-#methods = [HLMEA, HLMSA]
+#models = ["gemini-2.0-flash", "gemini-2.0-flash-thinking-exp"]
+models = ["gemini-2.0-flash"]
+#methods = [OPRO, HLMEA, HLMSA]
+methods = [HLMEA, HLMSA]
 num_trials = 5
 batch_size = 16
 num_steps = 250
@@ -68,9 +68,9 @@ with multiprocessing.Pool() as pool:
 
 # Callbacks
 callbacks = [
-    EarlyStopping(monitor='best_score', min_delta=1.0, patience=50, verbose=0),
-    OptimalScoreStopping(optimal_score=290.22, tolerance=0.01), # Adjusted for this scale
-    AdaptTempOnPlateau(monitor='best_score', init_temperature=1.0, min_delta=1.0, patience=20, factor=1.1, max_temperature=1.9, verbose=1)
+    EarlyStopping(monitor='best_score', min_delta=0.01, patience=50, verbose=0),
+    OptimalScoreStopping(optimal_score=100.0, tolerance=0.01), # Adjusted for this scale
+    AdaptTempOnPlateau(monitor='best_score', init_temperature=1.0, min_delta=0.01, patience=20, factor=1.1, max_temperature=1.9, verbose=1)
 ]
 
 with open("bwr_ge14.txt", "r") as f:
@@ -107,7 +107,8 @@ for model in models:
                     batch_size=batch_size,
                     num_steps=num_steps,
                     callbacks=callbacks,
-                    verbose=1
+                    verbose=1,
+                    parallel_n_jobs=-1
                 )
             except Exception as e:
                 log_error(f"Optimization failed: {str(e)}")
