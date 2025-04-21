@@ -10,13 +10,22 @@ LLMize is a Python package that uses Large Language Models (LLMs) for multipurpo
 - **Callback System**: Extensible callback mechanism for monitoring and controlling the optimization process
 - **Early Stopping**: Built-in early stopping mechanism to prevent overfitting
 - **Adaptive Temperature**: Dynamic LLM temperature adjustment based on optimization progress
+- **Comprehensive Results**: Detailed optimization results including best scores, solution history, and convergence metrics
 
 ## Installation
 
 To install LLMize, you can use pip:
 
 ```bash
-pip install .
+pip install llmize
+```
+
+For development installation:
+
+```bash
+git clone https://github.com/yourusername/llmize.git
+cd llmize
+pip install -e .
 ```
 
 ## Quick Start
@@ -26,6 +35,7 @@ Here's a simple example of how to use LLMize with OPRO approach:
 ```python
 from llmize import OPRO
 import os
+
 def obj_func(x):
     if isinstance(x, list):
         return (float(x[0]) + 2)**2  # Minimum at x=-2
@@ -34,7 +44,8 @@ def obj_func(x):
 
 opro = OPRO(
     problem_text="Minimize (x+2)^2",
-    obj_func=obj_func, api_key=os.getenv("GEMINI_API_KEY")
+    obj_func=obj_func,
+    api_key=os.getenv("GEMINI_API_KEY")
 )
 
 init_samples = ["0", "1", "-1"]
@@ -47,9 +58,11 @@ result = opro.minimize(
     batch_size=2
 )
 
-# Access results
-best_solution = results['best_solution']
-best_score = results['best_score']
+# Access results using the new OptimizationResult class
+print(f"Best solution: {result.best_solution}")
+print(f"Best score: {result.best_score}")
+print(f"Convergence history: {result.best_score_history}")
+print(f"Per-step scores: {result.best_score_per_step}")
 ```
 
 ## Examples
@@ -60,7 +73,7 @@ The package includes several example implementations:
 - **Traveling Salesman Problem**: Solve TSP using LLM-based optimization
 - **Linear Programming**: Solve linear programming problems
 - **Convex Optimization**: Handle convex optimization tasks
-- **Nuclear Fuel Optimization**: Complex optimization in nuclear engineering
+- **Nuclear Fuel Optimization**: Complex optimization in nuclear engineering (https://arxiv.org/abs/2503.19620)
 
 Check the `examples/` directory for detailed implementations.
 
@@ -95,33 +108,68 @@ results = optimizer.maximize(
 )
 ```
 
+### Result Analysis
+
+The new `OptimizationResult` class provides comprehensive optimization results:
+
+```python
+# Access optimization results
+print(f"Best solution: {results.best_solution}")
+print(f"Best score: {results.best_score}")
+print(f"Score history: {results.best_score_history}")
+print(f"Per-step scores: {results.best_score_per_step}")
+print(f"Average scores: {results.avg_score_per_step}")
+print(f"Number of steps: {results.num_steps}")
+print(f"Total time: {results.total_time} seconds")
+```
+
 ## Configuration
 
 The optimizer can be configured with various parameters:
 
-- `problem_text`: Text description of the optimization problem
-- `obj_func`: Objective function to optimize
-- `llm_model`: Choice of LLM model
-- `api_key`: API key for the LLM service
-- `num_steps`: Number of optimization iterations
-- `batch_size`: Number of solutions to generate per step
-- `temperature`: Controls solution diversity
-- `verbose`: Level of logging output
+```python
+opro = OPRO(
+    problem_text="Your problem description",
+    obj_func=your_objective_function,
+    api_key=your_api_key,
+    temperature=0.7,
+    max_tokens=100,
+    # ... other parameters
+)
+```
+
+## Dependencies
+
+- Python >= 3.8
+- numpy >= 1.21.0
+- google-generativeai >= 0.3.0
+- colorama >= 0.4.6
+- matplotlib >= 3.5.0
 
 ## Contributing
 
-We welcome contributions! Please feel free to:
-1. Fork the repository
-2. Create a feature branch
-3. Submit a pull request
-4. Report bugs or suggest features through issues
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+## Citation
+
+If you use LLMize in your research, please cite:
+
+```bibtex
+@software{llmize2025,
+  author = {Your Name},
+  title = {LLMize: LLM-based Optimization Library},
+  year = {2025},
+  publisher = {GitHub},
+  url = {https://github.com/rizkiokt/llmize}
+}
+```
+
 ## Contact
 
 For questions, suggestions, or support, please contact:
 - Email: rizki@bwailabs.com
-- GitHub Issues: [Open an issue](https://github.com/yourusername/llmize/issues)
+- GitHub Issues: [Open an issue](https://github.com/rizkiokt/llmize/issues)
