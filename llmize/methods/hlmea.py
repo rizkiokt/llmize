@@ -1,11 +1,11 @@
 import numpy as np
 
-from ..base import Optimizer
+from ..base import Optimizer, OptimizationResult
 from ..llm.llm_init import initialize_llm
 from ..utils.parsing import parse_pairs
 from ..utils.truncate import truncate_pairs
 from ..utils.logger import log_info, log_warning, log_error, log_critical, log_debug
-from ..callbacks import EarlyStopping, OptimalScoreStopping
+from ..callbacks import EarlyStopping, OptimalScoreStopping, AdaptTempOnPlateau
 
 class HLMEA(Optimizer):
     """
@@ -154,7 +154,7 @@ Make sure the length of solutions match examples given. Don't guess for the scor
         - optimization_type (str): "maximize" or "minimize" (default: "maximize").
 
         Returns:
-        - results (dict): A dictionary containing the best solution, best score, best score history, best score per step, and average score per step.
+        - results (OptimizationResult): An object containing the optimization results.
         """
 
         client = initialize_llm(self.llm_model, self.api_key)
@@ -173,6 +173,8 @@ Make sure the length of solutions match examples given. Don't guess for the scor
         best_score_history = [best_score]
         avg_score_per_step = [np.average(init_scores)]
         best_score_per_step = [best_score]
+
+        max_examples = batch_size
 
         # Call the helper function to initialize callbacks
         self._initialize_callbacks(callbacks, temperature)
@@ -193,20 +195,14 @@ Make sure the length of solutions match examples given. Don't guess for the scor
             if verbose > 3:
                 log_debug(f"Prompt: {prompt}")
 
-            solution_array, hp = self._generate_solutions(client, prompt, temperature, 
-                                                            batch_size, verbose, hp_parse=True)
+            solution_array = self._generate_solutions(client, prompt, temperature, 
+                                                            batch_size, verbose)
             
             best_score, best_solution, step_scores, best_step_score = self._evaluate_solutions(solution_array, best_solution,
                                                                               optimization_type, verbose, best_score, parallel_n_jobs)
             new_pairs = parse_pairs(solution_array, step_scores)
-            example_pairs = new_pairs
-
-            # Check if hp is not None and has the correct format (3 values between 0 and 1)
-            if hp is None or len(hp) != 3 or not all(0 <= x <= 1 for x in hp):
-                log_warning("Invalid or missing hyperparameters format.")
-                hp_text = "The hyperparameters used in previous step are unknown."
-            else:
-                hp_text = f"""The hyperparameters (elitism_rate, mutation_rate, crossover_rate) used in previous step are: <hp> {hp[0]}, {hp[1]}, {hp[2]} <\hp>"""
+            example_pairs = example_pairs + new_pairs
+            example_pairs = truncate_pairs(example_pairs, max_examples, optimization_type)
 
             avg_step_score = sum(step_scores) / len(solution_array)
             best_score_per_step.append(best_step_score)
@@ -228,22 +224,16 @@ Make sure the length of solutions match examples given. Don't guess for the scor
                     early_stop = isinstance(callback, EarlyStopping) and callback.wait >= callback.patience
                     optimal_stop = isinstance(callback, OptimalScoreStopping) and callback.on_step_end(step, logs)
                     if early_stop or optimal_stop:
-                        return {
-                            "best_solution": best_solution,
-                            "best_score": best_score,
-                            "best_score_history": best_score_history,
-                            "best_score_per_step": best_score_per_step,
-                            "avg_score_per_step": avg_score_per_step
-                        }
+                        break
+                if early_stop or optimal_stop:
+                    break
 
-        results = {
-            "best_solution": best_solution,
-            "best_score": best_score,
-            "best_score_history": best_score_history,
-            "best_score_per_step": best_score_per_step,
-            "avg_score_per_step": avg_score_per_step
-        }
-
-        return results
+        return OptimizationResult(
+            best_solution=best_solution,
+            best_score=best_score,
+            best_score_history=best_score_history,
+            best_score_per_step=best_score_per_step,
+            avg_score_per_step=avg_score_per_step
+        )
 
 

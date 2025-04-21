@@ -1,4 +1,5 @@
-numpy
-google-genai
-colorama
-pytest
+numpy>=1.21.0
+google-generativeai>=0.3.0
+colorama>=0.4.6
+pytest>=7.0.0
+matplotlib>=3.5.0

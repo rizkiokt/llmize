@@ -7,6 +7,35 @@ from .utils.logger import log_info, log_critical, log_debug, log_warning, log_er
 from .utils.parsing import parse_response
 from .utils.decorators import check_init, time_it
 from .callbacks import EarlyStopping, AdaptTempOnPlateau
+
+class OptimizationResult:
+    """
+    A class to store the results of an optimization process.
+    
+    Attributes:
+        best_solution: The best solution found during optimization
+        best_score: The score of the best solution
+        best_score_history: List of best scores at each step
+        best_score_per_step: List of best scores in each batch
+        avg_score_per_step: List of average scores in each batch
+    """
+    def __init__(self, best_solution, best_score, best_score_history, best_score_per_step, avg_score_per_step):
+        self.best_solution = best_solution
+        self.best_score = best_score
+        self.best_score_history = best_score_history
+        self.best_score_per_step = best_score_per_step
+        self.avg_score_per_step = avg_score_per_step
+
+    def to_dict(self):
+        """Convert the result to a dictionary format."""
+        return {
+            "best_solution": self.best_solution,
+            "best_score": self.best_score,
+            "best_score_history": self.best_score_history,
+            "best_score_per_step": self.best_score_per_step,
+            "avg_score_per_step": self.avg_score_per_step
+        }
+
 class Optimizer:
     def __init__(self, problem_text=None, obj_func=None, llm_model="gemini-2.0-flash", api_key=None):
         """

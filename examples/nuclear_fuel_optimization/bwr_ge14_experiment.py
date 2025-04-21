@@ -10,6 +10,7 @@ from cas5_functions import objective_function, template_content
 from llmize import OPRO, HLMEA, HLMSA
 from llmize.callbacks import EarlyStopping, OptimalScoreStopping, AdaptTempOnPlateau
 from llmize.utils.logger import log_info, log_error
+from llmize.optimization_result import OptimizationResult
 
 
 # Experiment parameters
@@ -112,20 +113,24 @@ for model in models:
                 )
             except Exception as e:
                 log_error(f"Optimization failed: {str(e)}")
-                result = {
-                    'best_score': float('inf'),
-                    'best_solution': None,
-                    'best_score_history': []
-                }
+                result = OptimizationResult(
+                    best_score=float('inf'),
+                    best_solution=None,
+                    best_score_history=[],
+                    best_score_per_step=[],
+                    avg_score_per_step=[]
+                )
             
             results[f"{model}_{method_name}"].append({
-                'best_score': result['best_score'],
-                'best_solution': result['best_solution'],
-                'best_score_history': result['best_score_history']
+                'best_score': result.best_score,
+                'best_solution': result.best_solution,
+                'best_score_history': result.best_score_history,
+                'best_score_per_step': result.best_score_per_step,
+                'avg_score_per_step': result.avg_score_per_step
             })
             
-            log_info(f"Trial {trial + 1} best score: {result['best_score']:.2f}")
-            log_info(f"Trial {trial + 1} best solution: {result['best_solution']}")
+            log_info(f"Trial {trial + 1} best score: {result.best_score:.2f}")
+            log_info(f"Trial {trial + 1} best solution: {result.best_solution}")
 
 # Store results in current directory
 results_dir = os.path.join(os.path.dirname(__file__), 'results')

@@ -7,7 +7,7 @@ def plot_scores(results, filename=None):
 
     Parameters
     ----------
-    results : dict
+    results : OptimizationResult
         Output of :func:`llmize.OPRO.minimize` or :func:`llmize.OPRO.maximize`.
     filename : str, optional
         If not None, save the plot to the specified filename.
@@ -19,9 +19,9 @@ def plot_scores(results, filename=None):
     interactive backend is closed.
 
     """
-    score_history = results["best_score_history"]
-    best_score_per_step = results["best_score_per_step"]
-    avg_score_per_step = results["avg_score_per_step"]
+    score_history = results.best_score_history
+    best_score_per_step = results.best_score_per_step
+    avg_score_per_step = results.avg_score_per_step
     
     steps = np.arange(len(score_history))
     

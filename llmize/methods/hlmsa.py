@@ -1,11 +1,11 @@
 import numpy as np
 
-from ..base import Optimizer
+from ..base import Optimizer, OptimizationResult
 from ..llm.llm_init import initialize_llm
 from ..utils.parsing import parse_pairs
 from ..utils.truncate import truncate_pairs
 from ..utils.logger import log_info, log_warning, log_error, log_critical, log_debug
-from ..callbacks import EarlyStopping, OptimalScoreStopping
+from ..callbacks import EarlyStopping, OptimalScoreStopping, AdaptTempOnPlateau
 
 class HLMSA(Optimizer):
     """
@@ -142,7 +142,7 @@ Return exactly **{batch_size} unique solutions** and the chosen hyperparameters 
         - optimization_type (str): "maximize" or "minimize" (default: "maximize").
 
         Returns:
-        - results (dict): A dictionary containing the best solution, best score, best score history, best score per step, and average score per step.
+        - results (OptimizationResult): An object containing the optimization results.
         """
 
         client = initialize_llm(self.llm_model, self.api_key)
@@ -229,27 +229,21 @@ Return exactly **{batch_size} unique solutions** and the chosen hyperparameters 
                     early_stop = isinstance(callback, EarlyStopping) and callback.wait >= callback.patience
                     optimal_stop = isinstance(callback, OptimalScoreStopping) and callback.on_step_end(step, logs)
                     if early_stop or optimal_stop:
-                        return {
-                            "best_solution": best_solution,
-                            "best_score": best_score,
-                            "best_score_history": best_score_history,
-                            "best_score_per_step": best_score_per_step,
-                            "avg_score_per_step": avg_score_per_step
-                        }
+                        break
+                if early_stop or optimal_stop:
+                    break
             
             if sa_temperature < final_sa_temperature:
                 log_warning(f"SA Temperature is too low. Stopping the optimization process.")
                 break
 
 
-        results = {
-            "best_solution": best_solution,
-            "best_score": best_score,
-            "best_score_history": best_score_history,
-            "best_score_per_step": best_score_per_step,
-            "avg_score_per_step": avg_score_per_step
-        }
-
-        return results
+        return OptimizationResult(
+            best_solution=best_solution,
+            best_score=best_score,
+            best_score_history=best_score_history,
+            best_score_per_step=best_score_per_step,
+            avg_score_per_step=avg_score_per_step
+        )
 
 

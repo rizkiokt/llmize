@@ -45,11 +45,10 @@ def test_optimal_score_stopping():
     )
     
     # Check if optimization results contain expected fields
-    assert "best_score" in result
-    assert "best_solution" in result
-    assert "best_score_history" in result
-    assert isinstance(result["best_score_history"], list)
-
+    assert hasattr(result, 'best_score')
+    assert hasattr(result, 'best_solution')
+    assert hasattr(result, 'best_score_history')
+    assert isinstance(result.best_score_history, list)
 
 def test_hlmsa_minimize():
     """Test HLMSA's minimize functionality"""
@@ -74,7 +73,7 @@ def test_hlmsa_minimize():
         batch_size=2
     )
     
-    assert result["best_score"] <= 4  # Should be better than initial best score
+    assert result.best_score <= 4  # Should be better than initial best score
 
 def test_hlmsa_with_invalid_optimization_type():
     """Test HLMSA with invalid optimization type"""

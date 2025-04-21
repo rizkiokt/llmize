@@ -7,9 +7,9 @@ from ..utils.truncate import truncate_pairs
 from ..utils.logger import log_info, log_warning, log_error, log_critical, log_debug
 from ..callbacks import EarlyStopping, OptimalScoreStopping, AdaptTempOnPlateau
 
-class OPRO(Optimizer):
+class ADOPRO(Optimizer):
     """
-    OPRO optimizer for optimizing tasks using a specified LLM model.
+    ADOPRO optimizer for optimizing tasks using a specified LLM model.
 
     This class inherits from the `Optimizer` class and allows configuration 
     of various parameters related to the optimization process.
@@ -22,7 +22,7 @@ class OPRO(Optimizer):
 
     def __init__(self, problem_text=None, obj_func=None, llm_model="gemini-2.0-flash", api_key=None):
         """
-        Initialize the OPRO optimizer with the provided configuration.
+        Initialize the ADOPRO optimizer with the provided configuration.
         Inherits from `Optimizer`.
 
         :param str llm_model: The name of the LLM model to use.
@@ -70,7 +70,7 @@ Make sure the length of solutions match examples given. Don't guess for the scor
                  temperature=1.0, callbacks=None, verbose=1, optimization_type="maximize", parallel_n_jobs=1):
         
         """
-        Run the OPRO optimization algorithm.
+        Run the ADOPRO optimization algorithm.
 
         Parameters:
         - init_samples (list): A list of initial solutions.
@@ -88,7 +88,7 @@ Make sure the length of solutions match examples given. Don't guess for the scor
         client = initialize_llm(self.llm_model, self.api_key)
 
         if verbose > 0: 
-            log_info(f"Running OPRO optimization with {num_steps} steps and batch size {batch_size}...")
+            log_info(f"Running ADOPRO optimization with {num_steps} steps and batch size {batch_size}...")
         best_solution = None
         if optimization_type == "maximize":
             best_score = np.max(init_scores)
@@ -102,7 +102,7 @@ Make sure the length of solutions match examples given. Don't guess for the scor
         avg_score_per_step = [np.average(init_scores)]
         best_score_per_step = [best_score]
 
-        #max_examples = batch_size
+        max_examples = batch_size
 
         # Call the helper function to initialize callbacks
         self._initialize_callbacks(callbacks, temperature)
@@ -128,7 +128,7 @@ Make sure the length of solutions match examples given. Don't guess for the scor
                                                                               optimization_type, verbose, best_score, parallel_n_jobs)
             new_pairs = parse_pairs(solution_array, step_scores)
             example_pairs = example_pairs + new_pairs
-            #example_pairs = truncate_pairs(example_pairs, max_examples, optimization_type)
+            example_pairs = truncate_pairs(example_pairs, max_examples, optimization_type)
 
             avg_step_score = sum(step_scores) / len(solution_array)
             best_score_per_step.append(best_step_score)
