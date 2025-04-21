@@ -73,7 +73,7 @@ The package includes several example implementations:
 - **Traveling Salesman Problem**: Solve TSP using LLM-based optimization
 - **Linear Programming**: Solve linear programming problems
 - **Convex Optimization**: Handle convex optimization tasks
-- **Nuclear Fuel Optimization**: Complex optimization in nuclear engineering (https://arxiv.org/abs/2503.19620)
+- **Nuclear Fuel Optimization**: Complex optimization in nuclear engineering [paper here](https://arxiv.org/abs/2503.19620)
 
 Check the `examples/` directory for detailed implementations.
 
