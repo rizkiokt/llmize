@@ -13,10 +13,14 @@ on:
 jobs:
   version:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
+          token: ${{ secrets.VERSION_BOT_TOKEN }}
       
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -64,7 +68,8 @@ jobs:
           git tag -a "v${{ steps.new_version.outputs.version }}" -m "Version ${{ steps.new_version.outputs.version }}"
       
       - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          tags: true 
+        run: |
+          git push origin main
+          git push origin "v${{ steps.new_version.outputs.version }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.VERSION_BOT_TOKEN }} 

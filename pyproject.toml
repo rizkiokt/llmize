@@ -4,7 +4,7 @@ build-backend = 'setuptools.build_meta'
 
 [project]
 name = "llmize"
-version = "0.1.0"
+version = "0.1.1"
 description = "A library for LLM-based optimization using techniques like OPRO, HLMEA, and HLMSA"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -36,7 +36,12 @@ Documentation = "https://llmize.readthedocs.io"
 Repository = "https://github.com/rizkiokt/llmize.git"
 "Bug Tracker" = "https://github.com/rizkiokt/llmize/issues"
 
-
+dependencies = [
+    "numpy>=1.21.0",
+    "google-genai>=1.5.0",
+    "colorama>=0.4.6",
+    "matplotlib>=3.5.0",
+]
 
 [project.optional-dependencies]
 dev = [
