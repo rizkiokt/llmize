@@ -1,5 +1,5 @@
 API Reference
-============
+=============
 
 This page contains the complete API reference for LLMize.
 
@@ -17,4 +17,4 @@ Submodules
 .. toctree::
    :maxdepth: 4
 
-   llmize 
+   modules/llmize 
