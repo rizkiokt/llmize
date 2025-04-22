@@ -46,5 +46,6 @@ dev = [
     "mypy>=1.0",
 ]
 
-[tool.setuptools]
-packages = ["llmize"]
+[tool.setuptools.packages.find]
+include = ["llmize", "llmize.*"]
+exclude = ["tests", "tests.*", "docs", "docs.*"]
