@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 setup(
     name="llmize",
     version="0.1.2",
-    packages=find_packages(),
+    packages=find_packages(include=['llmize', 'llmize.*']),
     install_requires=[
         "numpy>=1.21.0",
         "google-genai>=1.5.0",
