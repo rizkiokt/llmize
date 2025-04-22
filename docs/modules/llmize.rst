@@ -1,5 +1,5 @@
 LLMize Module
-============
+====================
 
 .. automodule:: llmize
    :members:
@@ -7,7 +7,7 @@ LLMize Module
    :show-inheritance:
 
 Submodules
----------
+------------------
 
 .. toctree::
    :maxdepth: 4

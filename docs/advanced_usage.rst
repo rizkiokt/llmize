@@ -1,8 +1,8 @@
 Advanced Usage
-=============
+====================
 
 Callbacks
----------
+------------------
 
 LLMize supports custom callbacks for monitoring and controlling the optimization process:
 
@@ -21,7 +21,7 @@ LLMize supports custom callbacks for monitoring and controlling the optimization
     )
 
 Parallel Processing
------------------
+---------------------
 
 Enable parallel evaluation of solutions:
 
@@ -33,7 +33,7 @@ Enable parallel evaluation of solutions:
     )
 
 Result Analysis
--------------
+------------------
 
 The new ``OptimizationResult`` class provides comprehensive optimization results:
 

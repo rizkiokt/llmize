@@ -1,10 +1,10 @@
 API Reference
-=============
+====================
 
 This page contains the complete API reference for LLMize.
 
 Core Module
-----------
+------------------
 
 .. automodule:: llmize
    :members:
@@ -12,7 +12,7 @@ Core Module
    :show-inheritance:
 
 Submodules
-----------
+------------------
 
 .. toctree::
    :maxdepth: 4

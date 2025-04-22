@@ -1,5 +1,5 @@
 Welcome to LLMize's documentation!
-=================================
+============================================================
 
 LLMize is a Python package that uses Large Language Models (LLMs) for multipurpose, numerical optimization tasks. It provides a flexible and efficient framework for solving various optimization problems using LLM-based approaches, with support for both maximization and minimization objectives.
 
@@ -20,7 +20,7 @@ LLMize is a Python package that uses Large Language Models (LLMs) for multipurpo
    contact
 
 Indices and tables
-==================
+============================
 
 * :ref:`genindex`
 * :ref:`modindex`

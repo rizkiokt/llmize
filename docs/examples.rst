@@ -1,8 +1,8 @@
 Examples
-========
+====================
 
 Basic Example
-------------
+------------------
 
 .. code-block:: python
 
@@ -15,7 +15,7 @@ Basic Example
     result = instance.process_data("your input")
 
 Advanced Example
----------------
+------------------
 
 .. code-block:: python
 

@@ -1,5 +1,5 @@
 Installation
-============
+====================
 
 You can install LLMize using pip:
 

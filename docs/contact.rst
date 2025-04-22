@@ -1,5 +1,5 @@
 Contact
-=======
+====================
 
 For questions, suggestions, or support, please contact:
 

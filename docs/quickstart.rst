@@ -1,5 +1,5 @@
 Quick Start
-===========
+====================
 
 Here's a simple example of how to use LLMize with OPRO approach:
 

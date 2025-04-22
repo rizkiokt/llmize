@@ -1,5 +1,5 @@
 Configuration
-============
+====================
 
 The optimizer can be configured with various parameters:
 
@@ -15,7 +15,7 @@ The optimizer can be configured with various parameters:
     )
 
 Dependencies
------------
+------------------
 
 - Python >= 3.8
 - numpy >= 1.21.0

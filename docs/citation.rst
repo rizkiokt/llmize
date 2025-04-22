@@ -1,5 +1,5 @@
 Citation
-========
+====================
 
 If you use LLMize in your research, please cite:
 
