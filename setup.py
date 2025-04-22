@@ -18,10 +18,11 @@ setup(
     packages=find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.12",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    python_requires=">=3.8",
+    python_requires=">=3.12",
     install_requires=requirements,
     include_package_data=True,
 ) 
