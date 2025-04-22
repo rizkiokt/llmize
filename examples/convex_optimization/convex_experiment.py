@@ -6,6 +6,7 @@ from llmize.utils.logger import log_info, log_error
 import matplotlib.pyplot as plt
 import json
 import time
+from llmize.base import OptimizationResult
 
 
 def objective_convex_penalty(x):
