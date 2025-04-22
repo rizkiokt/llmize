@@ -49,7 +49,7 @@ jobs:
       - name: Calculate new version
         id: new_version
         run: |
-          python -c "import semver; print(f'::set-output name=version::{semver.bump_${{ steps.version_bump.outputs.bump }}("${{ steps.current_version.outputs.version }}")}')"
+          python -c "import semver; current_version = '${{ steps.current_version.outputs.version }}'; bump_type = '${{ steps.version_bump.outputs.bump }}'; new_version = getattr(semver, f'bump_{bump_type}')(current_version); print(f'::set-output name=version::{new_version}')"
       
       - name: Update version
         run: |
