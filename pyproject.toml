@@ -9,9 +9,9 @@ description = "A library for LLM-based optimization using techniques like OPRO, 
 readme = "README.md"
 requires-python = ">=3.8"
 license = {file = "LICENSE"}
-keywords = ["llm", "optimization", "opro", "hlmea", "hlmsa"]
+keywords = ["llm", "optimization", "opro"]
 authors = [
-    {name = "Your Name", email = "your.email@example.com"}
+    {name = "Rizki Oktavian", email = "rizki@bwailabs.com"}
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -26,10 +26,10 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/yourusername/llmize"
+Homepage = "https://github.com/rizkiokt/llmize"
 Documentation = "https://llmize.readthedocs.io"
-Repository = "https://github.com/yourusername/llmize.git"
-"Bug Tracker" = "https://github.com/yourusername/llmize/issues"
+Repository = "https://github.com/rizkiokt/llmize.git"
+"Bug Tracker" = "https://github.com/rizkiokt/llmize/issues"
 
 [project.optional-dependencies]
 dev = [
