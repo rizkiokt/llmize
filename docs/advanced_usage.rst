@@ -2,7 +2,7 @@ Advanced Usage
 =============
 
 Callbacks
---------
+---------
 
 LLMize supports custom callbacks for monitoring and controlling the optimization process:
 

@@ -31,7 +31,8 @@ autodoc_default_options = {
     'member-order': 'bysource',
     'special-members': '__init__',
     'undoc-members': True,
-    'exclude-members': '__weakref__'
+    'exclude-members': '__weakref__',
+    'noindex': True
 }
 
 # Napoleon settings
@@ -46,4 +47,7 @@ napoleon_use_admonition_for_references = True
 napoleon_use_ivar = True
 napoleon_use_param = True
 napoleon_use_rtype = True
-napoleon_type_aliases = None 
+napoleon_type_aliases = None
+
+# Suppress warnings about duplicate object descriptions
+suppress_warnings = ['autodoc.duplicate_object'] 
