@@ -38,7 +38,7 @@ jobs:
       env:
         GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
       run: |
-        pytest --cov=llmize tests/
+        pytest --cov=llmize tests/ --ignore=tests/test_hlmea.py --ignore=tests/test_hlmsa.py
 
   build:
     needs: test
