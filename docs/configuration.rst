@@ -19,6 +19,6 @@ Dependencies
 
 - Python >= 3.8
 - numpy >= 1.21.0
-- google-generativeai >= 0.3.0
+- google-genai >= 1.5.0
 - colorama >= 0.4.6
 - matplotlib >= 3.5.0 
