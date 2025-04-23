@@ -9,6 +9,7 @@ from ..callbacks import EarlyStopping, OptimalScoreStopping, AdaptTempOnPlateau
 
 class HLMSA(Optimizer):
     """
+    :no-index:
     HLMSA: Hyper-heuristic LLM-driven Simulated Annealing
     HLMSA optimizer for optimizing tasks using a specified LLM model.
 

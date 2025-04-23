@@ -1,5 +1,6 @@
 """
-LLMize - A library to use Large Language Models (LLMs) as numerical optimizers
+:no-index:
+LLMize is a Python package that uses Large Language Models (LLMs) for multipurpose, numerical optimization tasks.
 """
 
 __version__ = "0.1.2"

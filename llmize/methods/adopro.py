@@ -9,6 +9,7 @@ from ..callbacks import EarlyStopping, OptimalScoreStopping, AdaptTempOnPlateau
 
 class ADOPRO(Optimizer):
     """
+    :no-index:
     ADOPRO optimizer for optimizing tasks using a specified LLM model.
 
     This class inherits from the `Optimizer` class and allows configuration 

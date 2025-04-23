@@ -9,7 +9,7 @@ from ..callbacks import EarlyStopping, OptimalScoreStopping, AdaptTempOnPlateau
 
 class HLMEA(Optimizer):
     """
-    HLMEA: Hyper-heuristic LLM-driven Evolutionary Algorithm
+    :no-index:
     HLMEA optimizer for optimizing tasks using a specified LLM model.
 
     This class inherits from the `Optimizer` class and allows configuration 

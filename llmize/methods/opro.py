@@ -9,6 +9,7 @@ from ..callbacks import EarlyStopping, OptimalScoreStopping, AdaptTempOnPlateau
 
 class OPRO(Optimizer):
     """
+    :no-index:
     OPRO optimizer for optimizing tasks using a specified LLM model.
 
     This class inherits from the `Optimizer` class and allows configuration 
@@ -59,7 +60,7 @@ Generate exactly {batch_size} new solutions that:
 - Have {text1} scores than the {text2} provided.
 - Respect the relationships based on logical reasoning.
 
-Each solution should start with <sol> and end with <\sol> with a comma between parameters. 
+Each solution should start with <sol> and end with </sol> with a comma between parameters. 
 Make sure the length of solutions match examples given. Don't guess for the scores as they will be calculated by an objective function.
 """
         prompt = "\n".join([self.problem_text, example_texts, example_pairs, instruction])
