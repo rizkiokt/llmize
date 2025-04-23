@@ -1,34 +1,39 @@
 Examples
 ====================
 
-Basic Example
+Convex Optimization
 ------------------
 
-.. code-block:: python
+This example demonstrates how to use LLMize for convex optimization with constraints. The full example can be found in the notebook:
 
-    from llmize import YourMainClass
+`convex_opt.ipynb <https://github.com/rizkiokt/llmize/blob/main/examples/convex_optimization/convex_opt.ipynb>`_
 
-    # Initialize with default settings
-    instance = YourMainClass()
+Traveling Salesman Problem
+-------------------------
 
-    # Process some data
-    result = instance.process_data("your input")
+This example shows how to solve the Traveling Salesman Problem using LLMize. The full example can be found in the notebook:
 
-Advanced Example
-------------------
+`tsp.ipynb <https://github.com/rizkiokt/llmize/blob/main/examples/tsp/tsp.ipynb>`_
 
-.. code-block:: python
+Neural Network Hyperparameter Tuning
+-----------------------------------
 
-    from llmize import YourMainClass
+This example demonstrates hyperparameter optimization for neural networks. The full example can be found in the notebook:
 
-    # Initialize with custom settings
-    instance = YourMainClass(
-        setting1="value1",
-        setting2="value2"
-    )
+`mnist_tf.ipynb <https://github.com/rizkiokt/llmize/blob/main/examples/nn_hp_tuning/mnist_tf.ipynb>`_
 
-    # Use advanced features
-    results = instance.advanced_processing(
-        input_data="your data",
-        options={"option1": True}
-    ) 
+Linear Programming
+-----------------
+
+This example shows how to solve linear programming problems. The full example can be found in the notebook:
+
+`lp_optimization.ipynb <https://github.com/rizkiokt/llmize/blob/main/examples/linear_programming/lp_optimization.ipynb>`_
+
+Nuclear Fuel Optimization
+------------------------
+
+This example demonstrates optimization of nuclear fuel parameters. The full example can be found in the notebook:
+
+`nuclear_fuel_optimization.ipynb <https://github.com/rizkiokt/llmize/blob/main/examples/nuclear_fuel_optimization/nuclear_fuel_optimization.ipynb>`_
+
+For more detailed examples and results, please refer to the examples directory in the repository.

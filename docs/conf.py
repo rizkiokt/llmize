@@ -2,10 +2,10 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('..'))
 
-project = 'LLMize'
-copyright = '2024, Rizki'
-author = 'Rizki'
-release = '0.1.0'
+project = 'llmize'
+copyright = '2025, Rizki Oktavian (Blue Wave AI Labs)'
+author = 'Rizki Oktavian'
+release = '0.1.3'
 
 extensions = [
     'sphinx.ext.autodoc',
