@@ -14,16 +14,19 @@ extensions = [
     'sphinx.ext.intersphinx',
     'sphinx_rtd_theme',
     'sphinx.ext.autosummary',
+    'sphinx.ext.autodoc.typehints',
 ]
 
 templates_path = ['_templates']
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', '**.ipynb_checkpoints']
 
 html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
 
 intersphinx_mapping = {
     'python': ('https://docs.python.org/3', None),
+    'numpy': ('https://numpy.org/doc/stable/', None),
+    'scipy': ('https://docs.scipy.org/doc/scipy/', None),
 }
 
 autodoc_default_options = {
@@ -50,4 +53,7 @@ napoleon_use_rtype = True
 napoleon_type_aliases = None
 
 # Suppress warnings about duplicate object descriptions
-suppress_warnings = ['autodoc.duplicate_object'] 
+suppress_warnings = ['autodoc.duplicate_object']
+
+# Add version information
+version = release 

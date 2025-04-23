@@ -1,5 +1,5 @@
 llmize.methods.hlmea module
-=========================
+============================
 
 .. automodule:: llmize.methods.hlmea
    :members:

@@ -6,7 +6,15 @@ Basic Usage
 
 Here's how to use LLMize for convex optimization with different initialization methods:
 
-1. Defining the objective function:
+1. First, import the necessary modules:
+
+.. code-block:: python
+
+    import numpy as np
+    from llmize import OPRO
+    import os
+
+2. Define the objective function:
 
 .. code-block:: python
 
@@ -29,7 +37,7 @@ Here's how to use LLMize for convex optimization with different initialization m
 
         return f + penalty
 
-2. Using Problem Description in text format:
+3. Define the problem description:
 
 .. code-block:: python
 
@@ -43,11 +51,20 @@ Here's how to use LLMize for convex optimization with different initialization m
         0 ≤ x2 ≤ 5
     """
 
-3. Generate Initial Samples and solutions:
+4. Initialize the optimizer:
 
 .. code-block:: python
 
-    import numpy as np
+    optimizer = OPRO(
+        problem_text=problem_text,
+        obj_func=objective_convex_penalty,
+        llm_model="gemini-2.0-flash",
+        api_key=os.getenv("GEMINI_API_KEY")
+    )
+
+5. Generate initial samples:
+
+.. code-block:: python
 
     # Generate initial samples
     num_samples = 4
@@ -62,39 +79,23 @@ Here's how to use LLMize for convex optimization with different initialization m
             solutions.append([x1_range[i], x2_range[j]])
             scores.append(objective_convex_penalty([x1_range[i], x2_range[j]]))
 
-    # Run optimization with initial samples
-    result = optimizer.minimize(
+6. Run the optimization:
+
+.. code-block:: python
+
+    results = optimizer.minimize(
         init_samples=solutions,
         init_scores=scores,
-        n_steps=100,
-        batch_size=8
+        num_steps=250,
+        batch_size=16
     )
 
-4. Define the optimizer:
-
-.. code-block:: python
-
-    from llmize import OPRO
-
-    optimizer = OPRO(problem_text=problem_text, obj_func=objective_convex_penalty,
-            llm_model="gemini-2.0-flash", api_key=os.getenv("GEMINI_API_KEY"))
-
-5. Run the optimization:
-
-.. code-block:: python
-
-    results = optimizer.minimize(init_samples=solutions, init_scores=scores, num_steps=250, batch_size=16, callbacks=callbacks)
-
-
-6. Plot the results (optional):
+7. Plot the results:
 
 .. code-block:: python
 
     from llmize.utils.plotting import plot_scores
-
     plot_scores(results)
-    
-
 
 Advanced Usage
 ---------------
@@ -102,21 +103,17 @@ Advanced Usage
 This section demonstrates advanced features for controlling the optimization process. For the full example, see:
 `convex_opt.ipynb <https://github.com/rizkiokt/llmize/blob/main/examples/convex_optimization/convex_opt.ipynb>`_
 
-
-1. Run the optimization with custom number of steps and batch size:
-
-.. code-block:: python
-
-    results = optimizer.minimize(init_samples=solutions, init_scores=scores, num_steps=250, batch_size=16)
-
-
-2. Using Callbacks for Control:
+1. Using Callbacks:
 
 .. code-block:: python
 
-    from llmize.callbacks import EarlyStopping, AdaptTempOnPlateau, OptimalScoreStopping
+    from llmize.callbacks import (
+        EarlyStopping,
+        AdaptTempOnPlateau,
+        OptimalScoreStopping
+    )
 
-    # Define the early stopping callback
+    # Define callbacks
     earlystop_callback = EarlyStopping(
         monitor='best_score',
         min_delta=0.001,
@@ -124,13 +121,11 @@ This section demonstrates advanced features for controlling the optimization pro
         verbose=1
     )
 
-    # Define the optimal score stopping callback
     optimal_score_callback = OptimalScoreStopping(
         optimal_score=7.90,
         tolerance=0.01
     )
 
-    # Define the temperature adaptation callback
     adapt_temp_callback = AdaptTempOnPlateau(
         monitor='best_score',
         init_temperature=1.0,
@@ -141,11 +136,22 @@ This section demonstrates advanced features for controlling the optimization pro
         verbose=1
     )
 
-    # Combine all callbacks
+    # Combine callbacks
     callbacks = [earlystop_callback, optimal_score_callback, adapt_temp_callback]
 
     # Run optimization with callbacks
-    results = optimizer.minimize(init_samples=solutions, init_scores=scores, callbacks=callbacks)
+    results = optimizer.minimize(
+        init_samples=solutions,
+        init_scores=scores,
+        num_steps=250,
+        batch_size=16,
+        callbacks=callbacks
+    )
 
+For more detailed examples and results, please refer to the :doc:`examples` section.
 
-For more detailed examples and results, please refer to the examples directory in the repository. 
+See Also
+---------------
+* :doc:`advanced_usage` for more advanced features
+* :doc:`configuration` for configuration options
+* :doc:`api` for complete API reference 

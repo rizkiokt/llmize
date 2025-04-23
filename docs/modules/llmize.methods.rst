@@ -5,12 +5,13 @@ LLMize Methods
    :members:
    :undoc-members:
    :show-inheritance:
+   :noindex:
 
 Submodules
 ------------------
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 2
 
    llmize.methods.opro
    llmize.methods.adopro

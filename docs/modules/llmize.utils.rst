@@ -5,11 +5,12 @@ LLMize Utils
    :members:
    :undoc-members:
    :show-inheritance:
+   :noindex:
 
 Submodules
 ------------------
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 2
 
    llmize.utils.parsing 
