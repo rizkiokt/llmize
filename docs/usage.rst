@@ -1,8 +1,8 @@
 Usage
-=====
+====================
 
 Basic Usage
-----------
+------------
 
 Here's how to use LLMize for convex optimization with different initialization methods:
 
@@ -97,7 +97,7 @@ Here's how to use LLMize for convex optimization with different initialization m
 
 
 Advanced Usage
--------------
+---------------
 
 This section demonstrates advanced features for controlling the optimization process. For the full example, see:
 `convex_opt.ipynb <https://github.com/rizkiokt/llmize/blob/main/examples/convex_optimization/convex_opt.ipynb>`_
