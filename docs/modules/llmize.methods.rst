@@ -5,7 +5,6 @@ LLMize Methods
    :members:
    :undoc-members:
    :show-inheritance:
-   :noindex:
 
 Submodules
 ------------------
