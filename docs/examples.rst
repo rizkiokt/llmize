@@ -34,6 +34,6 @@ Nuclear Fuel Optimization
 
 This example demonstrates optimization of nuclear fuel parameters. The full example can be found in the notebook:
 
-`nuclear_fuel_optimization.ipynb <https://github.com/rizkiokt/llmize/blob/main/examples/nuclear_fuel_optimization/nuclear_fuel_optimization.ipynb>`_
+`nuclear_fuel_optimization.ipynb <https://github.com/rizkiokt/llmize/blob/main/examples/nuclear_fuel_optimization/nbwr_ge14_opt.ipynb>`_
 
 For more detailed examples and results, please refer to the examples directory in the repository.
