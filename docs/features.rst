@@ -9,7 +9,7 @@ Core Optimization Features
 LLM-Based Optimization
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-LLMize implements state-of-the-art LLM-based optimization techniques, drawing inspiration from the OPRO (Optimization by PROmpting) methodology (`paper here <https://arxiv.org/abs/2309.03409>`_). The framework supports both maximization and minimization objectives, handling both continuous and discrete optimization problems. It provides multiple optimization strategies including OPRO, ADOPRO, HLMEA, and HLMSA, allowing users to choose the most appropriate approach for their specific optimization needs.
+LLMize implements state-of-the-art LLM-based optimization techniques, drawing inspiration from the OPRO (Optimization by PROmpting) methodology (`paper here <https://arxiv.org/abs/2309.03409>`_). The framework supports both maximization and minimization objectives, handling both continuous and discrete optimization problems. It provides multiple optimization strategies including OPRO, ADOPRO (beta), HLMEA (beta), and HLMSA (beta), allowing users to choose the most appropriate approach for their specific optimization needs.
 
 Flexible Problem Definition
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -48,7 +48,7 @@ Results and Analysis
 Comprehensive Results
 ~~~~~~~~~~~~~~~~~~~~~~
 
-LLMize provides detailed optimization results including best solutions and scores, complete solution history, and convergence metrics. The framework also tracks optimization statistics and performance indicators, giving users comprehensive insights into the optimization process and its outcomes.
+LLMize provides detailed optimization results including best solutions and scores, complete solution history, and convergence metrics. The framework also tracks optimization statistics and performance indicators, giving users insights into the optimization process and its outcomes.
 
 Visualization Tools
 ~~~~~~~~~~~~~~~~~~~
@@ -61,7 +61,7 @@ Integration and Extensibility
 API Integration
 ~~~~~~~~~~~~~~~
 
-LLMize offers a clean and intuitive API that supports multiple LLM providers. It's designed for easy integration with existing workflows and includes comprehensive documentation with type hints for better IDE support. The API is structured to be both powerful and user-friendly.
+LLMize offers a clean and intuitive API that supports multiple LLM providers, including Google, OpenAI, and Huggingface inference API. It's designed for easy integration with existing workflows and includes documentation with type hints for better IDE support. The API is structured to be user-friendly.
 
 Extensibility
 ~~~~~~~~~~~~~
