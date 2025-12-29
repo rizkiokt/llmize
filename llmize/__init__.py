@@ -3,7 +3,7 @@
 LLMize is a Python package that uses Large Language Models (LLMs) for multipurpose, numerical optimization tasks.
 """
 
-__version__ = "0.1.5"
+__version__ = "0.2.0"
 
 from .methods.opro import OPRO
 from .methods.adopro import ADOPRO

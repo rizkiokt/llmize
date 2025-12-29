@@ -55,10 +55,18 @@ Here's how to use LLMize for convex optimization with different initialization m
 
 .. code-block:: python
 
+    # The optimizer will use defaults from configuration
     optimizer = OPRO(
         problem_text=problem_text,
         obj_func=objective_convex_penalty,
-        llm_model="gemini-2.5-flash-lite",
+        api_key=os.getenv("GEMINI_API_KEY")
+    )
+    
+    # Or override specific settings
+    optimizer = OPRO(
+        problem_text=problem_text,
+        obj_func=objective_convex_penalty,
+        llm_model="gemma-3-27b-it",  # Override config default
         api_key=os.getenv("GEMINI_API_KEY")
     )
 
