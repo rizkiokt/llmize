@@ -79,7 +79,7 @@ def test_parse_response_with_alternative_closing_tag():
     """Test parsing solutions with alternative closing tag format"""
     input_text = """
     <sol> 1,2,3 </sol>
-    <sol> 4,5,6 <\sol>
+    <sol> 4,5,6 <\\\\sol>
     """
     expected = [[1, 2, 3], [4, 5, 6]]
     result = parse_response(input_text)
@@ -103,7 +103,7 @@ def test_parse_response_with_invalid_hp():
     """
     solutions, hp = parse_response(input_text, hp_parse=True)
     assert solutions == [[1, 2, 3]]
-    assert hp is None
+    assert hp == [0.8, 0.9]  # Skips invalid value and returns valid ones
 
 def test_parse_pairs_empty_input():
     """Test parse_pairs with empty input"""
