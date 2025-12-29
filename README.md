@@ -5,7 +5,9 @@ LLMize is a Python package that uses Large Language Models (LLMs) for multipurpo
 ## Features
 
 - **LLM-Based Optimization**: Utilizes LLM for iteratively generating and optimizing solutions, inspired by OPRO methods [paper here](https://arxiv.org/abs/2309.03409)
+- **Multiple Optimizers**: Includes OPRO, ADOPRO, HLMEA, and HLMSA optimizers for different problem types
 - **Flexible Problem Definition**: Supports both text-based problem descriptions and objective functions
+- **Configuration System**: Centralized configuration management with TOML files and environment variables
 - **Parallel Processing**: Built-in support for parallel evaluation of solutions
 - **Callback System**: Extensible callback mechanism for monitoring and controlling the optimization process
 - **Early Stopping**: Built-in early stopping mechanism to prevent overfitting
@@ -125,6 +127,80 @@ print(f"Total time: {results.total_time} seconds")
 
 ## Configuration
 
+LLMize uses a flexible configuration system that allows you to customize defaults without modifying code. Configuration can be provided through:
+
+### 1. Configuration File (TOML)
+
+Create a `llmize.toml` file in your project root:
+
+```toml
+[llm]
+# Default LLM model to use
+default_model = "gemma-3-27b-it"
+
+# Default temperature for LLM generation (0.0 to 2.0)
+temperature = 1.0
+
+# Maximum number of retries when hitting rate limits
+max_retries = 10
+
+# Delay between retries in seconds
+retry_delay = 5
+
+[optimization]
+# Default number of optimization steps
+default_num_steps = 50
+
+# Default batch size for generating solutions
+default_batch_size = 5
+
+# Default number of parallel jobs for evaluation
+parallel_n_jobs = 1
+```
+
+### 2. Environment Variables
+
+Override configuration using environment variables:
+
+```bash
+export LLMIZE_DEFAULT_MODEL="gemini-2.0-flash-thinking-exp"
+export LLMIZE_TEMPERATURE=0.8
+export LLMIZE_MAX_RETRIES=15
+```
+
+### 3. In Code
+
+You can still override defaults when creating optimizers:
+
+```python
+from llmize import OPRO
+
+# Uses all defaults from config
+opro = OPRO(
+    problem_text="Your problem",
+    obj_func=your_function,
+    api_key=your_key
+)
+
+# Override specific parameters
+opro = OPRO(
+    problem_text="Your problem",
+    obj_func=your_function,
+    llm_model="custom-model",  # Override config
+    api_key=your_key
+)
+```
+
+### Configuration Priority
+
+Settings are applied in the following priority (highest first):
+1. Direct parameters in method calls
+2. Environment variables
+3. Configuration file
+4. Default values
+
+## Advanced Configuration
+
 The optimizer can be configured with various parameters:
 
 ```python
@@ -142,9 +218,11 @@ opro = OPRO(
 
 - Python >= 3.8
 - numpy >= 1.21.0
-- google-genai>=1.5.0
+- google-genai>=1.15.0
 - colorama >= 0.4.6
 - matplotlib >= 3.5.0
+- python-dotenv >= 0.19.0
+- toml >= 0.10.2
 
 ## Contributing
 

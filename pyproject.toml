@@ -4,7 +4,7 @@ build-backend = 'setuptools.build_meta'
 
 [project]
 name = "llmize"
-version = "0.1.5"
+version = "0.2.0"
 description = "A library to use Large Language Models (LLMs) as numerical optimizers"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -15,9 +15,11 @@ authors = [
 ]
 dependencies = [
     "numpy>=1.21.0",
-    "google-genai>=1.5.0",
+    "google-genai>=1.15.0",
     "colorama>=0.4.6",
     "matplotlib>=3.5.0",
+    "python-dotenv>=0.19.0",
+    "toml>=0.10.2",
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -49,3 +51,9 @@ dev = [
 [tool.setuptools.packages.find]
 include = ["llmize", "llmize.*"]
 exclude = ["tests", "tests.*", "docs", "docs.*"]
+
+[tool.pytest.ini_options]
+markers = [
+    "long_test: marks tests as medium-running tests that make API calls (2 steps)",
+    "very_long_test: marks tests as very long-running tests that make many API calls (50 steps)",
+]

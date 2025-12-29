@@ -2,6 +2,7 @@ import pytest
 import numpy as np
 from llmize import HLMEA
 from llmize.callbacks import OptimalScoreStopping
+from llmize.config import get_config
 import os
 
 def test_hlmea_initialization():
@@ -13,8 +14,10 @@ def test_hlmea_initialization():
     
     assert hlmea.problem_text == problem_text
     assert hlmea.obj_func == obj_func
-    assert hlmea.llm_model == "gemini-2.5-flash-lite"  # default model
+    assert hlmea.llm_model == get_config().default_model  # default model
 
+@pytest.mark.very_long_test
+@pytest.mark.skipif(not os.getenv("GEMINI_API_KEY"), reason="Need GEMINI_API_KEY to run this test")
 def test_optimal_score_stopping():
     """Test OptimalScoreStopping callback functionality"""
     # Create a simple optimization problem
@@ -50,6 +53,8 @@ def test_optimal_score_stopping():
     assert hasattr(result, 'best_score_history')
     assert isinstance(result.best_score_history, list)
 
+@pytest.mark.long_test
+@pytest.mark.skipif(not os.getenv("GEMINI_API_KEY"), reason="Need GEMINI_API_KEY to run this test")
 def test_hlmea_minimize():
     """Test HLMEA's minimize functionality"""
     def obj_func(x):
@@ -82,7 +87,7 @@ def test_hlmea_with_invalid_optimization_type():
         obj_func=lambda x: float(x), api_key=os.getenv("GEMINI_API_KEY")
     )
     
-    with pytest.raises(ValueError, match="Invalid optimization_type"):
+    with pytest.raises(ValueError, match="optimization_type must be 'maximize' or 'minimize'"):
         hlmea.optimize(
             init_samples=["1"],
             init_scores=[1],

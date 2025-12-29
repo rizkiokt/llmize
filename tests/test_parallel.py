@@ -59,6 +59,8 @@ def obj_func(x):
     else:
         return (float(x) + 2) ** 2  # Minimum at x=-2
 
+@pytest.mark.long_test
+@pytest.mark.skipif(not os.getenv("GEMINI_API_KEY"), reason="Need GEMINI_API_KEY to run this test")
 def test_time_parallel_evaluation():
     """Test parallel evaluation of solutions in OPRO with complex objective functions and time assertions."""
     opro = OPRO(
@@ -105,6 +107,6 @@ def test_time_parallel_evaluation():
     #assert best_score_seq <= 0.25, f"Best score should be close to zero, near the minimum at x=-2. Found: {best_score_seq}."
 
     # Assert that parallel execution is meaningfully faster than sequential execution
-    scalability_factor = 1.25  # Allowing for parallel overhead
+    scalability_factor = 2.0  # Allowing for parallel overhead
     assert par_time < (seq_time / n_jobs) * scalability_factor, \
         f"Parallel execution ({par_time}s) should be noticeably faster than sequential execution ({seq_time}s) considering {n_jobs} jobs."

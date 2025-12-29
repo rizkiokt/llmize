@@ -5,6 +5,10 @@ def parse_response(response_text, hp_parse=False):
     Parses the generated response into a list of lists.
     Returns None if parsing fails.
     """
+    # Check if response_text is None
+    if response_text is None:
+        return None if not hp_parse else (None, None)
+    
     try:
         solution_array  = []
         solutions = response_text.split("<sol>")[1:]  # Split solutions correctly
@@ -14,7 +18,7 @@ def parse_response(response_text, hp_parse=False):
             return None if not hp_parse else (None, None)
         
         for sol in solutions:
-            sol = sol.split("</sol>")[0].split("<\sol>")[0].strip()  # Handle both / and \ in closing tag
+            sol = sol.split("</sol>")[0].split("<\\sol>")[0].strip()  # Handle both / and \ in closing tag
             values = []
             for x in sol.split(","):
                 x = x.strip()
@@ -35,16 +39,27 @@ def parse_response(response_text, hp_parse=False):
                 if line.startswith("<hp>"):
                     # Extract content between <hp> and closing tag
                     hp_text = line.split("<hp>")[1]
-                    hp_text = hp_text.split("</hp>")[0].split("<\hp>")[0].strip()
+                    # Try different closing tag formats
+                    if "</hp>" in hp_text:
+                        hp_text = hp_text.split("</hp>")[0].strip()
+                    elif "<\\\\hp>" in hp_text:  # Double backslash (raw string)
+                        hp_text = hp_text.split("<\\\\hp>")[0].strip()
+                    elif "<\\hp>" in hp_text:  # Single backslash
+                        hp_text = hp_text.split("<\\hp>")[0].strip()
                     
                     # Parse each hyperparameter value
                     for x in hp_text.split(","):
+                        x = x.strip()
+                        if not x or any(c in x for c in ['<', '>', '\\']):
+                            continue  # Skip empty strings and tags
                         try:
-                            hp.append(float(x.strip()))
+                            hp.append(float(x))
                         except ValueError:
                             try:
                                 # Try splitting with space and taking the second number
-                                hp.append(float(x.split()[1]))
+                                parts = x.split()
+                                if len(parts) > 1:
+                                    hp.append(float(parts[1]))
                             except (ValueError, IndexError) as e:
                                 log_error(f"Error parsing hyperparameter value '{x}': {e}")
                                 return solution_array, None
@@ -80,23 +95,24 @@ def parse_score(text):
 
 if __name__ == "__main__":
     text = """
-<hp> 0.1, 0.8, 0.9 <\hp>
-<sol> 5,2,7,3,0,8,9,6,1,4 <\sol>
-<sol> 4,2,7,0,6,3,5,8,9,1 <\sol>
-<sol> 4,8,1,3,0,5,2,9,7,6 <\sol>
-<sol> 5,2,4,3,0,8,9,6,1,7 <\sol>
-<sol> 5,2,7,3,1,8,9,6,0,4 <\sol>
-<sol> 4,2,7,0,5,3,6,8,9,1 <\sol>
-<sol> 5,2,7,0,6,3,8,9,1,4 <\sol>
-<sol> 4,2,8,0,6,3,5,7,9,1 <\sol>
-<sol> 5,2,7,3,0,8,1,6,9,4 <\sol>
-<sol> 4,2,7,0,1,3,5,8,9,6 <\sol>
-<sol> 5,2,7,3,0,6,9,8,1,4 <\sol>
-<sol> 4,2,7,1,6,3,5,8,9,0 <\sol>
-<sol> 5,2,6,3,0,8,9,7,1,4 <\sol>
-<sol> 4,7,2,0,6,3,5,8,9,1 <\sol>
-<sol> 5,7,2,3,0,8,9,6,1,4 <\sol>
-<sol> 4,2,7,0,6,3,1,8,9,5 <\sol>
+<hp> 0.1, 0.8, 0.9 <\\hp>
+<sol> 5,2,7,3,0,8,9,6,1,4 <\\sol>
+<sol> 4,2,7,0,6,3,5,8,9,1 <\\sol>
+<sol> 4,8,1,3,0,5,2,9,7,6 <\\sol>
+<sol> 4,5,6 <\\sol>
+<sol> 5,2,4,3,0,8,9,6,1,7 <\\sol>
+<sol> 5,2,7,3,1,8,9,6,0,4 <\\sol>
+<sol> 4,2,7,0,5,3,6,8,9,1 <\\sol>
+<sol> 5,2,7,0,6,3,8,9,1,4 <\\sol>
+<sol> 4,2,8,0,6,3,5,7,9,1 <\\sol>
+<sol> 5,2,7,3,0,8,1,6,9,4 <\\sol>
+<sol> 4,2,7,0,1,3,5,8,9,6 <\\sol>
+<sol> 5,2,7,3,0,6,9,8,1,4 <\\sol>
+<sol> 4,2,7,1,6,3,5,8,9,0 <\\sol>
+<sol> 5,2,6,3,0,8,9,7,1,4 <\\sol>
+<sol> 4,7,2,0,6,3,5,8,9,1 <\\sol>
+<sol> 5,7,2,3,0,8,9,6,1,4 <\\sol>
+<sol> 4,2,7,0,6,3,1,8,9,5 <\\sol>
     """
     sol, hp = parse_response(text, hp_parse=True)
     print(sol)

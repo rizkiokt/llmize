@@ -8,6 +8,13 @@ on:
       - 'docs/**'
   pull_request:
     branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      run_very_long_tests:
+        description: 'Run very long tests'
+        required: false
+        default: false
+        type: boolean
 
 jobs:
   test:
@@ -36,9 +43,9 @@ jobs:
     
     - name: Test with pytest
       env:
-        GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+        GEMINI_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
       run: |
-        pytest --cov=llmize tests/ --ignore=tests/test_hlmea.py --ignore=tests/test_hlmsa.py
+        pytest --cov=llmize tests/ -m "not very_long_test"
 
   build:
     needs: test
@@ -79,3 +86,29 @@ jobs:
         password: ${{ secrets.PYPI_API_TOKEN }}
         verbose: true
         skip_existing: true
+
+  test_very_long:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.12"]
+    if: github.event.inputs.run_very_long_tests == 'true'
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e .[dev]
+    
+    - name: Test with pytest (very long tests)
+      env:
+        GEMINI_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+      run: |
+        pytest --cov=llmize tests/ -m "very_long_test" -v

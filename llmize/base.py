@@ -1,5 +1,6 @@
 import functools
 import multiprocessing as mp
+from .config import get_config
 from .utils.parsing import parse_pairs
 from .llm.llm_call import generate_content
 from .llm.llm_init import initialize_llm
@@ -37,57 +38,85 @@ class OptimizationResult:
         }
 
 class Optimizer:
-    def __init__(self, problem_text=None, obj_func=None, llm_model="gemini-2.5-flash-lite", api_key=None):
+    def __init__(self, problem_text=None, obj_func=None, llm_model=None, api_key=None):
         """
         Initialize the Optimizer with the general configuration.    
         """
+        config = get_config()
+        
         self.problem_text = problem_text
         self.obj_func = obj_func
-        self.llm_model = llm_model
+        self.llm_model = llm_model if llm_model is not None else config.default_model
         self.api_key = api_key
 
     @check_init
     @time_it
-    def maximize(self, init_samples=None, init_scores=None, num_steps=50, batch_size=5,
-                 temperature=1.0, callbacks=None, verbose=1, parallel_n_jobs=1):
+    def maximize(self, init_samples=None, init_scores=None, num_steps=None, batch_size=None,
+                 temperature=None, callbacks=None, verbose=1, parallel_n_jobs=None):
         """
         Run the optimization algorithm to maximize the objective function.
 
         Parameters:
         - init_samples (list): A list of initial solutions.
         - init_scores (list): A list of initial scores corresponding to init_samples.
-        - num_steps (int): The number of optimization steps (default: 50).
-        - batch_size (int): The number of new solutions to generate at each step (default: 5).
-        - temperature (float): The temperature for the LLM model (default: 1.0).
+        - num_steps (int): The number of optimization steps (default from config).
+        - batch_size (int): The batch size used for optimization (default from config).
+        - temperature (float): The temperature for the LLM model (default from config).
         - callbacks (list): A list of callback functions to be triggered at the end of each step.
-        - optimization_type (str): "maximize" or "minimize" (default: "maximize").
+        - verbose (int): The verbosity level (default: 1).
+        - parallel_n_jobs (int): The number of parallel jobs for evaluation (default from config).
 
         Returns:
-        - results (dict): A dictionary containing the best solution, best score, best score history, best score per step, and average score per step.
+        - results (OptimizationResult): An object containing the optimization results.
         """
+        config = get_config()
+        
+        # Use config defaults if not provided
+        if num_steps is None:
+            num_steps = config.default_num_steps
+        if batch_size is None:
+            batch_size = config.default_batch_size
+        if temperature is None:
+            temperature = config.temperature
+        if parallel_n_jobs is None:
+            parallel_n_jobs = config.parallel_n_jobs
+        
         return self.optimize(init_samples=init_samples, init_scores=init_scores,
                               num_steps=num_steps, batch_size=batch_size, temperature=temperature, 
                               callbacks=callbacks, verbose=verbose, optimization_type="maximize", parallel_n_jobs=parallel_n_jobs)
     
     @check_init
     @time_it
-    def minimize(self, init_samples=None, init_scores=None, num_steps=50, batch_size=5,
-                 temperature=1.0, callbacks=None, verbose=1, parallel_n_jobs=1):
+    def minimize(self, init_samples=None, init_scores=None, num_steps=None, batch_size=None,
+                 temperature=None, callbacks=None, verbose=1, parallel_n_jobs=None):
         """
         Run the optimization algorithm to minimize the objective function.
 
         Parameters:
         - init_samples (list): A list of initial solutions.
         - init_scores (list): A list of initial scores corresponding to init_samples.
-        - num_steps (int): The number of optimization steps (default: 50).
-        - batch_size (int): The number of new solutions to generate at each step (default: 5).
-        - temperature (float): The temperature for the LLM model (default: 1.0).
+        - num_steps (int): The number of optimization steps (default from config).
+        - batch_size (int): The batch size used for optimization (default from config).
+        - temperature (float): The temperature for the LLM model (default from config).
         - callbacks (list): A list of callback functions to be triggered at the end of each step.
-        - optimization_type (str): "maximize" or "minimize" (default: "minimize").
+        - verbose (int): The verbosity level (default: 1).
+        - parallel_n_jobs (int): The number of parallel jobs for evaluation (default from config).
 
         Returns:
         - results (dict): A dictionary containing the best solution, best score, best score history, best score per step, and average score per step.
         """
+        config = get_config()
+        
+        # Use config defaults if not provided
+        if num_steps is None:
+            num_steps = config.default_num_steps
+        if batch_size is None:
+            batch_size = config.default_batch_size
+        if temperature is None:
+            temperature = config.temperature
+        if parallel_n_jobs is None:
+            parallel_n_jobs = config.parallel_n_jobs
+            
         return self.optimize(init_samples=init_samples, init_scores=init_scores,
                               num_steps=num_steps, batch_size=batch_size, temperature=temperature,
                               callbacks=callbacks, verbose=verbose, optimization_type="minimize", parallel_n_jobs=parallel_n_jobs)
@@ -118,13 +147,12 @@ class Optimizer:
         return "prompt"
     
     
-    def get_sample_prompt(self, batch_size=5, optimization_type="maximize", init_samples=None, init_scores=None):
-
+    def get_sample_prompt(self, batch_size=None, optimization_type="maximize", init_samples=None, init_scores=None):
         """
         Generate a sample prompt for the language model based on the provided parameters.
 
         Parameters:
-        - batch_size (int): The number of new solutions to generate (default: 5).
+        - batch_size (int): The number of new solutions to generate (default from config).
         - optimization_type (str): The type of optimization to perform, either "maximize" or "minimize" (default: "maximize").
         - init_samples (list): A list of initial solutions (default: None).
         - init_scores (list): A list of initial scores corresponding to init_samples (default: None).
@@ -132,6 +160,9 @@ class Optimizer:
         Returns:
         - str: The generated prompt as a string to be used for generating solutions from the language model.
         """
+        if batch_size is None:
+            batch_size = get_config().default_batch_size
+            
         example_pairs = parse_pairs(init_samples, init_scores)
 
         prompt = self.meta_prompt(batch_size=batch_size, example_pairs=example_pairs, optimization_type=optimization_type)
@@ -182,15 +213,19 @@ class Optimizer:
             solution_array = parse_response(response, hp_parse)
             hp_none = False
 
-        if verbose > 2: 
+        if verbose > 2:
             #log_debug(f"Prompt: {prompt}")
             log_debug(f"Response: {response}")
         if verbose > 1: log_debug(f"Generated Solutions: {solution_array}")
         
+        # Always show the response in debug mode to troubleshoot HLMSA issues
+        if verbose >= 1 and solution_array is None:
+            log_error(f"Failed to parse solutions. LLM response was: {response}")
+        
 
         retry = 0
         
-        while solution_array is None or len(solution_array) < batch_size or hp_none:
+        while solution_array is None or len(solution_array) < batch_size or (hp_parse and hp_none):
             log_warning("Number of solutions parsed is less than batch size. Retrying...")
             response = generate_content(client, self.llm_model, prompt, temperature)
             if hp_parse:
@@ -220,7 +255,7 @@ class Optimizer:
         else:
             return solution_array
     
-    def _evaluate_solutions(self, solution_array, best_solution, optimization_type, verbose, best_score=None, parallel_n_jobs=1):
+    def _evaluate_solutions(self, solution_array, best_solution, optimization_type, verbose, best_score=None, parallel_n_jobs=None):
         """
         Evaluate a list of solutions and update the best solution based on an objective function.
         
@@ -247,6 +282,10 @@ class Optimizer:
             ValueError: If optimization_type is not "maximize" or "minimize".
         """
         self.optimization_type = optimization_type  # Store for _evaluate_single_solution
+        
+        # Use config default if parallel_n_jobs is None
+        if parallel_n_jobs is None:
+            parallel_n_jobs = get_config().parallel_n_jobs
         
         if optimization_type == "maximize":
             best_step_score = -float('inf')  # Start with the lowest possible value for maximization
