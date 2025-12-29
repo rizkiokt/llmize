@@ -13,7 +13,7 @@ def test_hlmsa_initialization():
     
     assert hlmsa.problem_text == problem_text
     assert hlmsa.obj_func == obj_func
-    assert hlmsa.llm_model == "gemini-2.0-flash"  # default model
+    assert hlmsa.llm_model == "gemini-2.5-flash-lite"  # default model
 
 def test_optimal_score_stopping():
     """Test OptimalScoreStopping callback functionality"""
