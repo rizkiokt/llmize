@@ -24,7 +24,7 @@ def generate_content(client, model, prompt, temperature=1.0, max_retries=10, ret
     - str: The generated content as a string, or None if the request was unsuccessful after retries.
     """
 
-    if model.startswith("gemini"):
+    if model.startswith("gemini") or model.startswith("gemma"):
         return generate_content_gemini(client, model, prompt,temperature, max_retries, retry_delay)
     else:
         return generate_content_huggingface(client, model, prompt, temperature, max_retries, retry_delay)    
@@ -55,7 +55,7 @@ def generate_content_huggingface(client, model, prompt, temperature, max_retries
             completion = client.chat.completions.create(
                 model=model,
                 messages=messages,
-                temperatue=temperature)
+                temperature=temperature)
             response = completion.choices[0].message.content
             return response  # If the request is successful, return the response
         except Exception as e:
