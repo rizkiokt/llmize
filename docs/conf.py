@@ -5,7 +5,7 @@ sys.path.insert(0, os.path.abspath('..'))
 project = 'llmize'
 copyright = '2025, Rizki Oktavian (Blue Wave AI Labs)'
 author = 'Rizki Oktavian'
-release = '0.1.3'
+release = '0.2.0'
 
 extensions = [
     'sphinx.ext.autodoc',
@@ -21,7 +21,7 @@ templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', '**.ipynb_checkpoints']
 
 html_theme = 'sphinx_rtd_theme'
-html_logo = 'LLMize Optimization Framework Logo.png'
+html_logo = 'LLMize Logo White - 20251229.png'
 html_static_path = ['_static']
 
 intersphinx_mapping = {
