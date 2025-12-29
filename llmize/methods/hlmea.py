@@ -15,13 +15,13 @@ class HLMEA(Optimizer):
     This class inherits from the `Optimizer` class and allows configuration 
     of various parameters related to the optimization process.
 
-    :param str llm_model: The name of the LLM model to use (default: "gemini-2.5-flash-lite").
+    :param str llm_model: The name of the LLM model to use (default from config).
     :param str api_key: The API key for accessing the model (default: None).
     :param int num_steps: The number of optimization steps (default: 50).
     :param int batch_size: The batch size used for optimization (default: 5).
     """
 
-    def __init__(self, problem_text=None, obj_func=None, llm_model="gemini-2.5-flash-lite", api_key=None):
+    def __init__(self, problem_text=None, obj_func=None, llm_model=None, api_key=None):
         """
         Initialize the HLMEA optimizer with the provided configuration.
         Inherits from `Optimizer`.
@@ -102,11 +102,11 @@ Return exactly **{batch_size} unique solutions** and the chosen hyperparameters 
 
 ### **Hyperparameters Output**  
 
-<hp> elitism_rate, mutation_rate, crossover_rate <\hp>
+<hp> elitism_rate, mutation_rate, crossover_rate <\\\\hp>
 
 ### **Solutions Output**  
 
-<sol> param1, param2, ..., paramn <\sol>
+<sol> param1, param2, ..., paramn <\\\\sol>
 
 **Only provide the solutions and hyperparameters—do not include any extra text. Do not include any code.**  
 
@@ -129,8 +129,8 @@ Generate exactly {batch_size} solutions for the next population by following the
 8. Think step by step to follow the instructions above. The format <sol> and <hp> are only used for your final output, don't include them in your process.
 
 
-Give me the solutions in the format: <sol> param1, param2, ..., paramn <\sol> with a comma between parameters.
-Also, give me your decision on the hyperparameters in the format: <hp> elitism_rate, mutation_rate, crossover_rate <\hp>.
+Give me the solutions in the format: <sol> param1, param2, ..., paramn <\\\\sol> with a comma between parameters.
+Also, give me your decision on the hyperparameters in the format: <hp> elitism_rate, mutation_rate, crossover_rate <\\\\hp>.
 Make sure the length of solutions match examples given. Don't guess for the scores as they will be calculated by an objective function.
 
 """
@@ -138,8 +138,8 @@ Make sure the length of solutions match examples given. Don't guess for the scor
 
         return prompt
     
-    def optimize(self, init_samples=None, init_scores=None, num_steps=50, batch_size=5,
-                 temperature=1.0, callbacks=None, verbose=1, optimization_type="maximize", parallel_n_jobs=1):
+    def optimize(self, init_samples=None, init_scores=None, num_steps=None, batch_size=None,
+                 temperature=None, callbacks=None, verbose=1, optimization_type="maximize", parallel_n_jobs=None):
         
         """
         Run the HLMEA optimization algorithm.
@@ -156,6 +156,18 @@ Make sure the length of solutions match examples given. Don't guess for the scor
         Returns:
         - results (OptimizationResult): An object containing the optimization results.
         """
+        from ..config import get_config
+        config = get_config()
+        
+        # Use config defaults if not provided
+        if num_steps is None:
+            num_steps = config.default_num_steps
+        if batch_size is None:
+            batch_size = config.default_batch_size
+        if temperature is None:
+            temperature = config.temperature
+        if parallel_n_jobs is None:
+            parallel_n_jobs = config.parallel_n_jobs
 
         client = initialize_llm(self.llm_model, self.api_key)
 
@@ -168,7 +180,7 @@ Make sure the length of solutions match examples given. Don't guess for the scor
             best_score = np.min(init_scores)
         else:
             log_critical("Invalid optimization_type. Choose 'maximize' or 'minimize'.")
-            raise ValueError("Invalid optimization_type. Choose 'maximize' or 'minimize'.")
+            raise ValueError("optimization_type must be 'maximize' or 'minimize'")
         
         best_score_history = [best_score]
         avg_score_per_step = [np.average(init_scores)]

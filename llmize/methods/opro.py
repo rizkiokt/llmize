@@ -15,13 +15,13 @@ class OPRO(Optimizer):
     This class inherits from the `Optimizer` class and allows configuration 
     of various parameters related to the optimization process.
 
-    :param str llm_model: The name of the LLM model to use (default: "gemini-2.5-flash-lite").
+    :param str llm_model: The name of the LLM model to use (default from config).
     :param str api_key: The API key for accessing the model (default: None).
     :param int num_steps: The number of optimization steps (default: 50).
     :param int batch_size: The batch size used for optimization (default: 5).
     """
 
-    def __init__(self, problem_text=None, obj_func=None, llm_model="gemini-2.5-flash-lite", api_key=None):
+    def __init__(self, problem_text=None, obj_func=None, llm_model=None, api_key=None):
         """
         Initialize the OPRO optimizer with the provided configuration.
         Inherits from `Optimizer`.
@@ -67,8 +67,8 @@ Make sure the length of solutions match examples given. Don't guess for the scor
 
         return prompt
     
-    def optimize(self, init_samples=None, init_scores=None, num_steps=50, batch_size=5,
-                 temperature=1.0, callbacks=None, verbose=1, optimization_type="maximize", parallel_n_jobs=1):
+    def optimize(self, init_samples=None, init_scores=None, num_steps=None, batch_size=None,
+                 temperature=None, callbacks=None, verbose=1, optimization_type="maximize", parallel_n_jobs=None):
         
         """
         Run the OPRO optimization algorithm.
@@ -76,15 +76,28 @@ Make sure the length of solutions match examples given. Don't guess for the scor
         Parameters:
         - init_samples (list): A list of initial solutions.
         - init_scores (list): A list of initial scores corresponding to init_samples.
-        - num_steps (int): The number of optimization steps (default: 50).
-        - batch_size (int): The number of new solutions to generate at each step (default: 5).
-        - temperature (float): The temperature for the LLM model (default: 1.0).
+        - num_steps (int): The number of optimization steps (default from config).
+        - batch_size (int): The number of new solutions to generate at each step (default from config).
+        - temperature (float): The temperature for the LLM model (default from config).
         - callbacks (list): A list of callback functions to be triggered at the end of each step.
         - optimization_type (str): "maximize" or "minimize" (default: "maximize").
+        - parallel_n_jobs (int): Number of parallel jobs for evaluation (default from config).
 
         Returns:
         - results (OptimizationResult): An object containing the optimization results.
         """
+        from ..config import get_config
+        config = get_config()
+        
+        # Use config defaults if not provided
+        if num_steps is None:
+            num_steps = config.default_num_steps
+        if batch_size is None:
+            batch_size = config.default_batch_size
+        if temperature is None:
+            temperature = config.temperature
+        if parallel_n_jobs is None:
+            parallel_n_jobs = config.parallel_n_jobs
 
         client = initialize_llm(self.llm_model, self.api_key)
 
@@ -97,7 +110,7 @@ Make sure the length of solutions match examples given. Don't guess for the scor
             best_score = np.min(init_scores)
         else:
             log_critical("Invalid optimization_type. Choose 'maximize' or 'minimize'.")
-            raise ValueError("Invalid optimization_type. Choose 'maximize' or 'minimize'.")
+            raise ValueError("optimization_type must be 'maximize' or 'minimize'")
         
         best_score_history = [best_score]
         avg_score_per_step = [np.average(init_scores)]

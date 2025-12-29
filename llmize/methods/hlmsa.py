@@ -16,13 +16,13 @@ class HLMSA(Optimizer):
     This class inherits from the `Optimizer` class and allows configuration 
     of various parameters related to the optimization process.
 
-    :param str llm_model: The name of the LLM model to use (default: "gemini-2.5-flash-lite").
+    :param str llm_model: The name of the LLM model to use (default from config).
     :param str api_key: The API key for accessing the model (default: None).
     :param int num_steps: The number of optimization steps (default: 50).
     :param int batch_size: The batch size used for optimization (default: 5).
     """
 
-    def __init__(self, problem_text=None, obj_func=None, llm_model="gemini-2.5-flash-lite", api_key=None):
+    def __init__(self, problem_text=None, obj_func=None, llm_model=None, api_key=None):
         """
         Initialize the HLMSA optimizer with the provided configuration.
         Inherits from `Optimizer`.
@@ -94,11 +94,11 @@ Return exactly **{batch_size} unique solutions** and the chosen hyperparameters 
 
 ### **Hyperparameters Output**  
 
-<hp> cooling_rate <\hp>
+<hp> cooling_rate <\\\\hp>
 
 ### **Solutions Output**  
 
-<sol> param1, param2, ..., paramn <\sol>
+<sol> param1, param2, ..., paramn <\\\\sol>
 
 **Only provide the solutions and hyperparameters—do not include any extra text. Do not include any code.**  
 """
@@ -127,8 +127,8 @@ Return exactly **{batch_size} unique solutions** and the chosen hyperparameters 
 
         return current_solutions, current_scores    
     
-    def optimize(self, init_samples=None, init_scores=None, num_steps=50, batch_size=5,
-                 temperature=1.0, callbacks=None, verbose=1, optimization_type="maximize", parallel_n_jobs=1):
+    def optimize(self, init_samples=None, init_scores=None, num_steps=None, batch_size=None,
+                 temperature=None, callbacks=None, verbose=1, optimization_type="maximize", parallel_n_jobs=None):
         
         """
         Run the HLMSA optimization algorithm.
@@ -145,6 +145,18 @@ Return exactly **{batch_size} unique solutions** and the chosen hyperparameters 
         Returns:
         - results (OptimizationResult): An object containing the optimization results.
         """
+        from ..config import get_config
+        config = get_config()
+        
+        # Use config defaults if not provided
+        if num_steps is None:
+            num_steps = config.default_num_steps
+        if batch_size is None:
+            batch_size = config.default_batch_size
+        if temperature is None:
+            temperature = config.temperature
+        if parallel_n_jobs is None:
+            parallel_n_jobs = config.parallel_n_jobs
 
         client = initialize_llm(self.llm_model, self.api_key)
 
@@ -157,7 +169,7 @@ Return exactly **{batch_size} unique solutions** and the chosen hyperparameters 
             best_score = np.min(init_scores)
         else:
             log_critical("Invalid optimization_type. Choose 'maximize' or 'minimize'.")
-            raise ValueError("Invalid optimization_type. Choose 'maximize' or 'minimize'.")
+            raise ValueError("optimization_type must be 'maximize' or 'minimize'")
         
         best_score_history = [best_score]
         avg_score_per_step = [np.average(init_scores)]
@@ -191,13 +203,18 @@ Return exactly **{batch_size} unique solutions** and the chosen hyperparameters 
             solution_array, hp = self._generate_solutions(client, prompt, temperature, 
                                                             batch_size, verbose, hp_parse=True)
             
+            # If hyperparameter parsing failed but we got solutions, try again without hp_parse
+            if solution_array is not None and hp is None and len(solution_array) >= batch_size:
+                log_warning("Hyperparameter parsing failed, proceeding with default cooling rate")
+                hp = [0.95]  # Default cooling rate
+            
 
             # Check if hp is not None and has the correct format
             if hp is None or hp[0] < 0 or hp[0] > 1:
                 log_warning("Invalid or missing hyperparameters format.")
                 hp_text = "The cooling rate used in previous step are unknown."
             else:
-                hp_text = f"""The hyperparameter (cooling rate) used in previous step is: <hp> {hp} <\hp>"""
+                hp_text = f"""The hyperparameter (cooling rate) used in previous step is: <hp> {hp} <\\\\hp>"""
                 cooling_rate = hp[0]
 
             best_score, best_solution, step_scores, best_step_score = self._evaluate_solutions(solution_array, best_solution,

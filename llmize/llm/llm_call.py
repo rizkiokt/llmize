@@ -5,7 +5,7 @@ from ..utils.logger import log_info, log_warning, log_error
 from ..utils.decorators import time_it
 
 #@time_it
-def generate_content(client, model, prompt, temperature=1.0, max_retries=10, retry_delay=5):
+def generate_content(client, model, prompt, temperature=None, max_retries=None, retry_delay=None):
     """
     Generate content using the specified language model.
 
@@ -16,16 +16,27 @@ def generate_content(client, model, prompt, temperature=1.0, max_retries=10, ret
     - client: The API client used to interact with the language model.
     - model (str): The name of the language model to use.
     - prompt (str): The textual prompt to generate content from.
-    - temperature (float, optional): Controls the creativity of the responses. Default is 1.0.
-    - max_retries (int, optional): Maximum number of retry attempts in case of rate-limiting. Default is 10.
-    - retry_delay (int, optional): Delay in seconds between retry attempts. Default is 5.
+    - temperature (float, optional): Controls the creativity of the responses (default from config).
+    - max_retries (int, optional): Maximum number of retry attempts in case of rate-limiting (default from config).
+    - retry_delay (int, optional): Delay in seconds between retry attempts (default from config).
 
     Returns:
     - str: The generated content as a string, or None if the request was unsuccessful after retries.
     """
+    # Import config here to avoid circular imports
+    from ..config import get_config
+    config = get_config()
+    
+    # Use config defaults if not provided
+    if temperature is None:
+        temperature = config.temperature
+    if max_retries is None:
+        max_retries = config.max_retries
+    if retry_delay is None:
+        retry_delay = config.retry_delay
 
-    if model.startswith("gemini") or model.startswith("gemma"):
-        return generate_content_gemini(client, model, prompt,temperature, max_retries, retry_delay)
+    if model.startswith(("gemini", "gemma")):
+        return generate_content_gemini(client, model, prompt, temperature, max_retries, retry_delay)
     else:
         return generate_content_huggingface(client, model, prompt, temperature, max_retries, retry_delay)    
 

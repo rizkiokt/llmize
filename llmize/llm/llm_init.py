@@ -1,5 +1,5 @@
 def initialize_llm(llm_model, api_key):
-    if llm_model.startswith("gemini"):
+    if llm_model.startswith(("gemini", "gemma")):
         client = initialize_gemini(api_key)
     else:
         client = initialize_huggingface(api_key)
