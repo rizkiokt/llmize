@@ -13,7 +13,7 @@ def test_opro_initialization():
     
     assert opro.problem_text == problem_text
     assert opro.obj_func == obj_func
-    assert opro.llm_model == "gemini-2.0-flash"  # default model
+    assert opro.llm_model == "gemini-2.5-flash-lite"  # default model
 
 def test_optimal_score_stopping():
     """Test OptimalScoreStopping callback functionality"""

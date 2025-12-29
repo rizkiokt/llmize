@@ -13,7 +13,7 @@ def test_hlmea_initialization():
     
     assert hlmea.problem_text == problem_text
     assert hlmea.obj_func == obj_func
-    assert hlmea.llm_model == "gemini-2.0-flash"  # default model
+    assert hlmea.llm_model == "gemini-2.5-flash-lite"  # default model
 
 def test_optimal_score_stopping():
     """Test OptimalScoreStopping callback functionality"""

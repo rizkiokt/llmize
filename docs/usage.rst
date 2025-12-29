@@ -58,7 +58,7 @@ Here's how to use LLMize for convex optimization with different initialization m
     optimizer = OPRO(
         problem_text=problem_text,
         obj_func=objective_convex_penalty,
-        llm_model="gemini-2.0-flash",
+        llm_model="gemini-2.5-flash-lite",
         api_key=os.getenv("GEMINI_API_KEY")
     )
 
