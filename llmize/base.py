@@ -37,7 +37,7 @@ class OptimizationResult:
         }
 
 class Optimizer:
-    def __init__(self, problem_text=None, obj_func=None, llm_model="gemini-2.0-flash", api_key=None):
+    def __init__(self, problem_text=None, obj_func=None, llm_model="gemini-2.5-flash-lite", api_key=None):
         """
         Initialize the Optimizer with the general configuration.    
         """

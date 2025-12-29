@@ -15,13 +15,13 @@ class HLMEA(Optimizer):
     This class inherits from the `Optimizer` class and allows configuration 
     of various parameters related to the optimization process.
 
-    :param str llm_model: The name of the LLM model to use (default: "gemini-2.0-flash").
+    :param str llm_model: The name of the LLM model to use (default: "gemini-2.5-flash-lite").
     :param str api_key: The API key for accessing the model (default: None).
     :param int num_steps: The number of optimization steps (default: 50).
     :param int batch_size: The batch size used for optimization (default: 5).
     """
 
-    def __init__(self, problem_text=None, obj_func=None, llm_model="gemini-2.0-flash", api_key=None):
+    def __init__(self, problem_text=None, obj_func=None, llm_model="gemini-2.5-flash-lite", api_key=None):
         """
         Initialize the HLMEA optimizer with the provided configuration.
         Inherits from `Optimizer`.

@@ -14,8 +14,8 @@ from llmize.optimization_result import OptimizationResult
 
 
 # Experiment parameters
-#models = ["gemini-2.0-flash", "gemini-2.0-flash-thinking-exp"]
-models = ["gemini-2.0-flash"]
+#models = ["gemini-2.5-flash-lite", "gemini-2.0-flash-thinking-exp"]
+models = ["gemini-2.5-flash-lite"]
 #methods = [OPRO, HLMEA, HLMSA]
 methods = [HLMEA, HLMSA]
 num_trials = 5

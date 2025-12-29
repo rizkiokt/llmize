@@ -47,7 +47,7 @@ with open("tsp_problem.txt", "r") as f:
 
 # Initialize the OPRO optimizer
 opro = OPRO(problem_text=problem_text, obj_func=partial(objective_function, dist_matrix=dist_matrix),
-            llm_model="gemini-2.0-flash", api_key=os.getenv("GEMINI_API_KEY"))
+            llm_model="gemini-2.5-flash-lite", api_key=os.getenv("GEMINI_API_KEY"))
 
 prompt = opro.get_sample_prompt(init_samples=routes, init_scores=total_distances, optimization_type="minimize")
 response = opro.get_sample_response(prompt)
