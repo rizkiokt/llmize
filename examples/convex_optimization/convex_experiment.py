@@ -30,8 +30,8 @@ def objective_convex_penalty(x):
 
 
 # Experiment parameters
-models = ["gemini-2.5-flash-lite", "gemini-2.0-flash-thinking-exp"]
-#models = ["gemini-2.5-flash-lite"]
+models = ["gemma-3-27b-it", "gemini-2.0-flash-thinking-exp"]
+#models = ["gemma-3-27b-it"]
 methods = [OPRO, HLMEA, HLMSA]
 #methods = [HLMEA, HLMSA]
 num_trials = 5
