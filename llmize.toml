@@ -1,0 +1,25 @@
+# LLMize Configuration File
+# Copy this file to ~/.llmize/config.toml or .llmize.toml in your project
+
+[llm]
+# Default LLM model to use
+default_model = "gemma-3-27b-it"
+
+# Default temperature for LLM generation (0.0 to 2.0)
+temperature = 1.0
+
+# Maximum number of retries when hitting rate limits
+max_retries = 10
+
+# Delay between retries in seconds
+retry_delay = 5
+
+[optimization]
+# Default number of optimization steps
+default_num_steps = 50
+
+# Default batch size for generating solutions
+default_batch_size = 5
+
+# Default number of parallel jobs for evaluation
+parallel_n_jobs = 1
