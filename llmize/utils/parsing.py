@@ -78,7 +78,7 @@ def parse_pairs(samples, scores):
     output = ""
     for sample, score in zip(samples, scores):
         output += "\n"
-        output += f"<sol> {','.join(map(str, sample))} <\\sol>\nscore: {score:.3f}\n"
+        output += f"<sol> {','.join(map(str, sample))} </sol>\nscore: {score:.3f}\n"
 
     return output
 

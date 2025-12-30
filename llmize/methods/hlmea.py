@@ -106,7 +106,7 @@ Return exactly **{batch_size} unique solutions** and the chosen hyperparameters 
 
 ### **Solutions Output**  
 
-<sol> param1, param2, ..., paramn <\\\\sol>
+<sol> param1, param2, ..., paramn </sol>
 
 **Only provide the solutions and hyperparameters—do not include any extra text. Do not include any code.**  
 
@@ -129,7 +129,7 @@ Generate exactly {batch_size} solutions for the next population by following the
 8. Think step by step to follow the instructions above. The format <sol> and <hp> are only used for your final output, don't include them in your process.
 
 
-Give me the solutions in the format: <sol> param1, param2, ..., paramn <\\\\sol> with a comma between parameters.
+Give me the solutions in the format: <sol> param1, param2, ..., paramn </sol> with a comma between parameters.
 Also, give me your decision on the hyperparameters in the format: <hp> elitism_rate, mutation_rate, crossover_rate <\\\\hp>.
 Make sure the length of solutions match examples given. Don't guess for the scores as they will be calculated by an objective function.
 
