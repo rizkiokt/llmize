@@ -1,5 +1,6 @@
 import functools
 import multiprocessing as mp
+from typing import List, Optional, Callable, Dict, Any, Union
 from .config import get_config
 from .utils.parsing import parse_pairs
 from .llm.llm_call import generate_content
@@ -32,14 +33,15 @@ class OptimizationResult:
         >>> # Convert to dictionary for saving
         >>> result_dict = result.to_dict()
     """
-    def __init__(self, best_solution, best_score, best_score_history, best_score_per_step, avg_score_per_step):
+    def __init__(self, best_solution: Any, best_score: float, best_score_history: List[float], 
+                 best_score_per_step: List[float], avg_score_per_step: List[float]):
         self.best_solution = best_solution
         self.best_score = best_score
         self.best_score_history = best_score_history
         self.best_score_per_step = best_score_per_step
         self.avg_score_per_step = avg_score_per_step
 
-    def to_dict(self):
+    def to_dict(self) -> Dict[str, Any]:
         """Convert the result to a dictionary format."""
         return {
             "best_solution": self.best_solution,

@@ -10,16 +10,18 @@ LLMize is a Python package that uses Large Language Models (LLMs) for multipurpo
    features
    installation
    quickstart
+   how_it_works
    examples
    usage
    advanced_usage
    configuration
+   faq
    api
    contributing
    license
    citation
    contact
-
+   
 Indices and tables
 ============================
 
