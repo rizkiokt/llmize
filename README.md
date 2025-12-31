@@ -29,7 +29,7 @@ pip install llmize
 For development installation:
 
 ```bash
-git clone https://github.com/yourusername/llmize.git
+git clone https://github.com/rizkiokt/llmize.git
 cd llmize
 pip install -e .
 ```
@@ -200,7 +200,8 @@ adapt_temp = AdaptTempOnPlateau(
 from llmize.callbacks import OptimalScoreStopping
 
 optimal_stop = OptimalScoreStopping(
-    target_score=0.99,     # Target score to reach
+    optimal_score=0.99,     # Target score to reach
+    tolerance=0.01,         # Tolerance for reaching target
     verbose=1              # Print messages when target is reached
 )
 ```
@@ -213,7 +214,7 @@ from llmize.callbacks import EarlyStopping, AdaptTempOnPlateau, OptimalScoreStop
 callbacks = [
     EarlyStopping(patience=10),
     AdaptTempOnPlateau(factor=0.5),
-    OptimalScoreStopping(target_score=0.99)
+    OptimalScoreStopping(optimal_score=0.99, tolerance=0.01)
 ]
 
 results = optimizer.maximize(

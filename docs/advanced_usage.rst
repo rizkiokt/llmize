@@ -2,17 +2,25 @@ Advanced Usage
 ====================
 
 Callbacks
-------------------
+----------
 
 LLMize supports custom callbacks for monitoring and controlling the optimization process:
 
+Available Callbacks
+~~~~~~~~~~~~~~~~~~~~
+
+1. **EarlyStopping**: Stop optimization when no improvement is seen
+2. **AdaptTempOnPlateau**: Reduce temperature when optimization plateaus
+3. **OptimalScoreStopping**: Stop when reaching a target score
+
 .. code-block:: python
 
-    from llmize.callbacks import EarlyStopping, AdaptTempOnPlateau
+    from llmize.callbacks import EarlyStopping, AdaptTempOnPlateau, OptimalScoreStopping
 
     callbacks = [
-        EarlyStopping(patience=5),
-        AdaptTempOnPlateau(factor=0.5)
+        EarlyStopping(patience=10, monitor='best_score'),
+        AdaptTempOnPlateau(factor=0.5, patience=5),
+        OptimalScoreStopping(optimal_score=0.99, tolerance=0.01)
     ]
 
     results = optimizer.maximize(
@@ -35,7 +43,7 @@ Enable parallel evaluation of solutions:
 Result Analysis
 ------------------
 
-The new ``OptimizationResult`` class provides comprehensive optimization results:
+The ``OptimizationResult`` class provides comprehensive optimization results:
 
 .. code-block:: python
 
@@ -43,7 +51,8 @@ The new ``OptimizationResult`` class provides comprehensive optimization results
     print(f"Best solution: {results.best_solution}")
     print(f"Best score: {results.best_score}")
     print(f"Score history: {results.best_score_history}")
-    print(f"Per-step scores: {results.best_score_per_step}")
-    print(f"Average scores: {results.avg_score_per_step}")
-    print(f"Number of steps: {results.num_steps}")
-    print(f"Total time: {results.total_time} seconds") 
+    print(f"Per-step best scores: {results.best_score_per_step}")
+    print(f"Per-step average scores: {results.avg_score_per_step}")
+    
+    # Convert to dictionary for serialization
+    results_dict = results.to_dict() 

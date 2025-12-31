@@ -11,6 +11,6 @@ Or install from source:
 
 .. code-block:: bash
 
-    git clone https://github.com/yourusername/llmize.git
+    git clone https://github.com/rizkiokt/llmize.git
     cd llmize
     pip install -e . 

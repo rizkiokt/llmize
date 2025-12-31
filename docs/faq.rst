@@ -119,6 +119,19 @@ Debugging Tips
     
     result = optimizer.optimize(callbacks=[ProgressTracker()])
 
+**3. OptimalScoreStopping**: Stop when reaching a target score
+
+.. code-block:: python
+
+    from llmize.callbacks import OptimalScoreStopping
+    
+    optimal_stop = OptimalScoreStopping(
+        optimal_score=0.99,  # Target score
+        tolerance=0.01       # Acceptable tolerance
+    )
+    
+    result = optimizer.optimize(callbacks=[optimal_stop])
+
 **Save and Load Results**
 
 .. code-block:: python
