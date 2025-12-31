@@ -98,7 +98,7 @@ Return exactly **{batch_size} unique solutions** and the chosen hyperparameters 
 
 ### **Solutions Output**  
 
-<sol> param1, param2, ..., paramn <\\\\sol>
+<sol> param1, param2, ..., paramn </sol>
 
 **Only provide the solutions and hyperparameters—do not include any extra text. Do not include any code.**  
 """

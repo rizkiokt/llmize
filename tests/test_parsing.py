@@ -56,7 +56,7 @@ def test_parse_pairs():
     """Test converting samples and scores to paired format"""
     samples = [[1, 2, 3], [4, 5, 6]]
     scores = [10.5, 20.7]
-    expected = "\n<sol> 1,2,3 <\\sol>\nscore: 10.500\n\n<sol> 4,5,6 <\\sol>\nscore: 20.700\n"
+    expected = "\n<sol> 1,2,3 </sol>\nscore: 10.500\n\n<sol> 4,5,6 </sol>\nscore: 20.700\n"
     result = parse_pairs(samples, scores)
     assert result == expected
 

@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="llmize",
-    version="0.1.4",
+    version="0.2.1",
     packages=find_packages(include=['llmize', 'llmize.*']),
     install_requires=[
         "numpy>=1.21.0",
