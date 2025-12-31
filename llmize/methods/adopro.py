@@ -10,26 +10,54 @@ from ..callbacks import EarlyStopping, OptimalScoreStopping, AdaptTempOnPlateau
 class ADOPRO(Optimizer):
     """
     :no-index:
-    ADOPRO optimizer for optimizing tasks using a specified LLM model.
-
-    This class inherits from the `Optimizer` class and allows configuration 
-    of various parameters related to the optimization process.
-
-    :param str llm_model: The name of the LLM model to use (default from config).
-    :param str api_key: The API key for accessing the model (default: None).
-    :param int num_steps: The number of optimization steps (default: 50).
-    :param int batch_size: The batch size used for optimization (default: 5).
+    ADOPRO (Adaptive Optimization by PROmpting) optimizer for numerical optimization using LLMs.
+    
+    ADOPRO is an enhanced version of OPRO that dynamically adjusts prompts based on
+    optimization progress. It monitors the optimization trajectory and adapts the
+    prompting strategy to escape local optima and improve convergence.
+    
+    This optimizer is best suited for:
+    - Complex optimization landscapes with multiple local optima
+    - Problems where OPRO gets stuck or converges prematurely
+    - Adaptive optimization strategies
+    - Problems requiring dynamic exploration-exploitation balance
+    
+    Example:
+        >>> def rastrigin(x):
+        ...     A = 10
+        ...     n = len(x)
+        ...     return A*n + sum(float(i)**2 - A*math.cos(2*math.pi*float(i)) for i in x)
+        >>> 
+        >>> adopro = ADOPRO(
+        ...     problem_text="Minimize the Rastrigin function (highly multimodal)",
+        ...     obj_func=rastrigin,
+        ...     api_key="your-api-key"
+        ... )
+        >>> result = adopro.minimize(
+        ...     init_samples=[["1", "1"], ["2", "2"], ["0", "0"]],
+        ...     init_scores=[...],
+        ...     num_steps=20
+        ... )
+    
+    Note:
+        This class inherits from `Optimizer` and uses adaptive prompting strategies
+        to improve upon the basic OPRO approach.
     """
 
     def __init__(self, problem_text=None, obj_func=None, llm_model=None, api_key=None):
         """
-        Initialize the ADOPRO optimizer with the provided configuration.
-        Inherits from `Optimizer`.
-
-        :param str llm_model: The name of the LLM model to use.
-        :param str api_key: The API key for accessing the model.
-        :param int num_steps: The number of optimization steps.
-        :param int batch_size: The batch size used for optimization.
+        Initialize the ADOPRO optimizer.
+        
+        Args:
+            problem_text (str, optional): Natural language description of the
+                optimization problem. Should include information about the complexity
+                and any known challenges (e.g., multimodality).
+            obj_func (callable, optional): Objective function that takes a solution
+                and returns a numerical score.
+            llm_model (str, optional): Name of the LLM model to use. If None,
+                uses the default from configuration file.
+            api_key (str, optional): API key for the LLM service. If None,
+                will attempt to read from environment variables.
         """
         super().__init__(problem_text=problem_text, obj_func=obj_func, llm_model=llm_model, api_key=api_key)
     

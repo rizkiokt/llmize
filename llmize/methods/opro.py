@@ -10,26 +10,53 @@ from ..callbacks import EarlyStopping, OptimalScoreStopping, AdaptTempOnPlateau
 class OPRO(Optimizer):
     """
     :no-index:
-    OPRO optimizer for optimizing tasks using a specified LLM model.
-
-    This class inherits from the `Optimizer` class and allows configuration 
-    of various parameters related to the optimization process.
-
-    :param str llm_model: The name of the LLM model to use (default from config).
-    :param str api_key: The API key for accessing the model (default: None).
-    :param int num_steps: The number of optimization steps (default: 50).
-    :param int batch_size: The batch size used for optimization (default: 5).
+    OPRO (Optimization by PROmpting) optimizer for numerical optimization using LLMs.
+    
+    OPRO is the original approach that directly prompts LLMs to generate better solutions
+    based on previous examples. It works by showing the LLM a history of solutions and
+    their scores, then asking it to generate new solutions that improve upon the best ones.
+    
+    This optimizer is best suited for:
+    - Simple optimization problems with clear patterns
+    - Problems where the relationship between solutions and scores is easily learnable
+    - Quick prototyping and testing
+    - Problems with relatively small search spaces
+    
+    Example:
+        >>> def sphere(x):
+        ...     return sum(float(i)**2 for i in x)
+        >>> 
+        >>> opro = OPRO(
+        ...     problem_text="Minimize the sphere function sum(x_i^2)",
+        ...     obj_func=sphere,
+        ...     api_key="your-api-key"
+        ... )
+        >>> result = opro.minimize(
+        ...     init_samples=[["1", "1"], ["2", "2"]],
+        ...     init_scores=[2, 8],
+        ...     num_steps=10
+        ... )
+    
+    Note:
+        This class inherits from `Optimizer` and uses the default configuration
+        parameters unless overridden during initialization or optimization.
     """
 
     def __init__(self, problem_text=None, obj_func=None, llm_model=None, api_key=None):
         """
-        Initialize the OPRO optimizer with the provided configuration.
-        Inherits from `Optimizer`.
-
-        :param str llm_model: The name of the LLM model to use.
-        :param str api_key: The API key for accessing the model.
-        :param int num_steps: The number of optimization steps.
-        :param int batch_size: The batch size used for optimization.
+        Initialize the OPRO optimizer.
+        
+        Args:
+            problem_text (str, optional): Natural language description of the
+                optimization problem. This should clearly state what needs to be
+                optimized and any constraints.
+            obj_func (callable, optional): Objective function that takes a solution
+                and returns a numerical score. Higher scores indicate better solutions
+                for maximization, lower scores for minimization.
+            llm_model (str, optional): Name of the LLM model to use. If None,
+                uses the default from configuration file.
+            api_key (str, optional): API key for the LLM service. If None,
+                will attempt to read from environment variables.
         """
         super().__init__(problem_text=problem_text, obj_func=obj_func, llm_model=llm_model, api_key=api_key)
     

@@ -4,13 +4,17 @@ LLMize is a Python package that uses Large Language Models (LLMs) for multipurpo
 
 ## Features
 
-- **LLM-Based Optimization**: Utilizes LLM for iteratively generating and optimizing solutions, inspired by OPRO methods [paper here](https://arxiv.org/abs/2309.03409)
-- **Multiple Optimizers**: Includes OPRO, ADOPRO, HLMEA, and HLMSA optimizers for different problem types
+- **LLM-Based Optimization**: Utilizes LLMs for iteratively generating and optimizing solutions, inspired by OPRO methods [paper here](https://arxiv.org/abs/2309.03409)
+- **Multiple Optimizers**: Includes four powerful optimizers:
+  - **OPRO**: Optimization by PROmpting - directly prompts LLMs to generate better solutions
+  - **ADOPRO**: Adaptive OPRO - dynamically adjusts prompts based on optimization progress
+  - **HLMEA**: Hyper-heuristic LLM-driven Evolutionary Algorithm - uses evolutionary strategies with LLM guidance
+  - **HLMSA**: Hyper-heuristic LLM-driven Simulated Annealing - combines simulated annealing with LLM optimization
 - **Flexible Problem Definition**: Supports both text-based problem descriptions and objective functions
 - **Configuration System**: Centralized configuration management with TOML files and environment variables
-- **Parallel Processing**: Built-in support for parallel evaluation of solutions
+- **Parallel Processing**: Built-in support for parallel evaluation of solutions to speed up optimization
 - **Callback System**: Extensible callback mechanism for monitoring and controlling the optimization process
-- **Early Stopping**: Built-in early stopping mechanism to prevent overfitting
+- **Early Stopping**: Built-in early stopping mechanism to prevent overfitting and save API costs
 - **Adaptive Temperature**: Dynamic LLM temperature adjustment based on optimization progress
 - **Comprehensive Results**: Detailed optimization results including best scores, solution history, and convergence metrics
 
@@ -29,6 +33,85 @@ git clone https://github.com/yourusername/llmize.git
 cd llmize
 pip install -e .
 ```
+
+## Available Optimizers
+
+### OPRO (Optimization by PROmpting)
+
+The original approach that directly prompts LLMs to generate better solutions based on previous examples. Best for:
+- Simple optimization problems
+- Problems with clear solution patterns
+- Quick prototyping and testing
+
+```python
+from llmize import OPRO
+
+opro = OPRO(
+    problem_text="Minimize (x+2)^2",
+    obj_func=obj_func,
+    api_key=os.getenv("GEMINI_API_KEY")
+)
+```
+
+### ADOPRO (Adaptive OPRO)
+
+An enhanced version of OPRO that dynamically adjusts prompts based on optimization progress. Best for:
+- Problems requiring adaptive strategies
+- Complex optimization landscapes
+- When OPRO gets stuck in local optima
+
+```python
+from llmize import ADOPRO
+
+adopro = ADOPRO(
+    problem_text="Optimize complex function",
+    obj_func=complex_func,
+    api_key=os.getenv("GEMINI_API_KEY")
+)
+```
+
+### HLMEA (Hyper-heuristic LLM-driven Evolutionary Algorithm)
+
+Uses evolutionary strategies with LLM guidance to maintain diversity and avoid premature convergence. Best for:
+- Combinatorial optimization problems
+- Large search spaces
+- Problems requiring diverse solutions
+
+```python
+from llmize import HLMEA
+
+hlmea = HLMEA(
+    problem_text="Solve traveling salesman problem",
+    obj_func=tsp_objective,
+    api_key=os.getenv("GEMINI_API_KEY")
+)
+```
+
+### HLMSA (Hyper-heuristic LLM-driven Simulated Annealing)
+
+Combines simulated annealing principles with LLM optimization for controlled exploration. Best for:
+- Problems with many local optima
+- Fine-tuning solutions
+- Temperature-sensitive optimization
+
+```python
+from llmize import HLMSA
+
+hlmsa = HLMSA(
+    problem_text="Find global minimum",
+    obj_func=multimodal_func,
+    api_key=os.getenv("GEMINI_API_KEY")
+)
+```
+
+## Choosing the Right Optimizer
+
+| Optimizer | Best For | Complexity | Diversity | Convergence Speed |
+|-----------|----------|------------|-----------|------------------|
+| OPRO | Simple problems | Low | Low | Fast |
+| ADOPRO | Adaptive problems | Medium | Medium | Medium |
+| HLMEA | Combinatorial/Large spaces | High | High | Slow |
+| HLMSA | Multi-modal problems | High | Medium | Medium |
 
 ## Quick Start
 
@@ -85,12 +168,52 @@ Check the `examples/` directory for detailed implementations.
 
 LLMize supports custom callbacks for monitoring and controlling the optimization process:
 
+#### Available Callbacks
+
+1. **EarlyStopping**: Stop optimization when no improvement is seen
 ```python
-from llmize.callbacks import EarlyStopping, AdaptTempOnPlateau
+from llmize.callbacks import EarlyStopping
+
+early_stop = EarlyStopping(
+    monitor='best_score',  # Metric to monitor
+    min_delta=0.01,        # Minimum change to qualify as improvement
+    patience=10,           # Steps with no improvement before stopping
+    verbose=1              # Print messages when early stopping triggers
+)
+```
+
+2. **AdaptTempOnPlateau**: Reduce temperature when optimization plateaus
+```python
+from llmize.callbacks import AdaptTempOnPlateau
+
+adapt_temp = AdaptTempOnPlateau(
+    monitor='best_score',  # Metric to monitor
+    factor=0.5,            # Factor to multiply temperature by
+    patience=5,            # Steps with no improvement before reducing temp
+    min_temp=0.1,          # Minimum temperature value
+    verbose=1              # Print messages when temperature changes
+)
+```
+
+3. **OptimalScoreStopping**: Stop when reaching a target score
+```python
+from llmize.callbacks import OptimalScoreStopping
+
+optimal_stop = OptimalScoreStopping(
+    target_score=0.99,     # Target score to reach
+    verbose=1              # Print messages when target is reached
+)
+```
+
+#### Using Multiple Callbacks
+
+```python
+from llmize.callbacks import EarlyStopping, AdaptTempOnPlateau, OptimalScoreStopping
 
 callbacks = [
-    EarlyStopping(patience=5),
-    AdaptTempOnPlateau(factor=0.5)
+    EarlyStopping(patience=10),
+    AdaptTempOnPlateau(factor=0.5),
+    OptimalScoreStopping(target_score=0.99)
 ]
 
 results = optimizer.maximize(
@@ -112,17 +235,37 @@ results = optimizer.maximize(
 
 ### Result Analysis
 
-The new `OptimizationResult` class provides comprehensive optimization results:
+The `OptimizationResult` class provides comprehensive optimization results:
 
 ```python
 # Access optimization results
 print(f"Best solution: {results.best_solution}")
 print(f"Best score: {results.best_score}")
 print(f"Score history: {results.best_score_history}")
-print(f"Per-step scores: {results.best_score_per_step}")
-print(f"Average scores: {results.avg_score_per_step}")
-print(f"Number of steps: {results.num_steps}")
-print(f"Total time: {results.total_time} seconds")
+print(f"Per-step best scores: {results.best_score_per_step}")
+print(f"Per-step average scores: {results.avg_score_per_step}")
+
+# Convert to dictionary for serialization
+results_dict = results.to_dict()
+```
+
+### Plotting Results
+
+Visualize optimization progress:
+
+```python
+import matplotlib.pyplot as plt
+
+# Plot convergence
+plt.figure(figsize=(10, 6))
+plt.plot(results.best_score_history, label='Best Score')
+plt.plot(results.avg_score_per_step, label='Average Score')
+plt.xlabel('Step')
+plt.ylabel('Score')
+plt.title('Optimization Progress')
+plt.legend()
+plt.grid(True)
+plt.show()
 ```
 
 ## Configuration
@@ -216,9 +359,9 @@ opro = OPRO(
 
 ## Dependencies
 
-- Python >= 3.8
+- Python >= 3.11
 - numpy >= 1.21.0
-- google-genai>=1.15.0
+- google-genai >= 1.15.0
 - colorama >= 0.4.6
 - matplotlib >= 3.5.0
 - python-dotenv >= 0.19.0

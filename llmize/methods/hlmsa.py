@@ -10,27 +10,54 @@ from ..callbacks import EarlyStopping, OptimalScoreStopping, AdaptTempOnPlateau
 class HLMSA(Optimizer):
     """
     :no-index:
-    HLMSA: Hyper-heuristic LLM-driven Simulated Annealing
-    HLMSA optimizer for optimizing tasks using a specified LLM model.
-
-    This class inherits from the `Optimizer` class and allows configuration 
-    of various parameters related to the optimization process.
-
-    :param str llm_model: The name of the LLM model to use (default from config).
-    :param str api_key: The API key for accessing the model (default: None).
-    :param int num_steps: The number of optimization steps (default: 50).
-    :param int batch_size: The batch size used for optimization (default: 5).
+    HLMSA (Hyper-heuristic LLM-driven Simulated Annealing) optimizer for numerical optimization.
+    
+    HLMSA combines simulated annealing principles with LLM optimization to provide
+    controlled exploration of the solution space. It uses adaptive cooling rates and
+    perturbation strategies to balance exploration and exploitation.
+    
+    This optimizer is best suited for:
+    - Problems with many local optima requiring careful exploration
+    - Fine-tuning solutions where small improvements matter
+    - Temperature-sensitive optimization problems
+    - Problems where controlled convergence is important
+    
+    Example:
+        >>> def multimodal(x):
+        ...     # Function with many local optima
+        ...     return math.sin(5*x) + math.cos(3*x) + x**2
+        >>> 
+        >>> hlmsa = HLMSA(
+        ...     problem_text="Find global minimum of multimodal function",
+        ...     obj_func=multimodal,
+        ...     api_key="your-api-key"
+        ... )
+        >>> result = hlmsa.minimize(
+        ...     init_samples=[["0"], ["1"], ["-1"]],
+        ...     init_scores=[...],
+        ...     num_steps=30,
+        ...     batch_size=5
+        ... )
+    
+    Note:
+        HLMSA uses simulated annealing principles guided by LLM prompts to
+        dynamically adjust cooling rates and perturbation strategies.
     """
 
     def __init__(self, problem_text=None, obj_func=None, llm_model=None, api_key=None):
         """
-        Initialize the HLMSA optimizer with the provided configuration.
-        Inherits from `Optimizer`.
-
-        :param str llm_model: The name of the LLM model to use.
-        :param str api_key: The API key for accessing the model.
-        :param int num_steps: The number of optimization steps.
-        :param int batch_size: The batch size used for optimization.
+        Initialize the HLMSA optimizer.
+        
+        Args:
+            problem_text (str, optional): Natural language description of the
+                optimization problem. For multimodal problems, mention the
+                presence of local optima.
+            obj_func (callable, optional): Objective function that takes a solution
+                and returns a numerical score.
+            llm_model (str, optional): Name of the LLM model to use. If None,
+                uses the default from configuration file.
+            api_key (str, optional): API key for the LLM service. If None,
+                will attempt to read from environment variables.
         """
         super().__init__(problem_text=problem_text, obj_func=obj_func, llm_model=llm_model, api_key=api_key)
     

@@ -10,26 +10,55 @@ from ..callbacks import EarlyStopping, OptimalScoreStopping, AdaptTempOnPlateau
 class HLMEA(Optimizer):
     """
     :no-index:
-    HLMEA optimizer for optimizing tasks using a specified LLM model.
-
-    This class inherits from the `Optimizer` class and allows configuration 
-    of various parameters related to the optimization process.
-
-    :param str llm_model: The name of the LLM model to use (default from config).
-    :param str api_key: The API key for accessing the model (default: None).
-    :param int num_steps: The number of optimization steps (default: 50).
-    :param int batch_size: The batch size used for optimization (default: 5).
+    HLMEA (Hyper-heuristic LLM-driven Evolutionary Algorithm) optimizer for numerical optimization.
+    
+    HLMEA combines evolutionary algorithm principles with LLM guidance to maintain
+    solution diversity and avoid premature convergence. It uses hyper-heuristics to
+    adaptively select evolutionary operators (selection, crossover, mutation) based
+    on the optimization progress.
+    
+    This optimizer is best suited for:
+    - Combinatorial optimization problems (e.g., TSP, scheduling)
+    - Large search spaces where diversity is crucial
+    - Problems requiring exploration of multiple solution regions
+    - Complex optimization landscapes with many local optima
+    
+    Example:
+        >>> def tsp_distance(tour):
+        ...     # Calculate total distance for TSP tour
+        ...     return total_distance
+        >>> 
+        >>> hlmea = HLMEA(
+        ...     problem_text="Solve the Traveling Salesman Problem - find shortest tour",
+        ...     obj_func=tsp_distance,
+        ...     api_key="your-api-key"
+        ... )
+        >>> result = hlmea.minimize(
+        ...     init_samples=[["A", "B", "C", "D"], ["A", "C", "B", "D"]],
+        ...     init_scores=[100, 120],
+        ...     num_steps=50,
+        ...     batch_size=10
+        ... )
+    
+    Note:
+        HLMEA uses sophisticated evolutionary strategies guided by LLM prompts
+        to maintain diversity and avoid premature convergence.
     """
 
     def __init__(self, problem_text=None, obj_func=None, llm_model=None, api_key=None):
         """
-        Initialize the HLMEA optimizer with the provided configuration.
-        Inherits from `Optimizer`.
-
-        :param str llm_model: The name of the LLM model to use.
-        :param str api_key: The API key for accessing the model.
-        :param int num_steps: The number of optimization steps.
-        :param int batch_size: The batch size used for optimization.
+        Initialize the HLMEA optimizer.
+        
+        Args:
+            problem_text (str, optional): Natural language description of the
+                optimization problem. For combinatorial problems, specify the
+                problem type and constraints.
+            obj_func (callable, optional): Objective function that takes a solution
+                and returns a numerical score.
+            llm_model (str, optional): Name of the LLM model to use. If None,
+                uses the default from configuration file.
+            api_key (str, optional): API key for the LLM service. If None,
+                will attempt to read from environment variables.
         """
         super().__init__(problem_text=problem_text, obj_func=obj_func, llm_model=llm_model, api_key=api_key)
     
