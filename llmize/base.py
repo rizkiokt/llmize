@@ -1,5 +1,6 @@
 import functools
 import multiprocessing as mp
+from typing import List, Optional, Callable, Dict, Any, Union
 from .config import get_config
 from .utils.parsing import parse_pairs
 from .llm.llm_call import generate_content
@@ -11,23 +12,36 @@ from .callbacks import EarlyStopping, AdaptTempOnPlateau
 
 class OptimizationResult:
     """
-    A class to store the results of an optimization process.
+    A container class for storing and accessing the results of an optimization process.
+    
+    This class provides a structured way to access all relevant information from 
+    an optimization run, including the best solution found, its score, and the
+    complete optimization history.
     
     Attributes:
-        best_solution: The best solution found during optimization
-        best_score: The score of the best solution
-        best_score_history: List of best scores at each step
-        best_score_per_step: List of best scores in each batch
-        avg_score_per_step: List of average scores in each batch
+        best_solution: The best solution found during optimization. Can be any
+            type depending on the problem (string, list, tuple, etc.)
+        best_score: The score of the best solution (float)
+        best_score_history: Complete list of best scores at each step
+        best_score_per_step: List of best scores achieved in each batch
+        avg_score_per_step: List of average scores for each batch
+    
+    Example:
+        >>> result = optimizer.minimize(...)
+        >>> print(f"Best solution: {result.best_solution}")
+        >>> print(f"Best score: {result.best_score}")
+        >>> # Convert to dictionary for saving
+        >>> result_dict = result.to_dict()
     """
-    def __init__(self, best_solution, best_score, best_score_history, best_score_per_step, avg_score_per_step):
+    def __init__(self, best_solution: Any, best_score: float, best_score_history: List[float], 
+                 best_score_per_step: List[float], avg_score_per_step: List[float]):
         self.best_solution = best_solution
         self.best_score = best_score
         self.best_score_history = best_score_history
         self.best_score_per_step = best_score_per_step
         self.avg_score_per_step = avg_score_per_step
 
-    def to_dict(self):
+    def to_dict(self) -> Dict[str, Any]:
         """Convert the result to a dictionary format."""
         return {
             "best_solution": self.best_solution,
@@ -38,9 +52,40 @@ class OptimizationResult:
         }
 
 class Optimizer:
+    """
+    Base class for all LLM-based optimizers in LLMize.
+    
+    This class provides the common interface and functionality for all optimization
+    methods. It handles configuration management, LLM initialization, and provides
+    the standard maximize/minimize interface that all optimizers must implement.
+    
+    All optimizer classes (OPRO, ADOPRO, HLMEA, HLMSA) inherit from this base class.
+    
+    Attributes:
+        problem_text (str): Text description of the optimization problem
+        obj_func (callable): Objective function to evaluate solutions
+        llm_model (str): Name of the LLM model to use
+        api_key (str): API key for the LLM service
+    
+    Note:
+        This class should not be used directly. Instead, use one of the specific
+        optimizer implementations (OPRO, ADOPRO, HLMEA, HLMSA).
+    """
     def __init__(self, problem_text=None, obj_func=None, llm_model=None, api_key=None):
         """
-        Initialize the Optimizer with the general configuration.    
+        Initialize the Optimizer with the general configuration.
+        
+        Args:
+            problem_text (str, optional): A natural language description of the
+                optimization problem. This helps the LLM understand the context.
+                If None, must be provided before optimization.
+            obj_func (callable, optional): The objective function to optimize.
+                Should accept a solution and return a numerical score.
+                If None, must be provided before optimization.
+            llm_model (str, optional): Name of the LLM model to use. If None,
+                uses the default from configuration.
+            api_key (str, optional): API key for the LLM service. If None,
+                will look for environment variable or config setting.
         """
         config = get_config()
         

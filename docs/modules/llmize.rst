@@ -7,10 +7,12 @@ LLMize Module
    :show-inheritance:
 
 Submodules
-------------------
+----------
 
 .. toctree::
    :maxdepth: 2
 
    llmize.methods
-   llmize.utils 
+   llmize.utils
+   llmize.callbacks
+   llmize.llm 
