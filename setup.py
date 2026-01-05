@@ -9,6 +9,7 @@ setup(
         "google-genai>=1.5.0",
         "colorama>=0.4.6",
         "matplotlib>=3.5.0",
+        "requests>=2.25.0",
     ],
     extras_require={
         "dev": [
