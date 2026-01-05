@@ -2,13 +2,14 @@ from setuptools import setup, find_packages
 
 setup(
     name="llmize",
-    version="0.2.1",
+    version="0.3.0",
     packages=find_packages(include=['llmize', 'llmize.*']),
     install_requires=[
         "numpy>=1.21.0",
         "google-genai>=1.5.0",
         "colorama>=0.4.6",
         "matplotlib>=3.5.0",
+        "requests>=2.25.0",
     ],
     extras_require={
         "dev": [

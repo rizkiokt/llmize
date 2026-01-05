@@ -5,6 +5,7 @@ LLMize is a Python package that uses Large Language Models (LLMs) for multipurpo
 ## Features
 
 - **LLM-Based Optimization**: Utilizes LLMs for iteratively generating and optimizing solutions, inspired by OPRO methods [paper here](https://arxiv.org/abs/2309.03409)
+- **Multiple LLM Providers**: Support for Google Gemini, OpenRouter (new in v0.3.0), and Hugging Face models
 - **Multiple Optimizers**: Includes four powerful optimizers:
   - **OPRO**: Optimization by PROmpting - directly prompts LLMs to generate better solutions
   - **ADOPRO**: Adaptive OPRO - dynamically adjusts prompts based on optimization progress
@@ -34,6 +35,21 @@ cd llmize
 pip install -e .
 ```
 
+### API Keys Setup
+
+LLMize supports multiple LLM providers. Set up the API keys for the providers you want to use:
+
+```bash
+# For Google Gemini
+export GEMINI_API_KEY="your-gemini-api-key"
+
+# For OpenRouter (access to multiple models)
+export OPENROUTER_API_KEY="your-openrouter-api-key"
+
+# For Hugging Face
+export HUGGINGFACE_API_KEY="your-huggingface-api-key"
+```
+
 ## Available Optimizers
 
 ### OPRO (Optimization by PROmpting)
@@ -45,11 +61,12 @@ The original approach that directly prompts LLMs to generate better solutions ba
 
 ```python
 from llmize import OPRO
+import os
 
 opro = OPRO(
     problem_text="Minimize (x+2)^2",
     obj_func=obj_func,
-    api_key=os.getenv("GEMINI_API_KEY")
+    api_key=os.getenv("GEMINI_API_KEY")  # or OPENROUTER_API_KEY
 )
 ```
 
@@ -66,7 +83,7 @@ from llmize import ADOPRO
 adopro = ADOPRO(
     problem_text="Optimize complex function",
     obj_func=complex_func,
-    api_key=os.getenv("GEMINI_API_KEY")
+    api_key=os.getenv("GEMINI_API_KEY")  # or OPENROUTER_API_KEY
 )
 ```
 
@@ -83,7 +100,7 @@ from llmize import HLMEA
 hlmea = HLMEA(
     problem_text="Solve traveling salesman problem",
     obj_func=tsp_objective,
-    api_key=os.getenv("GEMINI_API_KEY")
+    api_key=os.getenv("GEMINI_API_KEY")  # or OPENROUTER_API_KEY
 )
 ```
 
@@ -100,7 +117,7 @@ from llmize import HLMSA
 hlmsa = HLMSA(
     problem_text="Find global minimum",
     obj_func=multimodal_func,
-    api_key=os.getenv("GEMINI_API_KEY")
+    api_key=os.getenv("GEMINI_API_KEY")  # or OPENROUTER_API_KEY
 )
 ```
 
@@ -148,6 +165,53 @@ print(f"Best solution: {result.best_solution}")
 print(f"Best score: {result.best_score}")
 print(f"Convergence history: {result.best_score_history}")
 print(f"Per-step scores: {result.best_score_per_step}")
+```
+
+## LLM Provider Support
+
+LLMize supports multiple LLM providers for your optimization tasks:
+
+### Google Gemini
+
+```python
+# Using Google Gemini models
+opro = OPRO(
+    problem_text="Minimize (x+2)^2",
+    obj_func=obj_func,
+    llm_model="gemini-2.0-flash-thinking-exp",  # or gemini-1.5-pro, gemma-3-27b-it
+    api_key=os.getenv("GEMINI_API_KEY")
+)
+```
+
+### OpenRouter (New in v0.3.0)
+
+```python
+# Using OpenRouter to access various models
+opro = OPRO(
+    problem_text="Minimize (x+2)^2",
+    obj_func=obj_func,
+    llm_model="openrouter/anthropic/claude-3.5-sonnet",  # or any OpenRouter model
+    api_key=os.getenv("OPENROUTER_API_KEY")
+)
+```
+
+OpenRouter provides access to multiple models including:
+- OpenAI: `openrouter/openai/gpt-4o`, `openrouter/openai/gpt-4o-mini`
+- Anthropic: `openrouter/anthropic/claude-3.5-sonnet`, `openrouter/anthropic/claude-3.5-haiku`
+- Google: `openrouter/google/gemini-2.0-flash-exp`
+- Meta: `openrouter/meta-llama/llama-3.1-405b-instruct`
+- And many more...
+
+### Hugging Face
+
+```python
+# Using Hugging Face models
+opro = OPRO(
+    problem_text="Minimize (x+2)^2",
+    obj_func=obj_func,
+    llm_model="meta-llama/Meta-Llama-3.1-8B-Instruct",
+    api_key=os.getenv("HUGGINGFACE_API_KEY")
+)
 ```
 
 ## Examples

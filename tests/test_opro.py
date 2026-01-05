@@ -93,3 +93,44 @@ def test_opro_with_invalid_optimization_type():
             init_scores=[1],
             optimization_type="invalid"
         )
+
+@pytest.mark.long_test
+@pytest.mark.skipif(not os.getenv("OPENROUTER_API_KEY"), reason="Need OPENROUTER_API_KEY to run this test")
+def test_opro_with_openrouter_llama33():
+    """Test OPRO optimization using OpenRouter Llama 3.3"""
+    def obj_func(x):
+        if isinstance(x, list):
+            return float(x[0])**2  # Simple quadratic function
+        else:
+            return float(x)**2  # Simple quadratic function
+    
+    # Use OpenRouter Llama 3.3 model
+    opro = OPRO(
+        problem_text="Maximize x^2 where x is integer between -10 and 10",
+        obj_func=obj_func, 
+        llm_model="openrouter/meta-llama/llama-3.3-70b-instruct",
+        api_key=os.getenv("OPENROUTER_API_KEY")
+    )
+    
+    init_samples = ["5", "-4", "3"]
+    init_scores = [25, 16, 9]  # Corresponding scores: 5^2, (-4)^2, 3^2
+    
+    result = opro.maximize(
+        init_samples=init_samples,
+        init_scores=init_scores,
+        num_steps=3,
+        batch_size=2
+    )
+    
+    # Check if optimization results contain expected fields
+    assert hasattr(result, 'best_score')
+    assert hasattr(result, 'best_solution')
+    assert hasattr(result, 'best_score_history')
+    assert isinstance(result.best_score_history, list)
+    
+    # The best score should be at least as good as the initial best (25)
+    assert result.best_score >= 25
+    
+    print(f"\nOpenRouter Llama 3.3 optimization result:")
+    print(f"Best solution: {result.best_solution}")
+    print(f"Best score: {result.best_score}")

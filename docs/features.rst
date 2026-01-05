@@ -11,6 +11,17 @@ LLM-Based Optimization
 
 LLMize implements state-of-the-art LLM-based optimization techniques, drawing inspiration from the OPRO (Optimization by PROmpting) methodology (`paper here <https://arxiv.org/abs/2309.03409>`_). The framework supports both maximization and minimization objectives, handling both continuous and discrete optimization problems. It provides multiple optimization strategies including OPRO, ADOPRO (beta), HLMEA (beta), and HLMSA (beta), allowing users to choose the most appropriate approach for their specific optimization needs.
 
+Multiple LLM Provider Support
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+LLMize supports multiple LLM providers to give users flexibility in model choice:
+
+- **Google Gemini**: Direct integration with Google's Gemini models for high-quality optimization
+- **OpenRouter** (new in v0.3.0): Access to dozens of models including OpenAI GPT, Anthropic Claude, Google Gemini, Meta Llama, and more through a single API
+- **Hugging Face**: Integration with Hugging Face's inference API for open-source models
+
+This multi-provider support ensures users can choose the best model for their specific optimization task, budget, and performance requirements.
+
 Flexible Problem Definition
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

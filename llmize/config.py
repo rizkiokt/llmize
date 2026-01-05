@@ -50,10 +50,20 @@ class Config:
         """Set default configuration values."""
         defaults = {
             "llm": {
-                "default_model": os.getenv("LLMIZE_DEFAULT_MODEL", "gemma-3-27b-it"),
+                "default_model": os.getenv("LLMIZE_DEFAULT_MODEL", "google/gemma-3-27b-it"),
                 "temperature": float(os.getenv("LLMIZE_TEMPERATURE", 1.0)),
                 "max_retries": int(os.getenv("LLMIZE_MAX_RETRIES", 10)),
                 "retry_delay": int(os.getenv("LLMIZE_RETRY_DELAY", 5)),
+                # Support multiple API keys per provider
+                "api_keys": {
+                    "google": os.getenv("GEMINI_API_KEY"),
+                    "huggingface": os.getenv("HUGGINGFACE_API_KEY"),
+                    "openrouter": os.getenv("OPENROUTER_API_KEY"),
+                    "openai": os.getenv("OPENAI_API_KEY"),
+                },
+                "base_urls": {
+                    "openrouter": "https://openrouter.ai/api/v1",
+                },
             },
             "optimization": {
                 "default_num_steps": 50,
@@ -127,6 +137,14 @@ class Config:
         """Get the default number of parallel jobs."""
         return self.get("optimization.parallel_n_jobs", 1)
 
+
+    def get_api_key(self, provider: str) -> Optional[str]:
+        """Get API key for a specific provider."""
+        return self.get(f"llm.api_keys.{provider}")
+    
+    def get_base_url(self, provider: str) -> Optional[str]:
+        """Get base URL for a specific provider."""
+        return self.get(f"llm.base_urls.{provider}")
 
 # Global config instance
 _config = None

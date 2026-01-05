@@ -64,6 +64,26 @@ LLM Settings
 - ``max_retries`` (int): Maximum retry attempts for failed API calls (default: 10)
 - ``retry_delay`` (int): Delay between retries in seconds (default: 5)
 
+Supported Models
+~~~~~~~~~~~~~~~~
+
+Google Models
+- ``gemini-2.0, 2.5, 3.0``
+- ``gemma-3``
+
+OpenRouter Models (new in v0.3.0)
+- ``openrouter/anthropic/claude-3.5-sonnet``
+- ``openrouter/anthropic/claude-3.5-haiku``
+- ``openrouter/openai/gpt-4o``
+- ``openrouter/openai/gpt-4o-mini``
+- ``openrouter/google/gemini-2.0-flash-exp``
+- ``openrouter/meta-llama/llama-3.1-405b-instruct``
+- ``openrouter/deepseek/deepseek-chat``
+- And many more... See `OpenRouter models <https://openrouter.ai/models>`_ for the full list.
+
+Hugging Face Models
+(Untested)
+
 Optimization Settings
 ~~~~~~~~~~~~~~~~~~~~
 
