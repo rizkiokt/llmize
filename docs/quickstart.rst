@@ -16,7 +16,14 @@ Then, set up your API key as an environment variable:
 
 .. code-block:: bash
 
+    # For Google Gemini
     export GEMINI_API_KEY="your-api-key-here"
+    
+    # For OpenRouter
+    export OPENROUTER_API_KEY="your-openrouter-api-key"
+    
+    # For Hugging Face
+    export HUGGINGFACE_API_KEY="your-huggingface-api-key"
 
 Your First Optimization
 ------------------------
